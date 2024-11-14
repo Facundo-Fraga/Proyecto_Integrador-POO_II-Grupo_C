@@ -28,16 +28,6 @@ La solución de software automatizará la gestión de inventario, permitiendo un
   - Al añadir un producto, el sistema muestra un mensaje de confirmación.
   - El producto añadido debe ser visible en la lista de inventario.
 
-### Historia de Usuario: Actualizar cantidad de productos en inventario
-
-**Como administrador, quiero actualizar la cantidad de productos en el inventario para que el stock refleje la disponibilidad real de los productos.**
-
-- **Criterios de Aceptación:**
-  - La cantidad actualizada debe guardarse en la base de datos.
-  - No se debe permitir una cantidad negativa.
-  - Al actualizar la cantidad, el sistema muestra un mensaje de confirmación.
-  - La cantidad de inventario se actualiza en tiempo real en la vista de productos.
-
 ### Historia de Usuario: Eliminar productos descontinuados
 
 **Como administrador, quiero eliminar productos descontinuados del inventario para que los clientes solo vean los productos disponibles.**
@@ -52,9 +42,7 @@ La solución de software automatizará la gestión de inventario, permitiendo un
 **Como cliente, quiero ver la cantidad de productos disponibles para que pueda decidir si hago la compra o no.**
 
 - **Criterios de Aceptación:**
-  - El cliente debe poder ver la cantidad de productos disponibles en la página del producto.
   - Si el producto está agotado, el sistema debe mostrar un mensaje de “Producto no disponible”.
-  - El inventario debe reflejarse en tiempo real en la tienda.
 
 ### Historia de Usuario: Buscar productos por categoría
 
@@ -73,7 +61,7 @@ La solución de software automatizará la gestión de inventario, permitiendo un
 
 - **Criterios de Aceptación:**
   - El administrador debe poder definir un porcentaje o monto fijo de descuento y asociarlo a productos específicos.
-  - La promoción debe guardarse en la base de datos y aplicarse automáticamente al producto.
+  - La promoción debe aplicarse automáticamente al producto.
   - El descuento debe reflejarse en el precio final visible en la tienda en línea.
 
 ### Historia de Usuario: Programar duración de promociones
@@ -93,15 +81,6 @@ La solución de software automatizará la gestión de inventario, permitiendo un
   - El cliente debe ver el precio original y el precio con descuento.
   - Si no hay promociones disponibles, el sistema debe mostrar solo los precios regulares.
 
-### Historia de Usuario: Aplicar descuentos automáticamente en el carrito
-
-**Como cliente, quiero aplicar los descuentos automáticamente al agregar productos al carrito para que el precio final refleje las promociones vigentes.**
-
-- **Criterios de Aceptación:**
-  - Los descuentos deben aplicarse automáticamente en el carrito sin que el cliente realice acciones adicionales.
-  - El precio final en el carrito debe mostrar los descuentos aplicados.
-  - Si el cliente quita el producto del carrito, el descuento deja de aplicarse.
-
 ## 3. Métodos de Pago
 
 ### Historia de Usuario: Seleccionar métodos de pago
@@ -110,7 +89,6 @@ La solución de software automatizará la gestión de inventario, permitiendo un
 
 - **Criterios de Aceptación:**
   - El cliente debe poder seleccionar entre múltiples métodos de pago en el proceso de compra.
-  - La página de pago debe cargar encriptada y de forma segura.
   - El sistema debe confirmar el método de pago seleccionado antes de procesar la compra.
 
 ### Historia de Usuario: Ver detalles del pedido antes de confirmar
