@@ -25,8 +25,6 @@ Desarrollar y entregar las funcionalidades básicas de gestión de inventario y 
 3. **Experiencia de Usuario y Gestión de Cuenta**
    - **Crear cuenta en la tienda**  
      Como cliente, quiero crear una cuenta en la tienda para poder gestionar mis pedidos.
-   - **Iniciar sesión para ver historial de compras**  
-     Como cliente, quiero iniciar sesión en mi cuenta para ver mi historial de compras y realizar nuevas compras sin volver a ingresar mis datos.
 
 ### Criterios de Éxito para la Iteración
 

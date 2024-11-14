@@ -120,14 +120,6 @@ La solución de software automatizará la gestión de inventario, permitiendo un
   - El sistema debe verificar la unicidad del correo electrónico.
   - Se debe enviar un correo electrónico de confirmación de registro.
 
-### Historia de Usuario: Iniciar sesión para ver historial de compras
-
-**Como cliente, quiero iniciar sesión en mi cuenta para que pueda ver mi historial de compras y realizar nuevas compras sin volver a ingresar mis datos.**
-
-- **Criterios de Aceptación:**
-  - El cliente debe ingresar correo electrónico y contraseña para iniciar sesión.
-  - El sistema debe notificar errores de autenticación si el login falla.
-
 ## Arquitectura de software
 
 1. **Tipo de Aplicación:**
