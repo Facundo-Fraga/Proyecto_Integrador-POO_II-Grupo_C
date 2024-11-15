@@ -12,7 +12,7 @@ Los clientes, por su parte, tanto actuales como nuevos, se beneficiarán de una 
 
 ## Solución propuesta
 
-La solución de software automatizará la gestión de inventario, permitiendo un control más preciso y eficiente de los productos. Simplificará la aplicación de descuentos, facilitando la creación de promociones para atraer a los clientes. Además, la integración de múltiples métodos de pago ofrecerá una experiencia de compra fluida, mejorando la satisfacción del cliente y aumentando las posibilidades de venta. Estas mejoras permitirán a la tienda expandir su alcance y gestionar sus operaciones en línea de manera más efectiva.
+La solución de software automatizará la gestión de inventario, permitiendo un control más preciso y eficiente de los productos. Simplificará la aplicación y creación de descuentos, para así poder atraer a los clientes. Además, la integración de múltiples métodos de pago ofrecerá una experiencia de compra fluida, mejorando la satisfacción del cliente y aumentando las posibilidades de venta. Estas mejoras permitirán a la tienda expandir su alcance y gestionar sus operaciones en línea de manera más efectiva.
 
 ## Requisitos
 
@@ -53,33 +53,33 @@ La solución de software automatizará la gestión de inventario, permitiendo un
   - La búsqueda debe ser rápida y precisa.
   - Si no hay productos en la categoría seleccionada, el sistema muestra un mensaje de “No hay productos disponibles en esta categoría”.
 
-## 2. Aplicación de Descuentos y Promociones
+## 2. Aplicación de Descuentos
 
-### Historia de Usuario: Crear promociones y descuentos
+### Historia de Usuario: Crear descuentos
 
-**Como administrador, quiero crear promociones y descuentos en productos para que pueda atraer más clientes con ofertas especiales.**
+**Como administrador, quiero crear descuentos en productos para que pueda atraer más clientes con ofertas especiales.**
 
 - **Criterios de Aceptación:**
   - El administrador debe poder definir un porcentaje o monto fijo de descuento y asociarlo a productos específicos.
-  - La promoción debe aplicarse automáticamente al producto.
+  - El descuento debe aplicarse automáticamente al producto.
   - El descuento debe reflejarse en el precio final visible en la tienda en línea.
 
-### Historia de Usuario: Programar duración de promociones
+### Historia de Usuario: Programar duración de descuentos
 
-**Como administrador, quiero programar la duración de las promociones para que estas se activen y desactiven automáticamente en las fechas especificadas.**
+**Como administrador, quiero programar la duración de los descuentos para que estos se activen y desactiven automáticamente en las fechas especificadas.**
 
 - **Criterios de Aceptación:**
-  - El administrador debe poder seleccionar las fechas de inicio y fin de la promoción.
-  - El sistema debe activar la promoción automáticamente en la fecha de inicio y desactivarla en la fecha de finalización.
-  - El producto debe mostrar su precio regular una vez terminada la promoción.
+  - El administrador debe poder seleccionar las fechas de inicio y fin del descuento.
+  - El sistema debe activar el descuento automáticamente en la fecha de inicio y desactivarlo en la fecha de finalización.
+  - El producto debe mostrar su precio regular una vez terminado el descuento.
 
 ### Historia de Usuario: Ver productos en oferta
 
-**Como cliente, quiero ver los productos en oferta y los descuentos aplicables para que pueda aprovechar las promociones actuales.**
+**Como cliente, quiero ver los productos en oferta y los descuentos aplicables para poder aprovecharlos.**
 
 - **Criterios de Aceptación:**
   - El cliente debe ver el precio original y el precio con descuento.
-  - Si no hay promociones disponibles, el sistema debe mostrar solo los precios regulares.
+  - Si no hay descuentos disponibles, el sistema debe mostrar solo los precios regulares.
 
 ## 3. Métodos de Pago
 
