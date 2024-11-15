@@ -6,7 +6,7 @@ Este documento detalla el plan tentativo para las historias de usuario que se en
 
 ### Objetivo Principal
 
-Desarrollar y entregar las funcionalidades básicas de gestión de inventario y aplicación de descuentos. Esto permitirá que los administradores puedan añadir, modificar y eliminar productos, así como gestionar los descuentos en la tienda.
+Desarrollar y entregar las funcionalidades básicas de gestión de inventario y aplicación de descuentos y promociones. Esto permitirá que los administradores puedan añadir, modificar y eliminar productos, así como gestionar las promociones en la tienda.
 
 ### Historias de Usuario
 
@@ -16,20 +16,22 @@ Desarrollar y entregar las funcionalidades básicas de gestión de inventario y 
    - **Eliminar productos descontinuados**  
      Como administrador, quiero eliminar productos descontinuados del inventario para que los clientes solo vean los productos disponibles.
 
-2. **Aplicación de Descuentos**
-   - **Crear descuentos**  
-     Como administrador, quiero crear descuentos en productos para atraer más clientes con ofertas especiales.
-   - **Programar duración de descuentos**
-     Como administrador, quiero programar la duración de los descuentos para que estos se activen y desactiven automáticamente en las fechas especificadas.
+2. **Aplicación de Descuentos y Promociones**
+   - **Crear promociones y descuentos**  
+     Como administrador, quiero crear promociones y descuentos en productos para atraer más clientes con ofertas especiales.
+   - **Programar duración de promociones**  
+     Como administrador, quiero programar la duración de las promociones para que estas se activen y desactiven automáticamente en las fechas especificadas.
 
 3. **Experiencia de Usuario y Gestión de Cuenta**
    - **Crear cuenta en la tienda**  
      Como cliente, quiero crear una cuenta en la tienda para poder gestionar mis pedidos.
+   - **Iniciar sesión para ver historial de compras**  
+     Como cliente, quiero iniciar sesión en mi cuenta para ver mi historial de compras y realizar nuevas compras sin volver a ingresar mis datos.
 
 ### Criterios de Éxito para la Iteración
 
 - Las funcionalidades de gestión de inventario deben estar completamente operativas y permitir al administrador gestionar productos.
-- Las funcionalidades de creación y programación de descuentos deben estar implementadas y reflejarse en la tienda en línea.
+- Las funcionalidades de creación y programación de promociones deben estar implementadas y reflejarse en la tienda en línea.
 - Las funciones de gestión de cuenta deben permitir a los usuarios crear y administrar sus cuentas en la tienda.
 
 ## Iteración 2 (Semanas 3 y 4)
@@ -46,11 +48,11 @@ Completar las funcionalidades restantes, enfocándose en la experiencia de usuar
    - **Buscar productos por categoría**  
      Como cliente, quiero buscar productos específicos por categorías para encontrar fácilmente lo que necesito.
 
-2. **Aplicación de Descuentos**
+2. **Aplicación de Descuentos y Promociones**
    - **Ver productos en oferta**  
-     Como cliente, quiero ver los productos en oferta y los descuentos aplicables para aprovecharlos.
+     Como cliente, quiero ver los productos en oferta y los descuentos aplicables para aprovechar las promociones actuales.
    - **Aplicar descuentos automáticamente en el carrito**  
-     Como cliente, quiero que los descuentos se apliquen automáticamente al agregar productos al carrito, para que el precio final refleje estos descuentos vigentes.
+     Como cliente, quiero que los descuentos se apliquen automáticamente al agregar productos al carrito para que el precio final refleje las promociones vigentes.
 
 3. **Métodos de Pago**
    - **Seleccionar métodos de pago**  
