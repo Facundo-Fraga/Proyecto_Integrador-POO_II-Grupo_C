@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #000000;
+            color: #fff;
+            font-size: 18px;
+        }
+        .header .cart-icon {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+        }
+        .cart-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .item-image {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .item-info {
+            font-size: 14px;
+        }
+        .item-quantity {
+            font-size: 12px;
+            color: #555;
+        }
+        .item-price {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .remove-btn {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .checkout {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .shipping-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+        }
+        .checkout-btn {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>Carrito de Compras</div>
+        <div class="cart-icon">🛒</div>
+    </div>
+    <div class="cart-container">
+        <div class="cart-item">
+            <div class="item-details">
+                <div class="item-image">📷</div>
+                <div class="item-info">
+                    <div>Producto 1 - Lorem ipsum dolor sit amet</div>
+                    <div class="item-quantity">x1</div>
+                </div>
+            </div>
+            <div class="item-price">$10.000,00</div>
+            <button class="remove-btn">🗑️</button>
+        </div>
+        <div class="cart-item">
+            <div class="item-details">
+                <div class="item-image">📷</div>
+                <div class="item-info">
+                    <div>Producto 2 - Lorem ipsum dolor sit amet</div>
+                    <div class="item-quantity">x2</div>
+                </div>
+            </div>
+            <div class="item-price">$22.000,00</div>
+            <button class="remove-btn">🗑️</button>
+        </div>
+        <div class="cart-item">
+            <div class="item-details">
+                <div class="item-image">📷</div>
+                <div class="item-info">
+                    <div>Producto 3 - Lorem ipsum dolor sit amet</div>
+                    <div class="item-quantity">x1</div>
+                </div>
+            </div>
+            <div class="item-price">$1.000,00</div>
+            <button class="remove-btn">🗑️</button>
+        </div>
+        <div class="cart-item">
+            <div class="item-details">
+                <div class="item-image">📷</div>
+                <div class="item-info">
+                    <div>Producto 4 - Lorem ipsum dolor sit amet</div>
+                    <div class="item-quantity">x1</div>
+                </div>
+            </div>
+            <div class="item-price">$20.000,00</div>
+            <button class="remove-btn">🗑️</button>
+        </div>
+        <div class="summary">
+            <div>Subtotal: <span style="font-weight: bold;">$53.500,00</span></div>
+        </div>
+        <div class="checkout">
+            <select class="shipping-select">
+                <option>Seleccionar método de envío</option>
+                <option>Envío Local</option>
+                <option>Envío Provincial</option>
+                <option>Envío Nacional</option>
+            </select>
+            <button class="checkout-btn">Iniciar Compra</button>
+        </div>
+    </div>
+</body>
+</html>

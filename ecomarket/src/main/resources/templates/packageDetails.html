@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Paquete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .return_button {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle del paquete</h1>
+        <p><strong>Nombre:</strong> <span th:text="${paquete.nombre}">Nombre del Paquete</span></p>
+        <p><strong>Descripción:</strong> <span th:text="${paquete.descripcion}">Descripción del Paquete</span></p>
+        <p><strong>Descuento:</strong> <span th:text="${paquete.descuento}">Descuento</span>%</p>
+
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Unidad</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr th:each="producto : ${paquete.productos}">
+                <td th:text="${producto.nombre}">Nombre del Producto</td>
+                <td th:text="${producto.descripcion}">Descripción</td>
+                <td th:text="${producto.categoria}">Categoría</td>
+                <td th:text="${producto.unidad}">Unidad</td>
+                <td th:text="${producto.precio}">Precio</td>
+                <td th:text="${producto.cantidad}">Cantidad</td>
+                <td th:text="${producto.precio * producto.cantidad}">Subtotal</td>
+            </tr>
+        </table>
+        
+        <p>Total sin descuento: <span th:text="${#numbers.formatDecimal(paquete.productos.stream().mapToDouble(producto -> producto.precio * producto.cantidad).sum(), 1, 'COMMA', 2, 'POINT')}">Total sin descuento</span></p>
+        <p>Total: <span th:text="${#numbers.formatDecimal(paquete.productos.stream().mapToDouble(producto -> producto.precio * producto.cantidad).sum() * (1 - paquete.descuento / 100.0), 1, 'COMMA', 2, 'POINT')}">Total con descuento</span></p>
+
+        <button type="button" class="return_button" onclick="window.location.href='/mainMenu.html'">Volver al Menú</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .return_button {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle del producto</h1>
+        <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
+        <p><strong>Descripción:</strong> <span th:text="${producto.descripcion}"></span></p>
+        <p><strong>Categoría:</strong> <span th:text="${producto.categoria}"></span></p>
+        <p><strong>Unidad:</strong> <span th:text="${producto.unidad}"></span></p>
+        <p><strong>Cantidad:</strong> <span th:text="${producto.cantidad}"></span></p>
+        <p><strong>Precio:</strong> $<span th:text="${producto.precio}"></span></p>
+        <p><strong>Descuento:</strong> <span th:text="${producto.descuento}"></span>%</p>
+        <button type="button" class="return_button" onclick="window.location.href='/mainMenu.html'">Volver al Menú</button>
+    </div>
+</body>
+</html>
