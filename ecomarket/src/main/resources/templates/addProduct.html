@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,9 +95,9 @@
         <label for="fecha_fin">Fecha de finalización de descuento:</label>
         <input type="date" id="fecha_fin" name="fecha_fin" required>
         
-        <button type="submit">Guardar Producto</button>
-        <button type="button" class="return_button" onclick="window.location.href='/mainMenu.html'">Volver al Inicio</button>
-        <button type="button" class="return_button" onclick="window.location.href='/mainMenu.html'">Ir a Gestión de Productos</button>
+        <button type="submit" onclick="window.location.href='/manageProducts'">Guardar Producto</button>
+        <button type="button" class="return_button" onclick="window.location.href='/mainMenu'">Volver al Inicio</button>
+        <button type="button" class="return_button" onclick="window.location.href='/manageProducts'">Ir a Gestión de Productos</button>
     </form>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,6 +74,9 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .remove-btn:hover {
+            background-color: #ec0000;
+        }
         .summary {
             display: flex;
             justify-content: space-between;
@@ -94,12 +97,26 @@
             flex: 1;
         }
         .checkout-btn {
+            background-color: #00a028;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .checkout-btn:hover {
+            background-color: #00c030;
+        }
+        .return-btn {
             background-color: #000000;
             color: #fff;
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
+        }
+        .return-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -163,7 +180,8 @@
                 <option>Envío Provincial</option>
                 <option>Envío Nacional</option>
             </select>
-            <button class="checkout-btn">Iniciar Compra</button>
+            <button type="button" class="checkout-btn" onclick="window.location.href='/payment'">Iniciar Compra</button>
+            <button type="button" class="return-btn" onclick="window.location.href='/clientMenu'">Seguir comprando</button>
         </div>
     </div>
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +69,7 @@
         </div>
         <h1 class="confirmation-message">¡Pago Exitoso!</h1>
         <p class="order-number">Orden: <span th:text="${orderNumber}">#XXXXXX</span></p> <!-- Mostrando el número de orden -->
-        <button type="button" class="return_button" onclick="window.location.href='/mainMenu.html'">Volver al Inicio</button>
+        <button type="button" class="return_button" onclick="window.location.href='/clientMenu'">Volver al Inicio</button>
     </div>
 </body>
 </html>

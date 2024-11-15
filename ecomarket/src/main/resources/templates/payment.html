@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +55,7 @@
             border-radius: 4px;
         }
         .payment-submit {
-            background-color: #333;
+            background-color: #000000;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -64,6 +64,9 @@
             font-size: 16px;
             margin-top: 20px;
             width: 100%;
+        }
+        .payment-submit:hover {
+            background-color: #1f1f1f;
         }
     </style>
 </head>
@@ -128,7 +131,8 @@
             </div>
         </div>
 
-        <button class="payment-submit">Proceder con el Pago</button>
+        <button type="button" class="payment-submit" onclick="window.location.href='/succesfulPayment'">Proceder con el Pago 💵</button>
+        <button type="button" class="payment-submit" onclick="window.location.href='/shoppingCart'">Regresar</button>
     </div>
 
     <script>

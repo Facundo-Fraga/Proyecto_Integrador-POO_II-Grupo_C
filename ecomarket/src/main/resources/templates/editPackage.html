@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,6 +78,9 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+        }
+        .menu-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -242,13 +245,13 @@
         </div>
 
         <div class="actions">
-            <button class="save_btn">Guardar Cambios</button>
+            <button class="save_btn" onclick="window.location.href='/managePackages'">Guardar Cambios</button>
         </div>
 
         <div>
             <button type="submit" class="menu-btn" onclick="window.location.href='/mainMenu'">Ir al inicio</button>
-            <button type="submit" class="menu-btn" onclick="window.location.href='/mainMenu'">Ir a Gestión de Paquetes</button>
-            <button type="submit" class="menu-btn" onclick="window.location.href='/mainMenu'">Ir a Gestión de Productos</button>
+            <button type="submit" class="menu-btn" onclick="window.location.href='/managePackages'">Ir a Gestión de Paquetes</button>
+            <button type="submit" class="menu-btn" onclick="window.location.href='/manageProducts'">Ir a Gestión de Productos</button>
         </div>
     </div>
 </body>
