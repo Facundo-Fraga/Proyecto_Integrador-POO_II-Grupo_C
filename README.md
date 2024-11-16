@@ -33,7 +33,7 @@ El sistema de software para la venta de productos ecológicos en línea tiene la
 ## Tecnologías Utilizadas
 
 - **Lenguaje de Programación**: Java
-- **Framework**: JavaFX (para la interfaz de usuario)
+- **Framework**: Spring
 - **ORM**: JPA (EclipseLink)
 - **Base de Datos**: PostgreSQL
 - **Herramientas de Desarrollo**:
