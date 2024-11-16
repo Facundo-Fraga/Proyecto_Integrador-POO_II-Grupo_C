@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #00b818;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #009b14;
+        }
+        textarea {
+            resize: none; /* Evita que el textarea sea redimensionable */
+        }
+        .return_button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nuevo Producto</h1>
+    <form action="#" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre del Producto" required>
+        
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" placeholder="Descripción del Producto" rows="5" required></textarea>
+        
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="">Selecciona una categoría</option>
+            <!-- Las opciones de categorías se llenarán desde el backend -->
+            <option value="categoria1">Categoría 1</option>
+            <option value="categoria2">Categoría 2</option>
+        </select>
+        
+        <label for="unidad">Unidad:</label>
+        <input type="text" id="unidad" name="unidad" placeholder="Unidad del Producto" required>
+        
+        <label for="precio">Precio:</label>
+        <input type="text" id="precio" name="precio" placeholder="Precio del Producto" required>
+        
+        <label for="descuento">Descuento:</label>
+        <select id="descuento" name="descuento" required>
+            <option value="0">0%</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+        </select>
+        
+        <label for="fecha_inicio">Fecha de inicio de descuento:</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+        
+        <label for="fecha_fin">Fecha de finalización de descuento:</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" required>
+        
+        <button type="submit" onclick="window.location.href='/manageProducts'">Guardar Producto</button>
+        <button type="button" class="return_button" onclick="window.location.href='/mainMenu'">Volver al Inicio</button>
+        <button type="button" class="return_button" onclick="window.location.href='/manageProducts'">Ir a Gestión de Productos</button>
+    </form>
+</body>
+</html>
