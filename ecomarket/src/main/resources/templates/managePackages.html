@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +19,15 @@
             margin-bottom: 20px;
         }
         .add-product-btn {
-            background-color: #00b818;
+            background-color: #00a028;
             border: 1px solid #ccc;
             padding: 10px 15px;
             border-radius: 4px;
             cursor: pointer;
             color: white;
+        }
+        .add-product-btn:hover {
+            background-color: #00c030;
         }
         .product-table {
             width: 100%;
@@ -92,7 +95,7 @@
 <body>
     <div class="container">
         <h1>Gestión de Paquetes</h1>
-        <button class="add-product-btn">Agregar paquete</button>
+        <button type="button" class="add-product-btn" onclick="window.location.href='/addPackage'">Agregar paquete</button>
         <table class="product-table">
             <thead>
                 <tr>
@@ -116,10 +119,10 @@
                     <td></td>
                     <td></td>
                     <td class="action-buttons">
-                        <button class="details-btn">Ver detalle</button>
+                        <button class="details-btn" onclick="window.location.href='/packageDetails'">Ver detalle</button>
                     </td>
                     <td class="action-buttons">
-                        <button class="edit-btn">Editar</button>
+                        <button type="button" class="edit-btn" onclick="window.location.href='/editPackage'">Editar</button>
                     </td>
                     <td class="action-buttons">
                         <button class="delete-btn">Baja</button>
@@ -127,7 +130,7 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="basic_button" onclick="window.location.href='/mainMenu.html'">Volver al Menú</button>
+        <button type="button" class="basic_button" onclick="window.location.href='/mainMenu'">Volver al Menú</button>
     </div>
 </body>
 </html>

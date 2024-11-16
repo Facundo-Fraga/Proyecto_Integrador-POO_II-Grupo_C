@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,10 +78,10 @@
     <div class="menu-container">
         <h2>Menú Principal</h2>
         <form>
-            <button type="button" class="button" onclick="window.location.href='/manageProducts.html'">Gestionar Productos</button>
-            <button type="button" class="button" onclick="window.location.href='/managePackages.html'">Gestionar Paquetes</button>
+            <button type="button" class="button" onclick="window.location.href='/manageProducts'">Gestionar Productos</button>
+            <button type="button" class="button" onclick="window.location.href='/managePackages'">Gestionar Paquetes</button>
             <button type="submit" class="button">???</button>
-            <button type="button" class="close_button" onclick="window.location.href='/login.html'">Cerrar Sesión</button>
+            <button type="button" class="close_button" onclick="window.location.href='/login'">Cerrar Sesión</button>
         </form>
     </div>
 </body>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Paquete de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        .table-container {
+            max-height: 300px; /* Altura fija */
+            overflow-y: auto; /* Desplazamiento vertical */
+            border: 1px solid #ddd;
+            margin-top: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        .save_btn {
+            justify-content: space-between;
+            margin-top: 20px;
+            background-color: #00b818;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .save_btn:hover {
+            background-color: #009b14;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .menu-btn {
+            width: 32.9%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .menu-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Paquete</h1>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Nombre del Paquete">
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" placeholder="Descripción del Paquete">
+
+        <h2>Seleccionar Productos:</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Unidad</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Ver detalle</button>
+                            <button>Agregar al paquete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Ver detalle</button>
+                            <button>Agregar al paquete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Ver detalle</button>
+                            <button>Agregar al paquete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Ver detalle</button>
+                            <button>Agregar al paquete</button>
+                        </td>
+                    </tr>
+                    <!-- Más filas de ejemplo -->
+                </tbody>
+            </table>
+        </div>
+
+        <label for="descuento">Descuento:</label>
+        <select id="descuento">
+            <option value="0">0%</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+            <!-- Más opciones -->
+        </select>
+
+        <label for="fecha-inicio">Fecha de inicio de descuento:</label>
+        <input type="date" id="fecha-inicio">
+
+        <label for="fecha-fin">Fecha de finalización de descuento:</label>
+        <input type="date" id="fecha-fin">
+
+        <h2>Detalle:</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Unidad</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Quitar Producto</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Quitar Producto</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Quitar Producto</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>Descripción 1</td>
+                        <td>Categoría 1</td>
+                        <td>Unidad 1</td>
+                        <td>$100</td>
+                        <td>1</td>
+                        <td>$100</td>
+                        <td>
+                            <button>Quitar Producto</button>
+                        </td>
+                    </tr>
+                    <!-- Más filas de ejemplo -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total">
+            Total sin descuento: $100<br>
+            Total: $100
+        </div>
+
+        <div class="actions">
+            <button class="save_btn" onclick="window.location.href='/managePackages'">Guardar Cambios</button>
+        </div>
+
+        <div>
+            <button type="submit" class="menu-btn" onclick="window.location.href='/mainMenu'">Ir al inicio</button>
+            <button type="submit" class="menu-btn" onclick="window.location.href='/managePackages'">Ir a Gestión de Paquetes</button>
+            <button type="submit" class="menu-btn" onclick="window.location.href='/manageProducts'">Ir a Gestión de Productos</button>
+        </div>
+    </div>
+</body>
+</html>
