@@ -4,13 +4,13 @@ package edu.unam.ecomarket.modelo;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+@Entity
+@DiscriminatorValue("cliente") // Valor específico para esta subclase en la columna "tipo"
 
 @Getter @Setter @NoArgsConstructor
 @Entity
