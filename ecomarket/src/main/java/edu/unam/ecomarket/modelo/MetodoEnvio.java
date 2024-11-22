@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 public abstract class MetodoEnvio {
     
-    protected TipoEnvio tipo;
+    //protected TipoEnvio tipo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "envio_seq")

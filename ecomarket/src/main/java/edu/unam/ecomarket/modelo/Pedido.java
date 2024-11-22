@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -44,10 +43,11 @@ public class Pedido {
 
     private Cliente cliente;
     // a un pedido le corresponde un metodo de pago
-    private MetodoPago metodoPago;
+    
+    //private MetodoPago metodoPago;
     // a un pedido le corresponde un metodo de Envio
-    @OneToOne
-    private MetodoEnvio metodoEnvio;
+    //@OneToOne
+    //private MetodoEnvio metodoEnvio;
     private ArrayList<DetallePedido> listaDetallesPedido;
 
 }
