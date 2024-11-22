@@ -44,7 +44,7 @@ public class Pedido {
 
     private Cliente cliente;
     // a un pedido le corresponde un metodo de pago
-    private MetodoPago metodoPago;
+
     // a un pedido le corresponde un metodo de Envio
     @OneToOne
     private MetodoEnvio metodoEnvio;
