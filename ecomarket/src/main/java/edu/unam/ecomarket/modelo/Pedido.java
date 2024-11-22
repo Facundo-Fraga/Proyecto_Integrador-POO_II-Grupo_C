@@ -35,16 +35,14 @@ public class Pedido {
     @Setter(AccessLevel.NONE)
 
     private LocalDateTime fecha;
-
+    
+    // a un pedido le corresponde un metodo de pago
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
+    private Usuario cliente;
 
+    //private MetodoPago metodoPago;
 
-    
-
-    private Cliente cliente;
-    // a un pedido le corresponde un metodo de pago
-    private MetodoPago metodoPago;
     // a un pedido le corresponde un metodo de Envio
     @OneToOne
     private MetodoEnvio metodoEnvio;
