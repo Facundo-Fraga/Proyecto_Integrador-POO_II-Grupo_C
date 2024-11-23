@@ -12,8 +12,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,34 +61,46 @@ public class ProductoIndividual implements Producto {
 
     private short disponible = 1;
 
+    private double precioBase;
+
     @ManyToMany
     @JoinTable(name = "producto_paquete", joinColumns = @JoinColumn(name = "idPaquete"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
     private List<ProductoPaquete> listaPaquetes;
 
+    @Transient
+    
+    private EstrategiaPrecio estrategiaPrecio;
+
     public ProductoIndividual(String nombre, String descripcion, Long cantidad, CategoriaProducto categoria,
-            TipoUnidad unidad) {
+            TipoUnidad unidad, double precioBase, EstrategiaPrecio estrategiaPrecio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.categoria = categoria;
         this.unidad = unidad;
+        this.precioBase = precioBase;
+        this.estrategiaPrecio = estrategiaPrecio;
     }
 
-    @Override
-    public void aplicarDescuento() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aplicarDescuento'");
-    }
+   
 
     @Override
     public short esDisponible() {
         return disponible;
     }
 
-    @Override
     public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEstrategiaPrecio'");
+        this.estrategiaPrecio = estrategiaPrecio;
+    }
+
+
+
+    @Override
+    public double obtenerPrecio() {
+        return estrategiaPrecio.calcularPrecio(precioBase);
     }
 
 }
+
+
+
