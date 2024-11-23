@@ -1,81 +1,89 @@
 package edu.unam.ecomarket.modelo;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table (name = "paquete")
+
+
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class ProductoPaquete implements Producto{
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paquete_seq")
+    @SequenceGenerator(name = "paquete_seq", sequenceName = "paquete_sequence", allocationSize = 1)
     private Long idPaquete;
+
+    @Column(name = "nombre", nullable = false)
+    @NotBlank
+
     private String nombre;
+
+    @Column(name = "descripcion", nullable = false)
+    @NotBlank
+
     private String descripcion;
-    private BigDecimal precioTotal;
-    private ArrayList<ProductoIndividual> productos;
 
-    public ProductoPaquete(String nombre, String descripcion, BigDecimal precioTotal,
-            ArrayList<ProductoIndividual> productos) {
+    @Column(name = "precioTotal", nullable = false)
+    private double precioTotal;
+
+    @Column(name = "disponible", nullable = false)
+    private short disponible = 1;
+
+    @ManyToMany(mappedBy = "listaPaquetes")
+    private List<ProductoIndividual> productos;
+
+    @Transient  
+
+    private EstrategiaPrecio estrategiaPrecio;
+
+
+    public ProductoPaquete(String nombre, String descripcion, double precioTotal,
+            List<ProductoIndividual> productos, EstrategiaPrecio estrategiaPrecio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioTotal = precioTotal;
         this.productos = productos;
+        this.estrategiaPrecio = estrategiaPrecio;
+        
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public BigDecimal getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(BigDecimal precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
-    public ArrayList<ProductoIndividual> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(ArrayList<ProductoIndividual> productos) {
-        this.productos = productos;
-    }
-
-    public boolean esPaquete() {
-        return true;
-    }
 
     @Override
-    public void aplicarDescuento() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aplicarDescuento'");
+    public short esDisponible() {
+        return disponible;
     }
 
-    @Override
-    public void esDisponible() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esDisponible'");
-    }
-
-    @Override
+   
     public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEstrategiaPrecio'");
+        this.estrategiaPrecio = estrategiaPrecio;
     }
 
+
+
+
     @Override
-    public double calcularPrecioFinal(double precioBase) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularPrecioFinal'");
+    public double obtenerPrecio() {
+        return estrategiaPrecio.calcularPrecio(precioTotal);
     }
+
+  
 
 }
+
