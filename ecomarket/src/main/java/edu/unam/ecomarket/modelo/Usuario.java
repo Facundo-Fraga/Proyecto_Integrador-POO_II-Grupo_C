@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo")
+@DiscriminatorColumn(name = "tipo_usuario")
 @Getter @Setter @NoArgsConstructor
 public class Usuario {
 

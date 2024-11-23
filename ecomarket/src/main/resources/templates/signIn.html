@@ -74,7 +74,7 @@
     <div class="login-container">
         <h2>Registrarse</h2>
 
-        <form id="registerForm" th:action="@{/signIn}" th:object="${usuario}" th:method="post">
+        <form id="registerForm" th:action="@{/signIn}" th:object="${cliente}" th:method="post">
             
             <label for="nombre" class="input-label">Nombre de Usuario</label>
             <input type="text" class="input-field" id="nombre" placeholder="Nombre de usuario" value="" th:field="*{nombre}" required/>
@@ -91,7 +91,11 @@
             <label for="conf-contrasenia" class="input-label">Confirmar Contraseña</label>
             <input type="password" class="input-field" id="conf-contrasenia" placeholder="Confirmar contraseña" oninput="validatePasswords()" required/>
             
-            <div id="passwordError" class="error" style="display:none;">Las contraseñas no coinciden.</div>
+            <div id="passwordError" class="error" style="display:none;"></div>
+
+            <div th:if="${error}" style="color: red; margin-top: 10px;">
+                <p th:text="${error}"></p>
+            </div>
 
             <button type="submit" class="button" id="registrarse" disabled>Registrarse</button>
         </form>
@@ -107,9 +111,17 @@
             var confirmPassword = document.getElementById("conf-contrasenia").value;
             var errorMessage = document.getElementById("passwordError");
             var submitButton = document.getElementById("registrarse");
-
-            // Si las contraseñas no coinciden, muestra el mensaje de error
+    
+            // Mensajes de error
+            if (password.length < 8) {
+                errorMessage.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                errorMessage.style.display = "block";
+                submitButton.disabled = true;  // Deshabilita el botón de envío
+                return;
+            }
+    
             if (confirmPassword !== password) {
+                errorMessage.textContent = "Las contraseñas no coinciden.";
                 errorMessage.style.display = "block";
                 submitButton.disabled = true;  // Deshabilita el botón de envío
             } else {
