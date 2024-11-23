@@ -110,23 +110,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr th:each="paquete : ${paquetes}">
+                    <td th:text="${paquete.nombre}"></td>
+                    <td th:text="${paquete.productos}"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="action-buttons">
-                        <button class="details-btn" onclick="window.location.href='/packageDetails'">Ver detalle</button>
-                    </td>
-                    <td class="action-buttons">
-                        <button type="button" class="edit-btn" onclick="window.location.href='/editPackage'">Editar</button>
-                    </td>
-                    <td class="action-buttons">
-                        <button class="delete-btn">Baja</button>
-                    </td>
+                    <td th:text="${paquete.total}"></td>
+                    <td th:text="${paquete.cantidad}"></td>
+                    <td><a th:href="@{/managePackages/edit/{id}(id=${paquete.idPaquete})}">Editar</a></td>
+                    <td><a th:href="@{/managePackages/delete/{id}(id=${paquete.idPaquete})}">Eliminar</a></td>
                 </tr>
             </tbody>
         </table>

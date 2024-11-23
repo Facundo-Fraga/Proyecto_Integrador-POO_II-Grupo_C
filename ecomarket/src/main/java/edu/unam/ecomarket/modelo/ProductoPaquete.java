@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -41,24 +43,19 @@ public class ProductoPaquete implements Producto{
     private String descripcion;
 
     @Column(name = "precioTotal", nullable = false)
-    private double precioTotal;
-
-    @Column(name = "disponible", nullable = false)
-    private short disponible = 1;
-
-    @ManyToMany(mappedBy = "listaPaquetes")
+    private BigDecimal precioTotal;
+    
+    @ManyToMany
+    @JoinTable(name = "producto_paquete", joinColumns = @JoinColumn(name = "idPaquete"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
     private List<ProductoIndividual> productos;
 
-    @Transient  
-
-    private EstrategiaPrecio estrategiaPrecio;
+   
 
 
     public ProductoPaquete(String nombre, String descripcion, double precioTotal,
             List<ProductoIndividual> productos, EstrategiaPrecio estrategiaPrecio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioTotal = precioTotal;
         this.productos = productos;
         this.estrategiaPrecio = estrategiaPrecio;
         

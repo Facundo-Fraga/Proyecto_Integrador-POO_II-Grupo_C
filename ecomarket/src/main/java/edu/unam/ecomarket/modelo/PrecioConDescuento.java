@@ -1,5 +1,6 @@
 package edu.unam.ecomarket.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PrecioConDescuento implements EstrategiaPrecio {
@@ -7,9 +8,9 @@ public class PrecioConDescuento implements EstrategiaPrecio {
     private final double porcentajeDescuento;
     private final LocalDateTime inicioDescuento;
     private final LocalDateTime finDescuento;
-
+    private BigDecimal precioBase; 
     
-    public PrecioConDescuento(double porcentajeDescuento, LocalDateTime inicioDescuento, LocalDateTime finDescuento) {
+    public PrecioConDescuento(double porcentajeDescuento, LocalDateTime inicioDescuento, LocalDateTime finDescuento, BigDecimal precioBase ) {
         if (porcentajeDescuento < 0 || porcentajeDescuento > 1) {
             throw new IllegalArgumentException(
                 "El porcentaje de descuento debe estar entre 0 y 1. Valor recibido: " + porcentajeDescuento
@@ -21,7 +22,7 @@ public class PrecioConDescuento implements EstrategiaPrecio {
     }
 
     @Override
-    public double calcularPrecio(double precioBase) {
+    public double calcularPrecio() {
         LocalDateTime ahora = LocalDateTime.now();
         if (ahora.isAfter(this.inicioDescuento) && ahora.isBefore(this.finDescuento)) {
             // Aplica el descuento si está en el rango de fechas

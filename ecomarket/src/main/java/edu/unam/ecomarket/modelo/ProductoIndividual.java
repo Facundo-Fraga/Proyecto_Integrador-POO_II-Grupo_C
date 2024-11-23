@@ -1,5 +1,6 @@
 package edu.unam.ecomarket.modelo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -55,41 +56,37 @@ public class ProductoIndividual implements Producto {
     private TipoUnidad unidad;
 
     @Column(nullable = false)
-
-    private short disponible = 1;
-
     private double precioBase;
 
-    @ManyToMany
-    @JoinTable(name = "producto_paquete", joinColumns = @JoinColumn(name = "idPaquete"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
-    private List<ProductoPaquete> listaPaquetes;
+    @Column(nullable = false)
+    private double precioFinal;
 
-    @Transient
+    @Column(nullable = false)
+    private double descuento = 0; // Sin descuento
+
+    @Column(nullable = true)
+    private LocalDateTime inicioDescuento = null;
     
-    private EstrategiaPrecio estrategiaPrecio;
+    @Column(nullable = true)
+    private LocalDateTime finDescuento = null;
+
+
+
 
     public ProductoIndividual(String nombre, String descripcion, Long cantidad, CategoriaProducto categoria,
-            TipoUnidad unidad, double precioBase, EstrategiaPrecio estrategiaPrecio) {
+            TipoUnidad unidad, double precioBase) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.categoria = categoria;
         this.unidad = unidad;
         this.precioBase = precioBase;
-        this.estrategiaPrecio = estrategiaPrecio;
     }
 
    
 
-    @Override
-    public short esDisponible() {
-        return disponible;
-    }
-
-    public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        this.estrategiaPrecio = estrategiaPrecio;
-    }
-
+  
+    
 
 
     @Override
