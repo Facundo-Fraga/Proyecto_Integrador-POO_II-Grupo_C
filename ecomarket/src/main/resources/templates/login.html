@@ -26,12 +26,23 @@
             margin-bottom: 20px;
             font-size: 24px;
         }
+        .input-label {
+            text-align: left;
+            font-size: 12px;
+            display: block;
+        }
         .input-field {
             width: 90%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
         }
         .button {
             width: 97%;
@@ -62,14 +73,25 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form>
-            <input type="text" class="input-field" placeholder="Usuario" required>
-            <input type="password" class="input-field" placeholder="Contraseña" required>
-            <button type="submit" class="button" onclick="window.location.href='/mainMenu'">Iniciar Sesión</button>
+    
+        <form id="login-form" action="/login" method="post">
+            <label for="nombre" class="input-label">Nombre de Usuario</label>
+            <input type="text" class="input-field" id="nombre" name="nombre" placeholder="Usuario" required>
+    
+            <label for="contrasenia" class="input-label">Contraseña</label>
+            <input type="password" class="input-field" id="contrasenia" name="contrasenia" placeholder="Contraseña" required>
+    
+            <button type="submit" class="button">Iniciar Sesión</button>
         </form>
+    
+        <div th:if="${error}" style="color: red; margin-top: 10px;">
+            <p th:text="${error}"></p>
+        </div>
+    
         <div class="links">
-            <a href="#">He olvidado mi contraseña</a> | <a href="/signIn">Registrarse</a>
+            <a href="/signIn">Registrarse</a>
         </div>
     </div>
+    
 </body>
 </html>

@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,16 +42,18 @@ public class PagoConPaypal implements MetodoPago {
     private BigDecimal saldo;
 
     @Column(nullable = false)
-    
+    @NotBlank
     private String moneda;
    
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
+    @NotBlank
     
     private String emailUsuario;
     
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
+    @NotBlank
 
     private String contrasena;
 

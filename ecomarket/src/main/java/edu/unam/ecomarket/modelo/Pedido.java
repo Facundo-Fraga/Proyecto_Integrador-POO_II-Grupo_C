@@ -1,6 +1,7 @@
 package edu.unam.ecomarket.modelo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -33,21 +35,20 @@ public class Pedido {
     @Setter(AccessLevel.NONE)
 
     private LocalDateTime fecha;
-
+    
+    // a un pedido le corresponde un metodo de pago
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
 
-    public void pedido(){
-        
-    }
+
     
 
-    //private Cliente cliente;
+    private Cliente cliente;
     // a un pedido le corresponde un metodo de pago
-    //private MetodoPago metodoPago;
+
     // a un pedido le corresponde un metodo de Envio
-    //@OneToOne
-    //private MetodoEnvio metodoEnvio;
-    //private ArrayList<DetallePedido> listaDetallesPedido;
+    @OneToOne
+    private MetodoEnvio metodoEnvio;
+    private ArrayList<DetallePedido> listaDetallesPedido;
 
 }
