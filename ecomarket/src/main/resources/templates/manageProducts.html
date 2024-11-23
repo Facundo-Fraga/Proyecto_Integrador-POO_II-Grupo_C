@@ -107,21 +107,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td></td>
+                    <td th:text="${producto.categoria}"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="action-buttons">
-                        <button class="edit-btn" onclick="window.location.href='/editProduct'">Editar</button>
-                    </td>
-                    <td class="action-buttons">
-                        <button class="delete-btn">Baja</button>
-                    </td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td><a th:href="@{/manageProducts/edit/{id}(id=${producto.idProducto})}">Editar</a></td>
+                    <td><a th:href="@{/manageProducts/delete/{id}(id=${producto.idProducto})}">Eliminar</a></td>
                 </tr>
             </tbody>
         </table>

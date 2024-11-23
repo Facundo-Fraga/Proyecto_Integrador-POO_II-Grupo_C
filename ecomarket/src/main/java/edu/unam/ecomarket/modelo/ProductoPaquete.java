@@ -43,10 +43,7 @@ public class ProductoPaquete implements Producto{
 
     @Column(name = "precioTotal", nullable = false)
     private BigDecimal precioTotal;
-
-    @Column(name = "disponible", nullable = false)
-    private short disponible = 1;
-
+    
     @ManyToMany(mappedBy = "listaPaquetes")
     private List<ProductoIndividual> productos;
 

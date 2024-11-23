@@ -1,7 +1,6 @@
 package edu.unam.ecomarket.modelo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,15 +37,17 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
 
-
+    public void pedido(){
+        
+    }
     
 
-    private Cliente cliente;
+    //private Cliente cliente;
     // a un pedido le corresponde un metodo de pago
-    private MetodoPago metodoPago;
+    //private MetodoPago metodoPago;
     // a un pedido le corresponde un metodo de Envio
     //@OneToOne
     //private MetodoEnvio metodoEnvio;
-    private ArrayList<DetallePedido> listaDetallesPedido;
+    //private ArrayList<DetallePedido> listaDetallesPedido;
 
 }
