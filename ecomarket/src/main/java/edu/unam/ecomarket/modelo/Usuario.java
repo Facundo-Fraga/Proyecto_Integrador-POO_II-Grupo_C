@@ -15,12 +15,11 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.AccessLevel;
 
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo")
+@DiscriminatorColumn(name = "tipo_usuario")
 @Getter @Setter @NoArgsConstructor
 public class Usuario {
 
@@ -30,23 +29,14 @@ public class Usuario {
     private Long idUsuario;
     
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     @NotBlank
     private String nombre;
 
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     @NotBlank
-    private String contrasena;
+    private String contrasenia;
 
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     @NotBlank
     private String email;
-
-    public Usuario(String nombre, String contrasena, String email) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.email = email;
-    }
 }

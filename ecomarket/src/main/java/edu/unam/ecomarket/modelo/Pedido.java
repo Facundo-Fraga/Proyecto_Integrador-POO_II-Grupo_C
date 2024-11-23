@@ -39,7 +39,8 @@ public class Pedido {
     @Setter(AccessLevel.NONE)
 
     private LocalDateTime fecha;
-
+    
+    // a un pedido le corresponde un metodo de pago
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
 
