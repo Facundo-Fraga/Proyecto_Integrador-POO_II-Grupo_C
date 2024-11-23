@@ -1,7 +1,9 @@
 package edu.unam.ecomarket.modelo;
 
+import java.math.BigDecimal;
+
 public interface MetodoPago {
-    public abstract boolean autenticar();
-    public abstract boolean procesarPago();
-    public abstract boolean cancelarPago();
+
+ boolean pagar(BigDecimal monto);
+ void obtenerDetalles();  
 }

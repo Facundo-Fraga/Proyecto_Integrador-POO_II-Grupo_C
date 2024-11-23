@@ -9,9 +9,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +43,7 @@ public class ProductoPaquete implements Producto{
     private String descripcion;
 
     @Column(name = "precioTotal", nullable = false)
-    private BigDecimal precioTotal;
+    private double precioTotal;
 
     @Column(name = "disponible", nullable = false)
     private short disponible = 1;
@@ -50,33 +51,41 @@ public class ProductoPaquete implements Producto{
     @ManyToMany(mappedBy = "listaPaquetes")
     private List<ProductoIndividual> productos;
 
+    @Transient  
 
-    public ProductoPaquete(String nombre, String descripcion, BigDecimal precioTotal,
-            List<ProductoIndividual> productos) {
+    private EstrategiaPrecio estrategiaPrecio;
+
+
+    public ProductoPaquete(String nombre, String descripcion, double precioTotal,
+            List<ProductoIndividual> productos, EstrategiaPrecio estrategiaPrecio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioTotal = precioTotal;
         this.productos = productos;
+        this.estrategiaPrecio = estrategiaPrecio;
+        
     }
 
-
-    @Override
-    public void aplicarDescuento() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aplicarDescuento'");
-    }
 
     @Override
     public short esDisponible() {
         return disponible;
     }
 
-    @Override
+   
     public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEstrategiaPrecio'");
+        this.estrategiaPrecio = estrategiaPrecio;
+    }
+
+
+
+
+    @Override
+    public double obtenerPrecio() {
+        return estrategiaPrecio.calcularPrecio(precioTotal);
     }
 
   
 
 }
+
