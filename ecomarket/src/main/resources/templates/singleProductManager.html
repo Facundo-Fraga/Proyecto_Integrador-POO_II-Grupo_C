@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar o Crear Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+        }
+        input, textarea, button {
+            width: calc(100% - 20px); /* Ajuste para dejar espacio interno uniforme */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus {
+            border-color: #00b818;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 184, 24, 0.4);
+        }
+        button {
+            background-color: #00b818;
+            width: 100%;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 10px 15px;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #009b14;
+        }
+        button[type="button"] {
+            width: auto;
+            margin: 5px 0;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+        .return_button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #bb2020;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td input {
+            width: 95%;
+            padding: 8px;
+            margin: 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        td button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        td button:hover {
+            background-color: #c9302c;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function agregarFila() {
+            const tabla = document.getElementById("tablaCaracteristicas");
+            const fila = tabla.insertRow();
+            
+            const celdaClave = fila.insertCell(0);
+            const celdaValor = fila.insertCell(1);
+            const celdaAcciones = fila.insertCell(2);
+            
+            celdaClave.innerHTML = `<input type="text" name="detalles_clave[]" placeholder="Clave" required>`;
+            celdaValor.innerHTML = `<input type="text" name="detalles_valor[]" placeholder="Valor" required>`;
+            celdaAcciones.innerHTML = `<button type="button" onclick="eliminarFila(this)">Eliminar</button>`;
+        }
+
+        function eliminarFila(boton) {
+            const fila = boton.parentElement.parentElement;
+            const tabla = document.getElementById("tablaCaracteristicas");
+            if (fila.rowIndex > 1) { // Evita eliminar la fila fija de "Descripción"
+                tabla.deleteRow(fila.rowIndex);
+            } else {
+                alert("El campo 'Descripción' no puede ser eliminado.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <form th:action="@{/singleProductManager/crear}" th:object="${productoSingular}" th:method="post">
+        <h1>Alta/Modificación de Producto Singular</h1>
+        
+        <label for="nombre">Nombre del Producto</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto" th:field="*{nombre}" required>
+        <small class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en Nombre</small>
+
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="Ingrese el precio del producto" th:field="*{precio}" required>
+
+        <label>Características</label>
+        <table id="tablaCaracteristicas" style="width: 100%; margin-bottom: 15px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align: left; padding: 5px;">Clave</th>
+                    <th style="text-align: left; padding: 5px;">Valor</th>
+                    <th style="text-align: left; padding: 5px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Fila fija para "Descripción" -->
+                <tr>
+                    <td>
+                        <input type="text" name="detalles_clave[]" value="Descripción" readonly style="background-color: #f4f4f4; cursor: not-allowed;">
+                    </td>
+                    <td>
+                        <input type="text" name="detalles_valor[]" placeholder="Valor" required>
+                    </td>
+                    <td>
+                        <button type="button" disabled style="background-color: #ccc; cursor: not-allowed;">Eliminar</button>
+                    </td>
+                </tr>
+                <!-- Filas dinámicas se agregarán aquí -->
+            </tbody>
+        </table>
+        <button type="button" onclick="agregarFila()">+ Agregar Característica</button>
+        
+        <button type="submit">Guardar</button>
+        <button type="reset" class="return_button" onclick="location.href='/productsManager';">Cancelar</button>
+    </form>
+</body>
+</html>

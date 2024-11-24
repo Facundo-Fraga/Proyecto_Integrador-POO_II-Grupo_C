@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            height: 600px; /* Altura fija para activar el desplazamiento */
+            margin: 0 auto;
+            overflow-y: auto; /* Desplazamiento vertical si hay demasiados productos */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            background-color: #00b818;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #009b14;
+        }
+        .danger {
+            background-color: #d9534f;
+        }
+        .danger:hover {
+            background-color: #c9302c;
+        }
+        .actions {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function confirmarEliminacion(url) {
+            if (confirm("¿Está seguro de que desea eliminar este producto? Esta acción no se puede deshacer.")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Productos</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Es Paquete</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Inicio de Iteración de Productos -->
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.idProducto}">1</td>
+                    <td th:text="${producto.nombre}">Producto A</td>
+                    <td th:text="${producto.precio}">100.00</td>
+                    <td th:text="${producto.class.simpleName == 'ProductoSingular' ? 'No' : 'Sí'}">No</td>
+                    <td class="actions">
+                        <button th:onclick="'location.href=\'/productoSingular/editar/' + ${producto.idProducto} + '\';'">Editar</button>
+                        <button type="button" class="danger" th:onclick="'confirmarEliminacion(\'/productsManager/eliminar/' + ${producto.idProducto} + '\')'">Eliminar</button>
+                    </td>
+                </tr>
+                <!-- Fin de Iteración de Productos -->
+            </tbody>
+        </table>
+        <button onclick="location.href='/productoSingular/crear';">+ Agregar Producto</button>
+    </div>
+</body>
+</html>
