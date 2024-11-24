@@ -3,71 +3,82 @@ package edu.unam.ecomarket.modelo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table (name = "pagoTarjeta")
+
+
 public class PagoConTarjeta implements MetodoPago {
+   
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paypal_seq")
+    @SequenceGenerator(name = "paypal_seq", sequenceName = "paypal_sequence", allocationSize = 1)
+
     private Long idTransaccion;
-    private String numeroTarjeta;
-    private String nombreTitular;
-    private Date fechaExpiracion;
-    private String cvv;
+
+    @Column(nullable = false)
+
     private BigDecimal monto;
+
+    @Column(nullable = false)
+
+    private BigDecimal saldo;
+
+    @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
+    @NotBlank
+
     private String moneda;
+
+    @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
+    @NotBlank
+
+    private String numeroTarjeta;
+
+    @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
+    @NotBlank
+
+    private String nombreTitular;
     
+    @Column(nullable = false)
+    private Date fechaExpiracion;
     
-    public PagoConTarjeta(String numeroTarjeta, String nombreTitular, Date fechaExpiracion, String cvv,
-            BigDecimal monto, String moneda) {
-        this.numeroTarjeta = numeroTarjeta;
-        this.nombreTitular = nombreTitular;
-        this.fechaExpiracion = fechaExpiracion;
-        this.cvv = cvv;
-        this.monto = monto;
-        this.moneda = moneda;
+    @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
+    @NotBlank
+
+    private String cvv;
+    
+
+   
+    @Override
+    public boolean pagar(BigDecimal monto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'pagar'");
+    }
+    @Override
+    public void obtenerDetalles() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerDetalles'");
     }
 
-    public String getNumeroTarjeta() {
-        return numeroTarjeta;
-    }
-    public String getNombreTitular() {
-        return nombreTitular;
-    }
-    public void setNombreTitular(String nombreTitular) {
-        this.nombreTitular = nombreTitular;
-    }
-    public Date getFechaExpiracion() {
-        return fechaExpiracion;
-    }
-    public String getCvv() {
-        return cvv;
-    }
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
-    }
-    public BigDecimal getMonto() {
-        return monto;
-    }
-    public void setMonto(BigDecimal monto) {
-        this.monto = monto;
-    }
-    public String getMoneda() {
-        return moneda;
-    }
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
-    @Override
-    public boolean autenticar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'autenticar'");
-    }
-    @Override
-    public boolean procesarPago() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'procesarPago'");
-    }
-    @Override
-    public boolean cancelarPago() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cancelarPago'");
-    }
-
+    
     
 }
