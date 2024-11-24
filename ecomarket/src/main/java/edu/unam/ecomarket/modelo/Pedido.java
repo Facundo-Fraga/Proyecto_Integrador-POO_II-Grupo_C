@@ -44,8 +44,6 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Usuario cliente;
-
-    private Cliente cliente;
     
     // a un pedido le corresponde un metodo de pago
     @Transient

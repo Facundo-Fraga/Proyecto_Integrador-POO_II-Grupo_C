@@ -97,16 +97,16 @@
                     <td th:text="${producto.idProducto}">1</td>
                     <td th:text="${producto.nombre}">Producto A</td>
                     <td th:text="${producto.precio}">100.00</td>
-                    <td th:text="${producto.class.simpleName == 'ProductoSingular' ? 'No' : 'Sí'}">No</td>
+                    <td th:text="${producto.class.simpleName == 'singleProductManager' ? 'No' : 'Sí'}">No</td>
                     <td class="actions">
-                        <button th:onclick="'location.href=\'/productoSingular/editar/' + ${producto.idProducto} + '\';'">Editar</button>
+                        <button th:onclick="'location.href=\'/singleProductManager/editar/' + ${producto.idProducto} + '\';'">Editar</button>
                         <button type="button" class="danger" th:onclick="'confirmarEliminacion(\'/productsManager/eliminar/' + ${producto.idProducto} + '\')'">Eliminar</button>
                     </td>
                 </tr>
                 <!-- Fin de Iteración de Productos -->
             </tbody>
         </table>
-        <button onclick="location.href='/productoSingular/crear';">+ Agregar Producto</button>
+        <button onclick="location.href='/singleProductManager';">+ Agregar Producto</button>
     </div>
 </body>
 </html>
