@@ -1,19 +1,14 @@
 package edu.unam.ecomarket.modelo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -91,7 +86,7 @@ public class ProductoIndividual implements Producto {
 
     @Override
     public double obtenerPrecio() {
-        return estrategiaPrecio.calcularPrecio(precioBase);
+        return precioFinal;
     }
 
 }
