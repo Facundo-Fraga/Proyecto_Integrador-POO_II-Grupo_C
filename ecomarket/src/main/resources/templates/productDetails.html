@@ -3,69 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Producto</title>
+    <title>Detalles del Producto</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            height: auto;
+            text-align: center;
         }
-        p {
-            margin-bottom: 15px;
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
         }
-        strong {
+        .product-image {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        .product-info {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .product-price {
+            font-size: 24px;
+            color: #28a745;
             font-weight: bold;
+            margin-bottom: 20px;
         }
-        .return_button {
-            width: 200px;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #000000;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
+        .details-list {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .details-list li {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .add-to-cart-btn, .back-btn {
+            padding: 12px 20px;
             font-size: 16px;
-        }
-        .return_button:hover {
-            background-color: #0056b3;
-        }
-        .cart-button {
-            width: 200px;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #00a028;
             border: none;
-            color: white;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
-        .cart-button:hover {
-            background-color: #00c030;
+        .add-to-cart-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+        }
+        .back-btn {
+            background-color: #ffc107;
+            color: white;
+        }
+        .back-btn:hover {
+            background-color: #e0a800;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Detalle del producto</h1>
-        <p><strong>Nombre:</strong></p>
-        <p><strong>Descripción:</strong></p>
-        <p><strong>Categoría:</strong></p>
-        <p><strong>Unidad:</strong></p>
-        <p><strong>Cantidad:</strong></p>
-        <p><strong>Precio:</strong> $</p>
-        <p><strong>Descuento:</strong> %</p>
-        <button type="button" class="cart-button">Agregar al Carrito</button>
-        <button type="button" class="return_button" onclick="window.location.href='/clientMenu'">Volver al Menú</button>
+        <h1 th:text="${producto.nombre}">Nombre del Producto</h1>
+        <div class="product-info" th:text="${producto.descripcion}">Descripción del Producto</div>
+        <div class="product-price" th:text="'Precio: $' + ${producto.precio}">Precio: $100.00</div>
+        <ul class="details-list">
+            <li th:each="entry : ${producto.detalles}" th:text="${entry.key} + ': ' + ${entry.value}">Detalle del producto</li>
+        </ul>
+        <div class="action-buttons">
+            <!-- <button class="add-to-cart-btn" th:onclick="">Añadir al carrito</button> -->
+            <button class="back-btn" onclick="window.location.href='/clientMenu';">Volver al Menú</button>
+        </div>
     </div>
 </body>
 </html>

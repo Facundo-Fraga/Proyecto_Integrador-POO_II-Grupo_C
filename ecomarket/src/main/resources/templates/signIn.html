@@ -6,13 +6,13 @@
     <title>Registrarse</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
         .login-container {
             background-color: #fff;
@@ -26,6 +26,11 @@
             margin-bottom: 20px;
             font-size: 24px;
         }
+        .input-label {
+            text-align: left;
+            font-size: 12px;
+            display: block;
+        }
         .input-field {
             width: 90%;
             padding: 10px;
@@ -36,7 +41,7 @@
         .button {
             width: 97%;
             padding: 10px;
-            background-color: #000000;
+            background-color: #007bff;
             border: none;
             color: white;
             border-radius: 4px;
@@ -57,21 +62,73 @@
         .links a:hover {
             text-decoration: underline;
         }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Registrarse</h2>
-        <form>
-            <input type="text" class="input-field" placeholder="Usuario" required>
-            <input type="email" class="input-field" placeholder="Email" required>
-            <input type="password" class="input-field" placeholder="Contraseña" required>
-            <input type="password" class="input-field" placeholder="Confirmar contraseña" required>
-            <button type="button" class="button" onclick="window.location.href='/clientMenu'">Registrarse</button>
+
+        <form id="registerForm" th:action="@{/signIn}" th:object="${cliente}" th:method="post">
+            
+            <label for="nombre" class="input-label">Nombre de Usuario</label>
+            <input type="text" class="input-field" id="nombre" placeholder="Nombre de usuario" value="" th:field="*{nombre}" required/>
+            <small class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en Nombre</small>
+
+            <label for="email" class="input-label">Email</label>
+            <input type="email" class="input-field" id="email" placeholder="correo@email.com" value="" th:field="*{email}" required/>
+            <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error en Email</small>
+
+            <label for="contrasenia" class="input-label">Contraseña</label>
+            <input type="password" class="input-field" id="contrasenia" placeholder="Contraseña" th:field="*{contrasenia}" oninput="validatePasswords()" required/>
+            <small class="error" th:if="${#fields.hasErrors('contrasenia')}" th:errors="*{contrasenia}">Error en Contraseña</small>
+
+            <label for="conf-contrasenia" class="input-label">Confirmar Contraseña</label>
+            <input type="password" class="input-field" id="conf-contrasenia" placeholder="Confirmar contraseña" oninput="validatePasswords()" required/>
+            
+            <div id="passwordError" class="error" style="display:none;"></div>
+
+            <div th:if="${error}" style="color: red; margin-top: 10px;">
+                <p th:text="${error}"></p>
+            </div>
+
+            <button type="submit" class="button" id="registrarse" disabled>Registrarse</button>
         </form>
+
         <div class="links">
             <a href="/login">Ya tengo un usuario</a>
         </div>
     </div>
+
+    <script>
+        function validatePasswords() {
+            var password = document.getElementById("contrasenia").value;
+            var confirmPassword = document.getElementById("conf-contrasenia").value;
+            var errorMessage = document.getElementById("passwordError");
+            var submitButton = document.getElementById("registrarse");
+    
+            // Mensajes de error
+            if (password.length < 8) {
+                errorMessage.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                errorMessage.style.display = "block";
+                submitButton.disabled = true;  // Deshabilita el botón de envío
+                return;
+            }
+    
+            if (confirmPassword !== password) {
+                errorMessage.textContent = "Las contraseñas no coinciden.";
+                errorMessage.style.display = "block";
+                submitButton.disabled = true;  // Deshabilita el botón de envío
+            } else {
+                errorMessage.style.display = "none";
+                submitButton.disabled = false;  // Habilita el botón de envío
+            }
+        }
+    </script>
 </body>
 </html>

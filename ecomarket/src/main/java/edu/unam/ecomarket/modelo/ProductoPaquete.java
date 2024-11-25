@@ -1,81 +1,49 @@
 package edu.unam.ecomarket.modelo;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class ProductoPaquete implements Producto{
-    private Long idPaquete;
-    private String nombre;
-    private String descripcion;
-    private BigDecimal precioTotal;
-    private ArrayList<ProductoIndividual> productos;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public ProductoPaquete(String nombre, String descripcion, BigDecimal precioTotal,
-            ArrayList<ProductoIndividual> productos) {
+@Entity
+@NoArgsConstructor
+@Getter @Setter
+public class ProductoPaquete extends Producto{
+    
+    @ManyToMany
+    @JoinTable(
+        name = "paquete_producto",
+        joinColumns = @JoinColumn(name = "paquete_id"),
+        inverseJoinColumns = @JoinColumn(name = "producto_id"))
+    private List<Producto> productos = new ArrayList<>();
+
+    public ProductoPaquete(String nombre, Map<String, String> detalles) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precioTotal = precioTotal;
-        this.productos = productos;
+        this.detalles = detalles;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public BigDecimal getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(BigDecimal precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
-    public ArrayList<ProductoIndividual> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(ArrayList<ProductoIndividual> productos) {
-        this.productos = productos;
-    }
-
-    public boolean esPaquete() {
-        return true;
+    public void agregarProducto(Producto producto) {
+        productos.add(producto);
     }
 
     @Override
-    public void aplicarDescuento() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aplicarDescuento'");
+    public double getPrecio() {
+        double sumaPrecios = productos.stream().mapToDouble(Producto::getPrecio).sum();
+        return sumaPrecios * 0.9;
     }
 
     @Override
-    public void esDisponible() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esDisponible'");
+    public void aplicarDescuento(double porcentaje) {
+        for (Producto producto : productos) {
+            producto.aplicarDescuento(porcentaje);
+        }
     }
-
-    @Override
-    public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEstrategiaPrecio'");
-    }
-
-    @Override
-    public double calcularPrecioFinal(double precioBase) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularPrecioFinal'");
-    }
-
 }
+

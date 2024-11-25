@@ -6,13 +6,13 @@
     <title>Iniciar Sesión</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
         .login-container {
             background-color: #fff;
@@ -26,6 +26,11 @@
             margin-bottom: 20px;
             font-size: 24px;
         }
+        .input-label {
+            text-align: left;
+            font-size: 12px;
+            display: block;
+        }
         .input-field {
             width: 90%;
             padding: 10px;
@@ -33,10 +38,16 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
         .button {
             width: 97%;
             padding: 10px;
-            background-color: #000000;
+            background-color: #007bff;
             border: none;
             color: white;
             border-radius: 4px;
@@ -62,14 +73,25 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form>
-            <input type="text" class="input-field" placeholder="Usuario" required>
-            <input type="password" class="input-field" placeholder="Contraseña" required>
-            <button type="submit" class="button" onclick="window.location.href='/mainMenu'">Iniciar Sesión</button>
+    
+        <form id="login-form" action="/login" method="post">
+            <label for="nombre" class="input-label">Nombre de Usuario</label>
+            <input type="text" class="input-field" id="nombre" name="nombre" placeholder="Usuario" required>
+    
+            <label for="contrasenia" class="input-label">Contraseña</label>
+            <input type="password" class="input-field" id="contrasenia" name="contrasenia" placeholder="Contraseña" required>
+    
+            <button type="submit" class="button">Iniciar Sesión</button>
         </form>
+    
+        <div th:if="${error}" style="color: red; margin-top: 10px;">
+            <p th:text="${error}"></p>
+        </div>
+    
         <div class="links">
-            <a href="#">He olvidado mi contraseña</a> | <a href="/signIn">Registrarse</a>
+            <a href="/signIn">Registrarse</a>
         </div>
     </div>
+    
 </body>
 </html>
