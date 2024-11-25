@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.unam.ecomarket.modelo.Producto;
 import edu.unam.ecomarket.modelo.ProductoSingular;
 import edu.unam.ecomarket.services.ProductoService;
 import jakarta.validation.Valid;
@@ -17,31 +19,55 @@ import jakarta.validation.Valid;
 @Controller
 public class SingleProductController {
 
-    ProductoService service;
+    private final ProductoService service;
 
     @Autowired
-    SingleProductController(ProductoService service) {
+    public SingleProductController(ProductoService service) {
         this.service = service;
     }
 
-    @GetMapping({"/singleProductManager"})
+    @GetMapping("/singleProductCreator")
     public String index(Model modelo) {
         modelo.addAttribute("productoSingular", new ProductoSingular());
-        return "singleProductManager";
+        return "singleProductCreator";
     }
 
-    @PostMapping("/singleProductManager/crear")
-    public String agregarProducto(@Valid ProductoSingular productoSingular, BindingResult resultado, Model modelo, 
-                                    @RequestParam("detalles_clave[]") List<String> claves, 
-                                    @RequestParam("detalles_valor[]") List<String> valores) {
-        
-        if(resultado.hasErrors()) {
-            return "singleProductManager";
+    @PostMapping("/singleProductCreator/crear")
+    public String agregarProducto(@Valid ProductoSingular productoSingular, BindingResult resultado, Model modelo,
+                                  @RequestParam(value = "detalles_clave[]", required = false) List<String> claves,
+                                  @RequestParam(value = "detalles_valor[]", required = false) List<String> valores) {
+        if (resultado.hasErrors()) {
+            return "singleProductCreator";
         }
-        for (int i = 0; i < claves.size(); i++) {
-            productoSingular.getDetalles().put(claves.get(i), valores.get(i));
+        service.crearProductoConDetalles(productoSingular, claves, valores);
+        return "redirect:/productsManager";
+    }
+
+    @GetMapping("/singleProductEditor/{id}")
+    public String mostrarFormularioEdicion(@PathVariable String id, Model model) {
+        try {
+            Long idProducto = Long.parseLong(id);
+            Producto producto = service.buscarProductoId(idProducto);
+            if (producto == null) {
+                throw new IllegalArgumentException("Producto no encontrado");
+            }
+            model.addAttribute("productoSingular", producto);
+            return "singleProductEditor";
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("El ID proporcionado no es válido: " + id, e);
         }
-        service.cargarProducto(productoSingular);
+    }
+
+    @PostMapping("/singleProductEditor/{id}/editar")
+    public String editarProducto(@PathVariable Long id, @Valid ProductoSingular productoSingular,
+                                 BindingResult resultado,
+                                 @RequestParam(value = "detalles_clave[]", required = false) List<String> claves,
+                                 @RequestParam(value = "detalles_valor[]", required = false) List<String> valores) {
+        if (resultado.hasErrors()) {
+            return "singleProductEditor";
+        }
+        service.actualizarProductoConDetalles(id, productoSingular, claves, valores);
         return "redirect:/productsManager";
     }
 }
+

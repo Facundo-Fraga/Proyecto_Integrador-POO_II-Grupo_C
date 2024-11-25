@@ -24,7 +24,7 @@ public class LoginController {
         this.servicio = servicio;
     }
 
-    @GetMapping({"/login"})
+    @GetMapping({"/", "/login"})
     public String index() {
         return "login";
     }
@@ -41,6 +41,11 @@ public class LoginController {
         }
         
         modelo.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String cerrarSesion() {
         return "login";
     }
 }

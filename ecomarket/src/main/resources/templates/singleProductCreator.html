@@ -6,17 +6,28 @@
     <title>Editar o Crear Producto</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         form {
             background-color: #ffffff;
             padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 750px;
-            margin: 0 auto;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
         }
         label {
             display: block;
@@ -26,11 +37,11 @@
             color: #333;
         }
         input, textarea, button {
-            width: calc(100% - 20px); /* Ajuste para dejar espacio interno uniforme */
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 14px;
         }
         input:focus, textarea:focus {
@@ -39,15 +50,15 @@
             box-shadow: 0 0 5px rgba(0, 184, 24, 0.4);
         }
         button {
-            background-color: #00b818;
             width: 100%;
+            background-color: #00b818;
             color: white;
             border: none;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #009b14;
@@ -60,12 +71,12 @@
         }
         .return_button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 10px;
             background-color: #000000;
             border: none;
             color: white;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
         }
@@ -79,14 +90,14 @@
         }
         th, td {
             text-align: left;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             font-size: 14px;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #007bff;
+            color: white;
             font-weight: bold;
-            color: #333;
         }
         tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -96,18 +107,18 @@
         }
         td input {
             width: 95%;
-            padding: 8px;
+            padding: 10px;
             margin: 0;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 14px;
         }
         td button {
             background-color: #d9534f;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
         }
         td button:hover {
@@ -137,48 +148,40 @@
         function eliminarFila(boton) {
             const fila = boton.parentElement.parentElement;
             const tabla = document.getElementById("tablaCaracteristicas");
-            if (fila.rowIndex > 1) { // Evita eliminar la fila fija de "Descripción"
-                tabla.deleteRow(fila.rowIndex);
-            } else {
-                alert("El campo 'Descripción' no puede ser eliminado.");
-            }
+            tabla.deleteRow(fila.rowIndex);
         }
     </script>
 </head>
 <body>
-    <form th:action="@{/singleProductManager/crear}" th:object="${productoSingular}" th:method="post">
+    <form th:action="@{/singleProductCreator/crear}" th:object="${productoSingular}" th:method="post">
         <h1>Alta/Modificación de Producto Singular</h1>
         
         <label for="nombre">Nombre del Producto</label>
         <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto" th:field="*{nombre}" required>
         <small class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en Nombre</small>
-
+    
         <label for="precio">Precio</label>
         <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="Ingrese el precio del producto" th:field="*{precio}" required>
-
+    
+        <label for="descripcion">Descripción</label>
+        <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del producto" th:field="*{descripcion}" required>
+        <small class="error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error en Descripción</small>
+    
         <label>Características</label>
-        <table id="tablaCaracteristicas" style="width: 100%; margin-bottom: 15px; border-collapse: collapse;">
+        <table id="tablaCaracteristicas">
             <thead>
                 <tr>
-                    <th style="text-align: left; padding: 5px;">Clave</th>
-                    <th style="text-align: left; padding: 5px;">Valor</th>
-                    <th style="text-align: left; padding: 5px;">Acciones</th>
+                    <th>Clave</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Fila fija para "Descripción" -->
-                <tr>
-                    <td>
-                        <input type="text" name="detalles_clave[]" value="Descripción" readonly style="background-color: #f4f4f4; cursor: not-allowed;">
-                    </td>
-                    <td>
-                        <input type="text" name="detalles_valor[]" placeholder="Valor" required>
-                    </td>
-                    <td>
-                        <button type="button" disabled style="background-color: #ccc; cursor: not-allowed;">Eliminar</button>
-                    </td>
+                <tr th:each="entry : ${productoSingular.detalles}">
+                    <td><input type="text" th:value="${entry.key}" name="detalles_clave[]" placeholder="Clave" required /></td>
+                    <td><input type="text" th:value="${entry.value}" name="detalles_valor[]" placeholder="Valor" required /></td>
+                    <td><button type="button" onclick="eliminarFila(this)">Eliminar</button></td>
                 </tr>
-                <!-- Filas dinámicas se agregarán aquí -->
             </tbody>
         </table>
         <button type="button" onclick="agregarFila()">+ Agregar Característica</button>

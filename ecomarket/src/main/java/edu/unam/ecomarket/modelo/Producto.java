@@ -40,6 +40,10 @@ public abstract class Producto {
     @NotBlank
     protected String nombre;
 
+    @Column(nullable = false)
+    @NotBlank
+    protected String descripcion;
+
     @ElementCollection
     @CollectionTable(
         name = "producto_detalles",

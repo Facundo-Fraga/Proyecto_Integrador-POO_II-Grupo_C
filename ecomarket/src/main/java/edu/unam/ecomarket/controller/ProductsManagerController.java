@@ -18,7 +18,7 @@ public class ProductsManagerController {
         this.service = service;
     }
 
-    @GetMapping({"/", "/productsManager"})
+    @GetMapping({"/productsManager"})
     public String index(Model modelo) {
         modelo.addAttribute("productos", service.buscarProductos());
         return "productsManager";
@@ -28,5 +28,11 @@ public class ProductsManagerController {
     public String eliminarProducto(@PathVariable("id") Long id, Model modelo) {
         service.quitarProducto(id);
         return "redirect:/productsManager";
+    }
+
+    @GetMapping("/clientMenu")
+    public String cargarMenuCliente(Model modelo) {
+        modelo.addAttribute("productos", service.buscarProductos());
+        return "clientMenu";
     }
 }
