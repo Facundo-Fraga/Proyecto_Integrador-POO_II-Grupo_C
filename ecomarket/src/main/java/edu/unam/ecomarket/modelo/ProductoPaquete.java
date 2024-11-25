@@ -12,7 +12,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +42,7 @@ public class ProductoPaquete implements Producto{
     private String descripcion;
 
     @Column(name = "precioTotal", nullable = false)
-    private BigDecimal precioTotal;
+    private double  precioTotal;
     
     @ManyToMany
     @JoinTable(name = "producto_paquete", joinColumns = @JoinColumn(name = "idPaquete"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
@@ -53,31 +52,23 @@ public class ProductoPaquete implements Producto{
 
 
     public ProductoPaquete(String nombre, String descripcion, double precioTotal,
-            List<ProductoIndividual> productos, EstrategiaPrecio estrategiaPrecio) {
+            List<ProductoIndividual> productos) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.productos = productos;
-        this.estrategiaPrecio = estrategiaPrecio;
         
     }
 
 
-    @Override
-    public short esDisponible() {
-        return disponible;
-    }
-
    
-    public void setEstrategiaPrecio(EstrategiaPrecio estrategiaPrecio) {
-        this.estrategiaPrecio = estrategiaPrecio;
-    }
+
 
 
 
 
     @Override
     public double obtenerPrecio() {
-        return estrategiaPrecio.calcularPrecio(precioTotal);
+        return 0;
     }
 
   

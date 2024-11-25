@@ -85,3 +85,22 @@ El proyecto sigue una arquitectura en capas bien definida para facilitar el desa
 - **Pulikoski Mauricio**
   - Testing y diseño de templates de UI.
   - Asesorar la creación de controladores y servicios.
+
+  ## Mecado Pago
+    **Vendedor** 
+    - Usuario: TESTUSER357148731
+    - Contraseña: RVMNfW3isI
+    
+    **Comprador** 
+    - Usuario: TESTUSER763275500
+    - Contraseña: W7LGeIsuiS
+
+    **Tarjetas de pruebas**
+    - Tarjeta:	 Mastercard
+    - Número:	5031 7557 3453 0604
+    - Código de seguridad:	123
+    - Fecha de caducidad: 11/25
+    - Nombre: APRO
+    - DNI: 12345678
+
+    **Access token:** APP_USR-2065505450968304-112416-8243d6043a8a5c0456925ea2dcf13478-2117047882
