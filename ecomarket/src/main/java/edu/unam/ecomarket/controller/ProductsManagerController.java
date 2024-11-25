@@ -35,4 +35,10 @@ public class ProductsManagerController {
         modelo.addAttribute("productos", service.buscarProductos());
         return "clientMenu";
     }
+
+    @GetMapping("/productDetails/{id}")
+    public String cargarDetalles(@PathVariable("id") Long id, Model modelo) {
+        modelo.addAttribute("producto", service.buscarProductoId(id));
+        return "productDetails";
+    }
 }
