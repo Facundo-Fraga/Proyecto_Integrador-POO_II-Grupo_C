@@ -43,4 +43,9 @@ public class LoginController {
         modelo.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
         return "login";
     }
+
+    @GetMapping("/logout")
+    public String cerrarSesion() {
+        return "login";
+    }
 }
