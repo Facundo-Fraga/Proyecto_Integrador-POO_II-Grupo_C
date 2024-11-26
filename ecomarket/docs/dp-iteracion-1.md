@@ -1,8 +1,13 @@
-# Trabajo en equipo
-- Erreguerena Agustín Iñaki: 
-- Fraga Facundo Román:
-- Piloni Fabrizio Julian:
-- Pulikoski Mauricio Ezequiel:
+# Trabajo en Equipo
+
+**Erreguerena, Agustín Iñaki:** Responsable del diseño de pantallas, implementación de plantillas, integración con la API de Mercado Pago y apoyo en el modelado del diagrama de clases.
+
+**Fraga, Facundo Román:** Encargado del diseño de pantallas y soporte en la implementación de las entidades JPA.
+
+**Piloni, Fabrizio Julián:** Responsable de la creación del diagrama de clases y de la implementación de las entidades JPA.
+
+**Pulikoski, Mauricio Ezequiel:** Responsable de las funcionalidades de alta, baja y modificación de productos individuales, diseño e implementación de plantillas, y desarrollo del sistema de registro e inicio de sesión de usuarios.
+
 # Diseño OO
 ![ ](/ecomarket/docs/EcoMarketDiagramaDeClases.png)
 # Wireframe y caso de uso

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Paquetes</title>
+    <title>Gestión de Productos</title>
     <style>
-        body {
+               body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             padding: 20px;
@@ -63,10 +63,6 @@
             background-color: #db0000;
             border: 1px solid #db0000;
         }
-        .details-btn {
-            background-color: #9911c2;
-            border: 1px solid #9911c2;
-        }
         .link {
             margin-top: 20px;
             display: block;
@@ -76,7 +72,7 @@
         .link:hover {
             text-decoration: underline;
         }
-        .basic_button {
+        .return_button {
             width: 200px;
             padding: 10px;
             margin: 10px 0;
@@ -87,43 +83,45 @@
             cursor: pointer;
             font-size: 16px;
         }
-        .basic_button:hover {
+        .return_button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Gestión de Paquetes</h1>
-        <button type="button" class="add-product-btn" onclick="window.location.href='/addPackage'">Agregar paquete</button>
+        <h1>Gestión de Productos</h1>
+        <button type="button" class="add-product-btn" onclick="window.location.href='/addProduct'">Agregar producto</button>
         <table class="product-table">
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Productos</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
                     <th>Descuento</th>
                     <th>Fecha inicio desc.</th>
                     <th>Fecha fin desc.</th>
-                    <th>Total</th>
                     <th>Cantidad</th>
-                    <th colspan="3">Acciones</th>
+                    <th colspan="2">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="paquete : ${paquetes}">
-                    <td th:text="${paquete.nombre}"></td>
-                    <td th:text="${paquete.productos}"></td>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td></td>
+                    <td th:text="${producto.categoria}"></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td th:text="${paquete.total}"></td>
-                    <td th:text="${paquete.cantidad}"></td>
-                    <td><a th:href="@{/managePackages/edit/{id}(id=${paquete.idPaquete})}">Editar</a></td>
-                    <td><a th:href="@{/managePackages/delete/{id}(id=${paquete.idPaquete})}">Eliminar</a></td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td><a th:href="@{/manageProducts/edit/{id}(id=${producto.idProducto})}">Editar</a></td>
+                    <td><a th:href="@{/manageProducts/delete/{id}(id=${producto.idProducto})}">Eliminar</a></td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="basic_button" onclick="window.location.href='/mainMenu'">Volver al Menú</button>
+        <button type="button" class="return_button" onclick="window.location.href='/mainMenu'">Volver al Menú</button>
     </div>
 </body>
 </html>

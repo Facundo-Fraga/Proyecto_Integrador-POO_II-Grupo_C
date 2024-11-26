@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,130 +22,68 @@
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
-        }
-        .payment-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .payment-option img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-        .card-details, .billing-details {
-            display: none;
-            margin: 15px;
-            border-top: 1px solid #ddd;
-            padding: 10px;
-        }
-        .form-group {
-            margin-bottom: 10px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            text-align: center;
         }
         .payment-submit {
-            background-color: #000000;
-            color: #fff;
-            border: none;
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #ddd;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .payment-submit img {
+            width: auto;
+        }
+        .payment-submit.paypal img {
+            height: 40px; /* Imagen más pequeña para PayPal */
+        }
+        .payment-submit.mercadopago img {
+            height: 40px; /* Imagen más grande para MercadoPago */
+        }
+        .payment-submit:hover {
+            background-color: #f9f9f9;
+            border-color: #bbb;
+        }
+        .back-button {
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
             margin-top: 20px;
             width: 100%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .payment-submit:hover {
-            background-color: #1f1f1f;
+        .back-button:hover {
+            background-color: #f9f9f9;
+            border-color: #bbb;
         }
     </style>
 </head>
 <body>
     <div class="payment-container">
-        <div class="payment-header">Selecciona un método de pago:</div>
+        <div class="payment-header">Selecciona una opción de pago:</div>
+        <!-- Botón para comprar con MercadoPago -->
+        <form action="/api/v1/mercadopago/preference" method="post">
+            <button type="submit" class="payment-submit mercadopago">
+                <img src="https://contactopuro.com/files/mercadopago-81090.png" alt="MercadoPago">
+                Comprar con MercadoPago
+            </button>
+        </form>
 
-        <!-- Opción PayPal -->
-        <div class="payment-option">
-            <input type="radio" name="payment-method" id="paypal" value="paypal">
-            <img src="https://cdn.pixabay.com/photo/2018/05/08/21/29/paypal-3384015_640.png" alt="PayPal">
-            <label for="paypal">PayPal</label>
-        </div>
-
-        <!-- Opción Tarjeta -->
-        <div class="payment-option">
-            <input type="radio" name="payment-method" id="card" value="card">
-            <img src="https://thumbs.dreamstime.com/b/logotipos-de-la-visa-y-mastercard-102631953.jpg" alt="Tarjeta">
-            <label for="card">Tarjeta de Crédito/Débito</label>
-        </div>
-
-        <!-- Opción MercadoPago -->
-        <div class="payment-option">
-            <input type="radio" name="payment-method" id="mercadopago" value="mercadopago">
-            <img src="https://contactopuro.com/files/mercadopago-81090.png" alt="MercadoPago">
-            <label for="mercadopago">MercadoPago</label>
-        </div>
-
-        <!-- Campos adicionales para Tarjeta de Crédito -->
-        <div class="card-details" id="card-details">
-            <div class="form-group">
-                <label for="card-number">Número de Tarjeta</label>
-                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="16">
-            </div>
-            <div class="form-group">
-                <label for="cardholder-name">Titular de la Tarjeta</label>
-                <input type="text" id="cardholder-name" placeholder="Nombre del Titular">
-            </div>
-            <div class="form-group">
-                <label for="ccv">CCV</label>
-                <input type="password" id="ccv" placeholder="123" maxlength="3">
-            </div>
-            <div class="form-group">
-                <label for="expiry-date">Vencimiento</label>
-                <input type="text" id="expiry-date" placeholder="MM/AA" maxlength="5">
-            </div>
-
-            <!-- Campos de Dirección de Facturación -->
-            <div class="billing-details">
-                <div class="form-group">
-                    <label for="billing-address">Dirección de Facturación</label>
-                    <input type="text" id="billing-address" placeholder="Calle, Número, Ciudad">
-                </div>
-                <div class="form-group">
-                    <label for="billing-city">Ciudad</label>
-                    <input type="text" id="billing-city" placeholder="Ciudad">
-                </div>
-                <div class="form-group">
-                    <label for="billing-zip">Código Postal</label>
-                    <input type="text" id="billing-zip" placeholder="Código Postal">
-                </div>
-            </div>
-        </div>
-
-        <button type="button" class="payment-submit" onclick="window.location.href='/succesfulPayment'">Proceder con el Pago 💵</button>
-        <button type="button" class="payment-submit" onclick="window.location.href='/shoppingCart'">Regresar</button>
+        <!-- Botón para regresar -->
+        <button onclick="window.location.href='/volver'" class="back-button">Regresar</button>
     </div>
-
-    <script>
-        document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
-            input.addEventListener('change', function() {
-                const cardDetails = document.getElementById('card-details');
-                if (this.value === 'card') {
-                    cardDetails.style.display = 'block';
-                } else {
-                    cardDetails.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

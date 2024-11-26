@@ -1,6 +1,8 @@
 package edu.unam.ecomarket.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -12,6 +14,12 @@ public class ShoppingCartController {
 
     @RequestMapping("/shoppingCart")
     public String verCarrito() {
+        return "shoppingCart";
+    }
+
+    @GetMapping("/shoppingCart")
+    public String cargarMetodosEnvio(Model modelo){
+        
         return "shoppingCart";
     }
 }

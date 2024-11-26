@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 public abstract class MetodoEnvio {
     
-    protected TipoEnvio tipo;
+    //protected TipoEnvio tipo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "envio_seq")
@@ -31,16 +31,17 @@ public abstract class MetodoEnvio {
     protected Long nroSeguimiento;
 
     @Column(nullable = false)
-
-    protected String destino;
-
-    @Column(nullable = false)
     
     protected double tarifaInterna;
 
+    @Column(nullable = false)
+
+    protected TipoEnvio tipo;
+
     public abstract void seleccionarTipoEnvio();
 
-    public void establecerDestino(String direccion) {
+    
+    /*  public void establecerDestino(String direccion) {
         this.destino = direccion;
     }
 
@@ -52,5 +53,5 @@ public abstract class MetodoEnvio {
         calcularCostoBase();
         return tarifaInterna;
     }
-
+    */
 }
