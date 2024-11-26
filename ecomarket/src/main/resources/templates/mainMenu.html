@@ -3,67 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Menú Administrador</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
         .menu-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            width: 320px;
             text-align: center;
         }
         .menu-container h2 {
+            font-size: 28px;
             margin-bottom: 20px;
-            font-size: 24px;
-        }
-        .input-field {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            color: #333;
         }
         .button {
-            width: 97%;
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             margin: 10px 0;
-            background-color: #000000;
+            background-color: #007bff;
             border: none;
+            border-radius: 6px;
             color: white;
-            border-radius: 4px;
-            cursor: pointer;
             font-size: 16px;
-        }
-        .close_button {
-            width: 97%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #db0000;
-            border: none;
-            color: white;
-            border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         .button:hover {
             background-color: #0056b3;
         }
-        .close_button:hover {
+        .close-button {
+            background-color: #db0000;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .close-button:hover {
             background-color: #af0000;
         }
         .links {
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: 14px;
+            color: #555;
         }
         .links a {
             color: #007bff;
@@ -76,13 +72,14 @@
 </head>
 <body>
     <div class="menu-container">
-        <h2>Menú Principal</h2>
-        <form>
-            <button type="button" class="button" onclick="window.location.href='/manageProducts'">Gestionar Productos</button>
-            <button type="button" class="button" onclick="window.location.href='/managePackages'">Gestionar Paquetes</button>
-            <button type="submit" class="button">???</button>
-            <button type="button" class="close_button" onclick="window.location.href='/login'">Cerrar Sesión</button>
-        </form>
+        <h2>Menú Administrador</h2>
+        <button class="button" onclick="window.location.href='/productsManager'">Gestionar Productos</button>
+        <button class="button" onclick="window.location.href='/managePackages'">Gestionar Paquetes</button>
+        <button class="button" onclick="window.location.href='/manageUsers'">???</button>
+        <button class="close-button" onclick="window.location.href='/logout'">Cerrar Sesión</button>
+        <!-- <div class="links">
+            <a href="/dashboard">Volver al Panel Principal</a>
+        </div> -->
     </div>
 </body>
 </html>
