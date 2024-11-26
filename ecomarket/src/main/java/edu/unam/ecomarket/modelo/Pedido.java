@@ -42,8 +42,6 @@ public class Pedido {
 
 
     
-
-    private Cliente cliente;
     // a un pedido le corresponde un metodo de pago
 
     // a un pedido le corresponde un metodo de Envio
