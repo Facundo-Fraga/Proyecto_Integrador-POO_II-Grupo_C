@@ -22,9 +22,9 @@ public class ProductoPaquete extends Producto{
         name = "paquete_producto",
         joinColumns = @JoinColumn(name = "paquete_id"),
         inverseJoinColumns = @JoinColumn(name = "producto_id"))
-    private List<Producto> productos = new ArrayList<>();
+        private List<ProductoSingular> productos = new ArrayList<>();
 
-    public void agregarProducto(Producto producto) {
+    public void agregarProducto(ProductoSingular producto) {
         if (!productos.contains(producto)) { 
             productos.add(producto);
             recalcularPrecioBase();

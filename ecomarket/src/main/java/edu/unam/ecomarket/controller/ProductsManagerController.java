@@ -32,9 +32,10 @@ public class ProductsManagerController {
         Producto producto = service.buscarProductoId(id);
         if(producto instanceof ProductoSingular) {
             service.eliminarProductoSingular((ProductoSingular)producto);
-            return "redirect:/productsManager";
         }
-        service.quitarProducto(id);
+        else if (producto instanceof ProductoPaquete) {
+            service.eliminarPaquete((ProductoPaquete)producto);
+        }
         return "redirect:/productsManager";
     }
 
