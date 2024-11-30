@@ -119,12 +119,6 @@
         .add-to-cart-btn:hover {
             background-color: #218838;
         }
-        .more-details {
-            font-style: italic;
-            color: #999;
-            font-size: 12px;
-            margin-top: -5px;
-        }
     </style>
 </head>
 <body>
@@ -138,20 +132,7 @@
             <div th:each="producto : ${productos}" class="item-card">
                 <div class="item-title" th:text="${producto.nombre}">Nombre del producto</div>
                 <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto</div>
-                <div class="item-info">
-                    <p th:if="${!producto.detalles.isEmpty()}">Detalles:</p>
-                    <ul th:if="${!producto.detalles.isEmpty()}">
-                        <li th:each="entry, iter : ${producto.detalles}" 
-                            th:if="${iter.index < 3}" 
-                            th:text="${entry.key} + ': ' + ${entry.value}">
-                            Detalle
-                        </li>
-                    </ul>
-                    <p class="more-details" th:if="${producto.detalles.size() > 3}">
-                        * Hay más detalles disponibles
-                    </p>
-                </div>
-                <div class="item-price" th:text="'Precio: $' + ${producto.precio}">Precio</div>
+                <div class="item-price" th:text="'Precio: $' + ${producto.precioBase}">Precio</div>
                 <div class="actions">
                     <button type="button" class="details-btn" th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">Ver detalles</button>
                     <button type="button" class="add-to-cart-btn">Añadir al carrito</button>

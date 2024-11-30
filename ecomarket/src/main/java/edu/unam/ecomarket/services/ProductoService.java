@@ -1,5 +1,6 @@
 package edu.unam.ecomarket.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,8 @@ public class ProductoService {
         }
     }
 
-    public void actualizarProductoSingular(Long id, ProductoSingular productoSingular, List<String> claves, List<String> valores) {
+    public void actualizarProductoSingular(Long id, ProductoSingular productoSingular, List<String> claves,
+            List<String> valores) {
         ProductoSingular existente = buscarProductoSingularPorId(id);
         if (existente == null) {
             throw new IllegalArgumentException("Producto no encontrado");
@@ -73,14 +75,34 @@ public class ProductoService {
 
     public void eliminarProductoSingular(ProductoSingular producto) {
         System.out.println(producto.getPaquetesContenedores());
-        if(producto.getPaquetesContenedores().isEmpty()){
+
+        if (producto.getPaquetesContenedores().isEmpty()) {
             quitarProducto(producto.getIdProducto());
+            return;
         }
 
-        for(ProductoPaquete paquete : producto.getPaquetesContenedores()) {
+        List<ProductoPaquete> paquetesContenedores = new ArrayList<>(producto.getPaquetesContenedores());
+        for (ProductoPaquete paquete : paquetesContenedores) {
             producto.eliminarPaqueteContenedor(paquete);
             cargarProducto(paquete);
         }
+
         quitarProducto(producto.getIdProducto());
     }
+
+    public void eliminarPaquete(ProductoPaquete paquete) {
+        if (paquete.getProductos().isEmpty()) {
+            quitarProducto(paquete.getIdProducto());
+            return;
+        }
+
+        List<ProductoSingular> productos = new ArrayList<>(paquete.getProductos());
+        for (ProductoSingular producto : productos) {
+            producto.eliminarPaqueteContenedor(paquete);
+            cargarProducto(producto);
+        }
+    
+        quitarProducto(paquete.getIdProducto());
+    }
+    
 }
