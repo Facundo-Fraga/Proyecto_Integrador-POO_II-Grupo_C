@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import edu.unam.ecomarket.modelo.Producto;
+import edu.unam.ecomarket.modelo.ProductoPaquete;
+import edu.unam.ecomarket.modelo.ProductoSingular;
 import edu.unam.ecomarket.services.ProductoService;
 
 @Controller
@@ -26,6 +29,11 @@ public class ProductsManagerController {
 
     @GetMapping("/productsManager/eliminar/{id}")
     public String eliminarProducto(@PathVariable("id") Long id, Model modelo) {
+        Producto producto = service.buscarProductoId(id);
+        if(producto instanceof ProductoSingular) {
+            service.eliminarProductoSingular((ProductoSingular)producto);
+            return "redirect:/productsManager";
+        }
         service.quitarProducto(id);
         return "redirect:/productsManager";
     }

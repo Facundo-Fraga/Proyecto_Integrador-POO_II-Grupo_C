@@ -24,7 +24,7 @@ public class LoginController {
         this.servicio = servicio;
     }
 
-    @GetMapping({"/", "/login"})
+    @GetMapping({"/login"})
     public String index() {
         return "login";
     }

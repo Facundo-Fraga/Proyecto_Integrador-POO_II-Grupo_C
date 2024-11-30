@@ -23,13 +23,13 @@ public class DescuentoPorcentaje implements Descuento {
 
     @Override
     public void aplicarSingular(Producto producto) {
-        producto.aplicarDescuento(porcentaje);
+        producto.setPorcentajeDescuento(porcentaje);
     }
 
     @Override
     public void aplicarMultiple(List<Producto> productos) {
         for(Producto producto : productos) {
-            producto.aplicarDescuento(porcentaje);
+            producto.setPorcentajeDescuento(porcentaje);
         }
     }
 
