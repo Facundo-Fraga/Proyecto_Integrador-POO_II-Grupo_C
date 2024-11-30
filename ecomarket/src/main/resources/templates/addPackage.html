@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Crear Paquete</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Paquete de Productos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -97,174 +97,52 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Nuevo Paquete</h1>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" placeholder="Nombre del Paquete">
+<div class="container">
+    <h1>Crear Paquete</h1>
+    <form th:action="@{/paquetes/crear}" th:object="${nuevoPaquete}" method="post">
+        <label for="nombre">Nombre del Paquete</label>
+        <input type="text" id="nombre" th:field="*{nombre}" placeholder="Nombre del paquete" required>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" placeholder="Descripción del Paquete">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" th:field="*{descripcion}" placeholder="Descripción del paquete"></textarea>
 
-        <h2>Seleccionar Productos:</h2>
+        <label for="productos">Buscar Productos Singulares</label>
+        <input type="text" id="buscar" onkeyup="filtrarProductos()" placeholder="Buscar por nombre">
+
         <div class="table-container">
             <table>
                 <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Categoría</th>
-                        <th>Unidad</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Ver detalle</button>
-                            <button>Agregar al paquete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Ver detalle</button>
-                            <button>Agregar al paquete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Ver detalle</button>
-                            <button>Agregar al paquete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Ver detalle</button>
-                            <button>Agregar al paquete</button>
-                        </td>
-                    </tr>
-                    <!-- Más filas de ejemplo -->
+                <tbody id="productos-lista">
+                <tr th:each="producto : ${productosSingulares}">
+                    <td>
+                        <input type="checkbox" name="productosSeleccionados" th:value="${producto.idProducto}">
+                    </td>
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.precioBase}"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
 
-        <label for="descuento">Descuento:</label>
-        <select id="descuento">
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20">20%</option>
-            <!-- Más opciones -->
-        </select>
+        <button type="submit" class="save_btn">Guardar Paquete</button>
+    </form>
+</div>
 
-        <label for="fecha-inicio">Fecha de inicio de descuento:</label>
-        <input type="date" id="fecha-inicio">
-
-        <label for="fecha-fin">Fecha de finalización de descuento:</label>
-        <input type="date" id="fecha-fin">
-
-        <h2>Detalle:</h2>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Categoría</th>
-                        <th>Unidad</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Quitar Producto</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Quitar Producto</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Quitar Producto</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Producto 1</td>
-                        <td>Descripción 1</td>
-                        <td>Categoría 1</td>
-                        <td>Unidad 1</td>
-                        <td>$100</td>
-                        <td>1</td>
-                        <td>$100</td>
-                        <td>
-                            <button>Quitar Producto</button>
-                        </td>
-                    </tr>
-                    <!-- Más filas de ejemplo -->
-                </tbody>
-            </table>
-        </div>
-
-        <div class="total">
-            Total sin descuento: $100<br>
-            Total: $100
-        </div>
-
-        <div class="actions">
-            <button class="save_btn" onclick="window.location.href='/managePackages'">Guardar Paquete</button>
-        </div>
-
-        <div class="links">
-            <button type="submit" class="menu-btn" onclick="window.location.href='/mainMenu'">Ir al inicio</button>
-            <button type="submit" class="menu-btn" onclick="window.location.href='/managePackages'">Ir a Gestión de Paquetes</button>
-            <button type="submit" class="menu-btn" onclick="window.location.href='/manageProducts'">Ir a Gestión de Productos</button>
-        </div>
-    </div>
+<script>
+    function filtrarProductos() {
+        const filtro = document.getElementById('buscar').value.toLowerCase();
+        const filas = document.getElementById('productos-lista').getElementsByTagName('tr');
+        for (let fila of filas) {
+            const nombre = fila.cells[1].textContent.toLowerCase();
+            fila.style.display = nombre.includes(filtro) ? '' : 'none';
+        }
+    }
+</script>
 </body>
 </html>

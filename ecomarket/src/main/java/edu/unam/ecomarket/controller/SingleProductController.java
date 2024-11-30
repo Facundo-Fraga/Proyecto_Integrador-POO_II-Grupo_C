@@ -39,7 +39,7 @@ public class SingleProductController {
         if (resultado.hasErrors()) {
             return "singleProductCreator";
         }
-        service.crearProductoConDetalles(productoSingular, claves, valores);
+        service.crearProductoSingular(productoSingular, claves, valores);
         return "redirect:/productsManager";
     }
 
@@ -66,7 +66,7 @@ public class SingleProductController {
         if (resultado.hasErrors()) {
             return "singleProductEditor";
         }
-        service.actualizarProductoConDetalles(id, productoSingular, claves, valores);
+        service.actualizarProductoSingular(id, productoSingular, claves, valores);
         return "redirect:/productsManager";
     }
 }

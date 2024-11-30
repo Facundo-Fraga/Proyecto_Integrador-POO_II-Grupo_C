@@ -22,14 +22,31 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 1000px;
             width: 100%;
-            height: 600px; /* Altura fija para activar el desplazamiento */
-            overflow-y: auto; /* Desplazamiento vertical si hay demasiados productos */
+            height: 825px;
         }
         h1 {
             text-align: center;
             font-size: 24px;
             margin-bottom: 20px;
             color: #333;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .table-container {
+            width: 100%;
+            height: 525px;
+            overflow-y: auto;
+
         }
         table {
             width: 100%;
@@ -72,12 +89,10 @@
         .danger:hover {
             background-color: #c82333;
         }
-        .actions {
-            text-align: center;
-        }
         .add-button {
             display: block;
             width: 100%;
+            margin-top: 10px;
             padding: 12px;
             font-size: 16px;
             text-align: center;
@@ -90,9 +105,6 @@
         }
         .add-button:hover {
             background-color: #0056b3;
-        }
-        .add-button:active {
-            background-color: #004085;
         }
         .back-button {
             background-color: #dc3545;
@@ -116,37 +128,61 @@
                 window.location.href = url;
             }
         }
+
+        function filtrarProductos() {
+            const filtro = document.getElementById("searchInput").value.toLowerCase();
+            const filas = document.querySelectorAll("tbody tr");
+
+            filas.forEach(fila => {
+                const nombre = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                const tipo = fila.querySelector("td:nth-child(5)").textContent.toLowerCase();
+
+                if (nombre.includes(filtro) || tipo.includes(filtro)) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        }
     </script>
 </head>
 <body>
     <div class="container">
         <h1>Lista de Productos</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Es Paquete</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Inicio de Iteración de Productos -->
-                <tr th:each="producto : ${productos}">
-                    <td th:text="${producto.idProducto}">1</td>
-                    <td th:text="${producto.nombre}">Producto A</td>
-                    <td th:text="${producto.precio}">100.00</td>
-                    <td th:text="${producto.class.simpleName == 'ProductoSingular' ? 'No' : 'Sí'}">No</td>
-                    <td class="actions">
-                        <button th:onclick="'location.href=\'/singleProductEditor/' + ${producto.idProducto} + '\';'">Editar</button>
-                        <button type="button" class="danger" th:onclick="'confirmarEliminacion(\'/productsManager/eliminar/' + ${producto.idProducto} + '\')'">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Fin de Iteración de Productos -->
-            </tbody>
-        </table>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o tipo..." onkeyup="filtrarProductos()">
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio Base</th>
+                        <th>Precio con Descuento</th>
+                        <th>Es Paquete</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Inicio de Iteración de Productos -->
+                    <tr th:each="producto : ${productos}">
+                        <td th:text="${producto.idProducto}">1</td>
+                        <td th:text="${producto.nombre}">Producto A</td>
+                        <td th:text="${producto.precioBase}">100.00</td>
+                        <td th:text="${producto.tieneDescuento() ? producto.precioFinal : 'N/A'}">80.00</td>
+                        <td th:text="${producto.class.simpleName == 'ProductoSingular' ? 'No' : 'Sí'}">No</td>
+                        <td class="actions">
+                            <button th:onclick="'location.href=\'/singleProductEditor/' + ${producto.idProducto} + '\';'">Editar</button>
+                            <button type="button" class="danger" th:onclick="'confirmarEliminacion(\'/productsManager/eliminar/' + ${producto.idProducto} + '\')'">Eliminar</button>
+                        </td>
+                    </tr>
+                    <!-- Fin de Iteración de Productos -->
+                </tbody>
+            </table>
+        </div>
         <button class="add-button" onclick="location.href='/singleProductCreator';">+ Agregar Producto</button>
+        <button class="add-button" onclick="location.href='/packageCreator';">+ Agregar Paquete</button>
         <button class="back-button" onclick="location.href='/mainMenu';">Volver al Menú</button>
     </div>
 </body>
