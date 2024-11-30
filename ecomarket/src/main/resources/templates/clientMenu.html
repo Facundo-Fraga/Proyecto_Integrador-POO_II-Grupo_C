@@ -151,7 +151,7 @@
                         * Hay más detalles disponibles
                     </p>
                 </div>
-                <div class="item-price" th:text="'Precio: $' + ${producto.precio}">Precio</div>
+                <div class="item-price" th:text="'Precio: $' + ${producto.precioBase}">Precio</div>
                 <div class="actions">
                     <button type="button" class="details-btn" th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">Ver detalles</button>
                     <button type="button" class="add-to-cart-btn">Añadir al carrito</button>
