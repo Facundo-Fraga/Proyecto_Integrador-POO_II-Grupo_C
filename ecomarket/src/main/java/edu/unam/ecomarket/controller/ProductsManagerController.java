@@ -39,11 +39,7 @@ public class ProductsManagerController {
         return "redirect:/productsManager";
     }
 
-    @GetMapping("/clientMenu")
-    public String cargarMenuCliente(Model modelo) {
-        modelo.addAttribute("productos", service.buscarProductos());
-        return "clientMenu";
-    }
+    
 
     @GetMapping("/productDetails/{id}")
     public String cargarDetalles(@PathVariable("id") Long id, Model modelo) {
