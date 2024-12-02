@@ -3,6 +3,7 @@ package edu.unam.ecomarket.modelo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import edu.unam.ecomarket.modelo.payment.PagoDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,23 +37,38 @@ public class Pedido {
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
 
-    private LocalDateTime fecha;
-    
-    // a un pedido le corresponde un metodo de pago
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-
-
-    
-
-    private Cliente cliente;
-    // a un pedido le corresponde un metodo de pago
-
+    private LocalDateTime fecha = LocalDateTime.now();
     // a un pedido le corresponde un metodo de Envio
+    @Column
+    private double total;
+
     @OneToOne
     private MetodoEnvio metodoEnvio;
-    
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pago pago;
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<DetallePedido> listaDetallesPedido;
+    private ArrayList<DetallePedido> detallesPedido = new ArrayList<>();
+
+    public Pedido(MetodoEnvio metodoEnvio, Pago pago, ArrayList<DetallePedido> detallesPedido) {
+        this.metodoEnvio = metodoEnvio;
+        this.pago = pago;
+        this.detallesPedido = detallesPedido;
+        this.total = calcularTotal();
+    }
+
+    private double calcularTotal() {
+        double total = metodoEnvio.getTarifaInterna();
+        for (DetallePedido detallePedido : detallesPedido) {
+            total += detallePedido.getSubTotal();
+        }
+        return total;
+    }
+
+    public void agregarDetalle(DetallePedido detallePedido) {
+        this.detallesPedido.add(detallePedido);
+        this.setTotal(calcularTotal());
+    }
 
 }

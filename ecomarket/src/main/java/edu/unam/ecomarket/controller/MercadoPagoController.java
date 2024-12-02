@@ -7,11 +7,18 @@ import edu.unam.ecomarket.services.MercadoPagoService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/api/v1/mercadopago")
@@ -22,37 +29,49 @@ public class MercadoPagoController {
 
     @Autowired
     private HttpSession session;
-    
-    @PostMapping("/preference")
-    public String getIdPreference(RedirectAttributes redirectAttributes) {
-        MetodoEnvio envio = (MetodoEnvio) session.getAttribute("envio");
-        // Crear la URL de los Back URLs
-        BacksUrlDTO backsUrl = new BacksUrlDTO();
-        backsUrl.setSuccess("http://localhost:4567/response/success");
-        backsUrl.setPending("http://localhost:4567/response/pending");
-        backsUrl.setFailure("http://localhost:4567/response/failed");
 
-        String preferenceUrl;
+    @PostMapping("/preference")
+    public String redirigirPreferencia(RedirectAttributes redirectAttributes) {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+
+        MetodoEnvio envio = (MetodoEnvio) session.getAttribute("envio");
         try {
+            // Crear la URL de los Back URLs
+            BacksUrlDTO backsUrl = new BacksUrlDTO();
+            backsUrl.setSuccess("https://3c8e-131-108-143-241.ngrok-free.app/response/success");
+            backsUrl.setPending("https://3c8e-131-108-143-241.ngrok-free.app/response/pending");
+            backsUrl.setFailure("https://3c8e-131-108-143-241.ngrok-free.app/response/failed");
+
+            String preferenceUrl;
+
             // Llamada al servicio para crear la preferencia de pago
-            preferenceUrl = this.mercadoPagoService.createPreference(backsUrl, 
-                "http://localhost:4567/api/v1/mercadopago/notify", envio);
+            preferenceUrl = this.mercadoPagoService.createPreference(backsUrl,
+                    "https://3c8e-131-108-143-241.ngrok-free.app/api/v1/mercadopago/notify", envio);
 
             // Redirigir a la URL de la preferencia
             return "redirect:" + preferenceUrl;
+        } catch (MPException | MPApiException e) {
+            // Capturamos excepciones específicas de MercadoPago
+            logger.error("Error creando preferencia de pago en MercadoPago", e);
+
+            return "errorPageCliente"; // Redirigir a una página de error
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Error al crear la preferencia de pago: " + e.getMessage();
+            // Capturamos cualquier otra excepción
+            logger.error("Error inesperado creando preferencia de pago", e);
+
+            return "errorPageCliente"; // Redirigir a una página de error
         }
     }
-    
+
     // Endpoint para recibir la notificación del pago
     @PostMapping(value = "notify")
-    public void notifyPay(@RequestBody MpNotifyDTO mpNotify) {
+    public ResponseEntity<Void> notifyPay(@RequestBody MpNotifyDTO mpNotify) {
         // Log de la notificación de pago
         System.out.println("Notificación de pago recibida: " + mpNotify.toString());
-        
-        // Aquí puedes manejar la notificación del pago (actualizar estado, etc.)
-    }
-}
 
+        // Aquí puedes manejar la notificación del pago (actualizar estado, etc.)
+        // Devuelve 200 OK para confirmar la recepción de la notificación
+        return ResponseEntity.ok().build();
+    }
+
+}

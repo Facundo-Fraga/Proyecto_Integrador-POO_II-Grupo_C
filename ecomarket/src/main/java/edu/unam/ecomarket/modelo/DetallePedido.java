@@ -31,6 +31,10 @@ public class DetallePedido {
     @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_sequence", allocationSize = 1)
     private Long idDetallePedido;
     
+    @ManyToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
+
     @Column
     private Long cantidad;
     
@@ -40,9 +44,10 @@ public class DetallePedido {
     @OneToOne
     private Producto producto;
 
-    public DetallePedido(Long cantidad, Producto producto) {
+    public DetallePedido(Long cantidad, Producto producto, Pedido pedido) {
         this.cantidad = cantidad;
         this.producto = producto;
+        this.pedido = pedido;
         subTotal = calcularSubTotal(producto);
     }
 
