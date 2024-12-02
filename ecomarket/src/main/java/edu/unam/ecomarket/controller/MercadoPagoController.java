@@ -1,8 +1,10 @@
 package edu.unam.ecomarket.controller;
 
+import edu.unam.ecomarket.modelo.MetodoEnvio;
 import edu.unam.ecomarket.modelo.payment.BacksUrlDTO;
 import edu.unam.ecomarket.modelo.payment.MpNotifyDTO;
 import edu.unam.ecomarket.services.MercadoPagoService;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,12 @@ public class MercadoPagoController {
     @Autowired
     private MercadoPagoService mercadoPagoService;
 
+    @Autowired
+    private HttpSession session;
+    
     @PostMapping("/preference")
     public String getIdPreference(RedirectAttributes redirectAttributes) {
+        MetodoEnvio envio = (MetodoEnvio) session.getAttribute("envio");
         // Crear la URL de los Back URLs
         BacksUrlDTO backsUrl = new BacksUrlDTO();
         backsUrl.setSuccess("http://localhost:4567/response/success");
@@ -30,7 +36,7 @@ public class MercadoPagoController {
         try {
             // Llamada al servicio para crear la preferencia de pago
             preferenceUrl = this.mercadoPagoService.createPreference(backsUrl, 
-                "http://localhost:4567/api/v1/mercadopago/notify");
+                "http://localhost:4567/api/v1/mercadopago/notify", envio);
 
             // Redirigir a la URL de la preferencia
             return "redirect:" + preferenceUrl;

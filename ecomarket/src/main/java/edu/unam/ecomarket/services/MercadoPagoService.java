@@ -18,6 +18,7 @@ import com.mercadopago.resources.preference.Preference;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.exceptions.MPApiException;
 
+import edu.unam.ecomarket.modelo.MetodoEnvio;
 import edu.unam.ecomarket.modelo.Producto;
 import edu.unam.ecomarket.modelo.payment.BacksUrlDTO;
 import edu.unam.ecomarket.repositories.CarritoRepository;
@@ -32,7 +33,7 @@ public class MercadoPagoService {
     private CarritoRepository carritoRepository;
 
     // Método para crear la preferencia de pago
-    public String createPreference(BacksUrlDTO backsUrl, String notificationUrl) throws MPException, MPApiException {
+    public String createPreference(BacksUrlDTO backsUrl, String notificationUrl, MetodoEnvio envio) throws MPException, MPApiException {
 
         // Configura el token de acceso para MercadoPago
         MercadoPagoConfig.setAccessToken(accesToken);
@@ -54,7 +55,16 @@ public class MercadoPagoService {
                     .build();
 
             items.add(itemRequest);
-        }
+        }   
+        // Añadir el costo del envío como un ítem adicional
+        PreferenceItemRequest envioItem = PreferenceItemRequest.builder()
+                .title("Costo de Envío")
+                .quantity(1)
+                .currencyId("ARS")
+                .unitPrice(BigDecimal.valueOf(envio.getTarifaInterna()))
+                .build();
+        items.add(envioItem);
+
 
         // Crear los objetos necesarios para la preferencia
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
@@ -73,7 +83,7 @@ public class MercadoPagoService {
         // Crear la preferencia de pago
         PreferenceClient preferenceClient = new PreferenceClient();
         Preference preference = preferenceClient.create(preferenceRequest);
-
+        
         // Retornar la URL de redirección para iniciar el pago
         return preference.getInitPoint();
     }

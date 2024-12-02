@@ -155,23 +155,26 @@
 
         <div class="buttons">
             <!-- Formulario para redirigir a "Iniciar Compra" -->
-            <form action="/payment" method="get">
-                <button type="submit" class="button checkout">Iniciar Compra</button>
+            <form action="/payment" method="post">
+                <div class="envio-section">
+                    <label for="tipoEnvio">Seleccionar Tipo de Envío:</label>
+                    <select id="tipoEnvio" name="tipoEnvio" required>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="local">Envío Local</option>
+                        <option value="provincial">Envío Provincial</option>
+                        <option value="nacional">Envío Nacional</option>
+                    </select>
+                </div>
+                <!-- Botón para iniciar la compra -->
+                <div class="buttons">
+                    <button type="submit" class="button checkout">Iniciar Compra</button>
+                </div>
             </form>
 
             <!-- Formulario para redirigir a "Seguir Comprando" -->
             <form action="/clientMenu" method="get">
                 <button type="submit" class="button continue">Seguir Comprando</button>
             </form>
-        </div>
-        <!-- Sección para seleccionar el tipo de envío -->
-        <div class="envio-section">
-            <label for="tipoEnvio">Seleccionar Tipo de Envío:</label>
-            <select id="tipoEnvio" name="tipoEnvio">
-                <option value="local">Envío Local</option>
-                <option value="provincial">Envío Provincial</option>
-                <option value="nacional">Envío Nacional</option>
-            </select>
         </div>
 
     </div>
