@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,6 +121,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Carrito de Compras</h1>
@@ -130,13 +132,12 @@
                     <div class="product-details">
                         <span class="product-name" th:text="${entry.key.nombre}">Producto</span>
                         <span class="product-price" th:text="'$' + ${entry.key.precioBase}">Precio</span>
-                        <input
-                            class="product-quantity"
-                            type="number"
-                            th:value="${entry.value}"
-                            min="1"
-                            th:data-id="${entry.key.idProducto}"
-                        />
+                        <form action="/update-cantidad" method="post" class="update-form">
+                            <input type="hidden" name="idProducto" th:value="${entry.key.idProducto}" />
+                            <input class="product-quantity" type="number" name="cantidad" th:value="${entry.value}"
+                                min="1" />
+                            <button type="submit" class="update-button">Actualizar</button>
+                        </form>
                         <span class="product-subtotal">Subtotal: $0.00</span>
                     </div>
                     <form action="/remove" method="post">
@@ -146,6 +147,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="cart-summary">
             Total: <span id="cart-total">$0.00</span>
@@ -162,6 +164,16 @@
                 <button type="submit" class="button continue">Seguir Comprando</button>
             </form>
         </div>
+        <!-- Sección para seleccionar el tipo de envío -->
+        <div class="envio-section">
+            <label for="tipoEnvio">Seleccionar Tipo de Envío:</label>
+            <select id="tipoEnvio" name="tipoEnvio">
+                <option value="local">Envío Local</option>
+                <option value="provincial">Envío Provincial</option>
+                <option value="nacional">Envío Nacional</option>
+            </select>
+        </div>
+
     </div>
 
     <script>
@@ -192,4 +204,5 @@
         actualizarTotales();
     </script>
 </body>
+
 </html>

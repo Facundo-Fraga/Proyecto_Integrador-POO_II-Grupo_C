@@ -1,11 +1,12 @@
 package edu.unam.ecomarket.services;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import edu.unam.ecomarket.modelo.Producto;
 import edu.unam.ecomarket.repositories.CarritoRepository;
 import edu.unam.ecomarket.repositories.ProductoRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public class CarritoService {
@@ -39,13 +40,13 @@ public class CarritoService {
         carritoRepository.eliminarProducto(idProducto);
     }
 
-    // Método para actualizar la cantidad de un producto
     public void actualizarCantidad(Long idProducto, int cantidad) {
-        // Actualizar la cantidad del producto en el carrito
-        if (cantidad > 0) {
+        Producto producto = productoRepository.findById(idProducto)
+            .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        
+        
             carritoRepository.actualizarCantidad(idProducto, cantidad);
-        } else {
-            carritoRepository.eliminarProducto(idProducto);  // Eliminar si la cantidad es 0
-        }
+        
     }
+    
 }

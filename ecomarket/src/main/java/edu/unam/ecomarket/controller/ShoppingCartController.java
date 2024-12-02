@@ -1,17 +1,15 @@
 package edu.unam.ecomarket.controller;
 
-import edu.unam.ecomarket.modelo.Producto;
-import edu.unam.ecomarket.services.CarritoService;
+import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Map;
+import edu.unam.ecomarket.modelo.Producto;
+import edu.unam.ecomarket.services.CarritoService;
 
 @Controller
 public class ShoppingCartController {
@@ -44,11 +42,14 @@ public class ShoppingCartController {
         return "redirect:/clientMenu";
     }
 
-    // Actualizar la cantidad de un producto en el carrito
-    @PostMapping("/updateQuantity")
-    public String actualizarCantidad(@RequestParam Long idProducto, @RequestParam int cantidad) {
+    
+    
+    @PostMapping("/update-cantidad")
+    public String actualizarCantidad(
+            @RequestParam("idProducto") Long idProducto,
+            @RequestParam("cantidad") int cantidad) {
         carritoService.actualizarCantidad(idProducto, cantidad);
-        return "redirect:/shoppingCart";  // Redirigir para actualizar el carrito
+        return "redirect:/shoppingCart"; // Redirige de nuevo al carrito después de actualizar
     }
 
 }
