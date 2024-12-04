@@ -14,4 +14,9 @@ public class ProductDetailsController {
     public String detallesProducto() {
         return "productDetails";
     }
+
+    @RequestMapping("/packageDetails")
+    public String detallesPaquete() {
+        return "packageDetails";
+    }
 }

@@ -3,20 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Paquete</title>
+    <title>Detalles del Paquete</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         .container {
-            max-width: 800px;
-            margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .product-info {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .product-price {
+            font-size: 24px;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .details-list {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .details-list li {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0;
         }
         table {
             width: 100%;
@@ -24,76 +56,87 @@
             margin-top: 20px;
         }
         th, td {
+            padding: 12px;
             border: 1px solid #ddd;
-            padding: 10px;
+            font-size: 14px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
-        }
-        .return_button {
-            width: 200px;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #000000;
-            border: none;
+            background-color: #007bff;
             color: white;
-            border-radius: 4px;
-            cursor: pointer;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .back-btn {
+            margin-top: 20px;
+            padding: 12px 20px;
             font-size: 16px;
-        }
-        .return_button:hover {
-            background-color: #0056b3;
-        }
-        .cart-button {
-            width: 200px;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #00a028;
             border: none;
-            color: white;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            background-color: #ffc107;
+            color: white;
+            transition: background-color 0.3s ease;
         }
-        .cart-button:hover {
-            background-color: #00c030;
+        .back-btn:hover {
+            background-color: #e0a800;
+        }
+        .details-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .details-btn {
+            background-color: #007bff;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Detalle del paquete</h1>
-        <p><strong>Nombre:</strong> <span>Nombre del Paquete</span></p>
-        <p><strong>Descripción:</strong> <span>Descripción del Paquete</span></p>
-        <p><strong>Descuento:</strong> <span>Descuento</span>%</p>
-
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Categoría</th>
-                <th>Unidad</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-            </tr>
-            <tr>
-                <td>Nombre del Producto</td>
-                <td>Descripción</td>
-                <td>Categoría</td>
-                <td>Unidad</td>
-                <td>Precio</td>
-                <td>Cantidad</td>
-                <td>Subtotal</td>
-            </tr>
-        </table>
+        <h1 th:text="${productoPaquete.nombre}">Nombre del Paquete</h1>
+        <div class="product-info" th:text="${productoPaquete.descripcion}">Descripción del Paquete</div>
+        <div class="product-price" th:text="'Precio: $' + ${productoPaquete.precioBase}">Precio: $100.00</div>
         
-        <p>Total sin descuento: <span>Total sin descuento</span></p>
-        <p>Total: <span>Total con descuento</span></p>
+        <!-- Tabla de productos que componen el paquete -->
+        <h2>Productos incluidos en este paquete:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre del Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productoPaquete.productos}">
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td th:text="'$' + ${producto.precioBase}"></td>
+                    <td>
+                        <button th:onclick="'location.href=\'/productDetails/' + ${producto.idProducto} + '\''" class="details-btn">
+                        Ver detalles
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        <button type="button" class="cart-button">Agregar al Carrito</button>
-        <button type="button" class="return_button" onclick="window.location.href='/clientMenu'">Volver al Menú</button>
+        <div class="action-buttons">
+            <button class="back-btn" onclick="window.location.href='/clientMenu';">Volver al Menú</button>
+        </div>
     </div>
 </body>
 </html>

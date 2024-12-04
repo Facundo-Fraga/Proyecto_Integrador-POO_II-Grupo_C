@@ -43,7 +43,7 @@ public class SingleProductController {
         return "redirect:/productsManager";
     }
 
-    @GetMapping("/singleProductEditor/{id}")
+    @GetMapping("/singleProductEditor/{id}/editar")
     public String mostrarFormularioEdicion(@PathVariable String id, Model model) {
         try {
             Long idProducto = Long.parseLong(id);

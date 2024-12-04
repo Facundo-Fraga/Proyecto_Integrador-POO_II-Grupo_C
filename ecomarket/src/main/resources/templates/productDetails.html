@@ -88,7 +88,7 @@
     <div class="container">
         <h1 th:text="${producto.nombre}">Nombre del Producto</h1>
         <div class="product-info" th:text="${producto.descripcion}">Descripción del Producto</div>
-        <div class="product-price" th:text="'Precio: $' + ${producto.precio}">Precio: $100.00</div>
+        <div class="product-price" th:text="'Precio: $' + ${producto.precioBase}">Precio: $100.00</div>
         <ul class="details-list">
             <li th:each="entry : ${producto.detalles}" th:text="${entry.key} + ': ' + ${entry.value}">Detalle del producto</li>
         </ul>

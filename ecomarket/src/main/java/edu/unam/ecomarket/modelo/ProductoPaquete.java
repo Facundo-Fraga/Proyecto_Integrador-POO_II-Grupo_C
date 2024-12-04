@@ -2,7 +2,6 @@ package edu.unam.ecomarket.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -37,7 +36,7 @@ public class ProductoPaquete extends Producto{
         }
     }
     
-    private void recalcularPrecioBase() {
+    public void recalcularPrecioBase() {
         double sumaPrecios = productos.stream().mapToDouble(Producto::getPrecioBase).sum();
         precioBase = sumaPrecios * 0.9;
     }

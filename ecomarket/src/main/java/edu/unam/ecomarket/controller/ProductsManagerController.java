@@ -46,8 +46,14 @@ public class ProductsManagerController {
     }
 
     @GetMapping("/productDetails/{id}")
-    public String cargarDetalles(@PathVariable("id") Long id, Model modelo) {
+    public String cargarDetallesProducto(@PathVariable("id") Long id, Model modelo) {
         modelo.addAttribute("producto", service.buscarProductoId(id));
         return "productDetails";
+    }
+
+    @GetMapping("/packageDetails/{id}")
+    public String cargarDetallesPaquete(@PathVariable("id") Long id, Model modelo) {
+        modelo.addAttribute("productoPaquete", service.buscarProductoId(id));
+        return "packageDetails";
     }
 }
