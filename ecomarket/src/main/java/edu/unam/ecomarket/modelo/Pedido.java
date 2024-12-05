@@ -2,11 +2,12 @@ package edu.unam.ecomarket.modelo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
-import edu.unam.ecomarket.modelo.payment.PagoDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,39 +27,42 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_seq")
     @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_sequence", allocationSize = 1)
-
     private Long idPedido;
 
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
-
     private LocalDateTime fecha = LocalDateTime.now();
-    // a un pedido le corresponde un metodo de Envio
+
     @Column
     private double total;
-
-    @OneToOne
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "metodo_envio_id")
     private MetodoEnvio metodoEnvio;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")  // La columna que se usará para la relación
+    private Cliente cliente;
     @OneToOne(cascade = CascadeType.ALL)
     private Pago pago;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<DetallePedido> detallesPedido = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pedido_id")
+    private List<DetallePedido> detallesPedido = new ArrayList<>();
 
-    public Pedido(MetodoEnvio metodoEnvio, Pago pago, ArrayList<DetallePedido> detallesPedido) {
+    public Pedido(MetodoEnvio metodoEnvio, Pago pago, List<DetallePedido> detallesPedido,  Cliente cliente) {
         this.metodoEnvio = metodoEnvio;
         this.pago = pago;
         this.detallesPedido = detallesPedido;
-        this.total = calcularTotal();
+        this.cliente = cliente;
+        this.total = calcularTotal(detallesPedido);
     }
 
-    private double calcularTotal() {
+    private double calcularTotal(List<DetallePedido> detallesPedido) {
         double total = metodoEnvio.getTarifaInterna();
         for (DetallePedido detallePedido : detallesPedido) {
             total += detallePedido.getSubTotal();
@@ -68,7 +72,6 @@ public class Pedido {
 
     public void agregarDetalle(DetallePedido detallePedido) {
         this.detallesPedido.add(detallePedido);
-        this.setTotal(calcularTotal());
+        this.setTotal(calcularTotal(this.detallesPedido));
     }
-
 }

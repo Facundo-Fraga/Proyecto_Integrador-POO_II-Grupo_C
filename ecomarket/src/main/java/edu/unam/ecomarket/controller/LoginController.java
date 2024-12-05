@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import edu.unam.ecomarket.modelo.Cliente;
 import edu.unam.ecomarket.modelo.Usuario;
 import edu.unam.ecomarket.services.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 
 @Controller
@@ -20,13 +21,16 @@ public class LoginController {
     private UsuarioService servicio;
 
     @Autowired
+    private HttpSession session;
+
+    @Autowired
     public LoginController(UsuarioService servicio) {
         this.servicio = servicio;
     }
 
     @GetMapping({"/", "/login"})
     public String index() {
-        return "login";
+        return "login";  // Redirige a la página de login
     }
 
     @PostMapping("/login")
@@ -35,17 +39,27 @@ public class LoginController {
             @RequestParam("contrasenia") String contrasenia,
             Model modelo) {
         
+        // Buscar al usuario por nombre
         Usuario encontrado = servicio.buscarUsuarioPorNombre(nombre);
         if (encontrado != null && BCrypt.checkpw(contrasenia, encontrado.getContrasenia())) {
-            return (encontrado instanceof Cliente) ? "redirect:/clientMenu" : "redirect:/mainMenu";
+            // Si es un Cliente, lo guardamos en la sesión
+            if (encontrado instanceof Cliente) {
+                session.setAttribute("clienteActual", (Cliente) encontrado);
+                return "redirect:/clientMenu";  // Redirige al menú del cliente
+            }
+            // Si es otro tipo de usuario, redirige al menú principal (por ejemplo, administrador)
+            return "redirect:/mainMenu";
         }
         
+        // Si las credenciales son incorrectas, mostramos el error
         modelo.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
         return "login";
     }
 
     @GetMapping("/logout")
     public String cerrarSesion() {
-        return "login";
+        // Invalidamos la sesión al hacer logout
+        session.invalidate();
+        return "login";  // Redirige a la página de login
     }
 }

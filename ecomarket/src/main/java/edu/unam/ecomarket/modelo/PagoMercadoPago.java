@@ -1,20 +1,25 @@
 package edu.unam.ecomarket.modelo;
 
-import java.math.BigDecimal;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class PagoMercadoPago extends Pago {
-    @Column(name = "monto", precision = 19, scale = 2, nullable = false)
-    private BigDecimal monto;
-
+    
     @Column(nullable = false)
     private String moneda = "ARS";
+    
+    @Column
+    private String idPagoMP;
+    
+    @Column 
+    private String estado;
 
-    public PagoMercadoPago(BigDecimal monto) {
-        this.monto = monto;
+    public PagoMercadoPago(String idPagoMP, String estado) {
+        this.idPagoMP = idPagoMP;
+        this.estado = estado;
     }
 }
+

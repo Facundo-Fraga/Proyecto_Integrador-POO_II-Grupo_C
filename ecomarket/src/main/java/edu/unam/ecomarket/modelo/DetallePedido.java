@@ -27,31 +27,29 @@ import lombok.Setter;
 public class DetallePedido {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_seq")
-    @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_sequence", allocationSize = 1)
-    private Long idDetallePedido;
-    
-    @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
-    private Pedido pedido;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "detalle_pedido_seq")
+@SequenceGenerator(name = "detalle_pedido_seq", sequenceName = "detalle_pedido_sequence", allocationSize = 1)
+private Long idDetallePedido;
+
 
     @Column
-    private Long cantidad;
+    private int cantidad;
     
     @Column
     private double subTotal;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "producto_id_producto")
     private Producto producto;
 
-    public DetallePedido(Long cantidad, Producto producto, Pedido pedido) {
+    public DetallePedido(int cantidad, Producto producto) {
         this.cantidad = cantidad;
         this.producto = producto;
-        this.pedido = pedido;
-        subTotal = calcularSubTotal(producto);
+        
+        this.subTotal = calcularSubTotal(producto, cantidad);
     }
 
-    private double calcularSubTotal(Producto producto){
+    private double calcularSubTotal(Producto producto, int cantidad){
         
         return producto.getPrecioFinal() * cantidad;   
     }

@@ -41,7 +41,7 @@ public class CarritoService {
     }
 
     public void actualizarCantidad(Long idProducto, int cantidad) {
-        Producto producto = productoRepository.findById(idProducto)
+        productoRepository.findById(idProducto)
             .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         
         

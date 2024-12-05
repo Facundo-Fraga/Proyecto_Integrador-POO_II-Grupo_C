@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import edu.unam.ecomarket.modelo.Cliente;
 import edu.unam.ecomarket.services.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -17,7 +18,8 @@ public class SignInController {
 
     @Autowired
     private UsuarioService servicio;
-
+    @Autowired
+    private HttpSession session;
     public SignInController(UsuarioService servicio) {
         this.servicio = servicio;
     }
@@ -41,7 +43,7 @@ public class SignInController {
             }
             cliente.setContrasenia(BCrypt.hashpw(cliente.getContrasenia(), BCrypt.gensalt()));
             servicio.cargarUsuario(cliente);
-            return "redirect:/clientMenu";
+            return "redirect:/login";
         }
 
         modelo.addAttribute("error", "Ya existe una cuenta con ese Nombre de Usuario.");

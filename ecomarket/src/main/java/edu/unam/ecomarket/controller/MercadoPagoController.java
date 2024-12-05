@@ -7,6 +7,7 @@ import edu.unam.ecomarket.services.MercadoPagoService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,8 @@ public class MercadoPagoController {
 
     @Autowired
     private MercadoPagoService mercadoPagoService;
-
+    @Value("${app.base.url}")
+    private String baseUrl;
     @Autowired
     private HttpSession session;
 
@@ -38,16 +40,17 @@ public class MercadoPagoController {
         try {
             // Crear la URL de los Back URLs
             BacksUrlDTO backsUrl = new BacksUrlDTO();
-            backsUrl.setSuccess("https://3c8e-131-108-143-241.ngrok-free.app/response/success");
-            backsUrl.setPending("https://3c8e-131-108-143-241.ngrok-free.app/response/pending");
-            backsUrl.setFailure("https://3c8e-131-108-143-241.ngrok-free.app/response/failed");
+            backsUrl.setSuccess(baseUrl + "/response/success");
+            backsUrl.setPending(baseUrl + "/response/pending");
+            backsUrl.setFailure(baseUrl + "/response/failed");
 
             String preferenceUrl;
 
             // Llamada al servicio para crear la preferencia de pago
             preferenceUrl = this.mercadoPagoService.createPreference(backsUrl,
-                    "https://3c8e-131-108-143-241.ngrok-free.app/api/v1/mercadopago/notify", envio);
-
+                    baseUrl + "/api/v1/mercadopago/notify", envio);
+            // Almacenar el objeto en la sesión o incluir un ID como referencia
+        session.setAttribute("envio", envio);
             // Redirigir a la URL de la preferencia
             return "redirect:" + preferenceUrl;
         } catch (MPException | MPApiException e) {
@@ -68,6 +71,7 @@ public class MercadoPagoController {
     public ResponseEntity<Void> notifyPay(@RequestBody MpNotifyDTO mpNotify) {
         // Log de la notificación de pago
         System.out.println("Notificación de pago recibida: " + mpNotify.toString());
+        
 
         // Aquí puedes manejar la notificación del pago (actualizar estado, etc.)
         // Devuelve 200 OK para confirmar la recepción de la notificación

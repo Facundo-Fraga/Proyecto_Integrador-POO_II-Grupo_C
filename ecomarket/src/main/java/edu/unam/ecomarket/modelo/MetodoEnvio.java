@@ -16,28 +16,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "envio")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_envio")
+@DiscriminatorColumn(name = "metodo_envio")
 @Getter
 @NoArgsConstructor
-
 public abstract class MetodoEnvio {
-    
-    //protected TipoEnvio tipo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "envio_seq")
     @SequenceGenerator(name = "envio_seq", sequenceName = "envio_sequence", allocationSize = 1)
-
     protected Long nroSeguimiento;
 
     @Column(nullable = false)
-    
     protected double tarifaInterna = 0;
 
-
     public abstract void calcularCosto();
-
-    
-    
-    
 }

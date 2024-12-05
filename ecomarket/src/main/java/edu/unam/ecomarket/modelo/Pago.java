@@ -1,5 +1,7 @@
 package edu.unam.ecomarket.modelo;
 
+import java.time.LocalDateTime;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,5 +18,9 @@ public abstract class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pago_seq")
     @SequenceGenerator(name = "pago_seq", sequenceName = "pago_sequence", allocationSize = 1)
+    @Column(name = "id_pago")  // Aseguramos que la columna tenga el nombre adecuado
     private Long idPago;
+    
+    @Column
+    private LocalDateTime fechaPago = LocalDateTime.now(); 
 }
