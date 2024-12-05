@@ -47,6 +47,9 @@ public class CarritoService {
         
             carritoRepository.actualizarCantidad(idProducto, cantidad);
         
+    }   
+    public void vaciarCarrito() {
+        carritoRepository.vaciarCarrito();
     }
     
 }

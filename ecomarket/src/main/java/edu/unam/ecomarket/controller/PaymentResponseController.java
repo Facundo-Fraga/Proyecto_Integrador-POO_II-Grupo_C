@@ -78,7 +78,8 @@ public class PaymentResponseController {
             // Crear pedido
             Pedido pedido = pedidoService.crearPedido(cliente, productosCarrito, paymentId, status, envio);
             model.addAttribute("pedido", pedido); // Agrega el pedido a la vista
-
+            // Vaciar el carrito
+            carritoService.vaciarCarrito();
             // Puedes redirigir a una página de confirmación de pedido
             return "succesfulPayment"; // Vista que muestra que el pedido fue exitoso
         } catch (Exception e) {

@@ -11,13 +11,13 @@ import java.util.Map;
 public class CarritoRepository {
 
     private final Map<Long, Integer> carrito = new HashMap<>();
-    
+
     @Autowired
     private ProductoRepository productoRepository;
 
     // Añadir un producto al carrito
     public void añadirProducto(Producto producto) {
-        carrito.merge(producto.getIdProducto(), 1, Integer::sum);  // Aumentar la cantidad si ya está en el carrito
+        carrito.merge(producto.getIdProducto(), 1, Integer::sum); // Aumentar la cantidad si ya está en el carrito
     }
 
     // Obtener el total de productos en el carrito
@@ -44,18 +44,23 @@ public class CarritoRepository {
         return productosEnCarrito;
     }
 
-     // Eliminar un producto del carrito
+    // Eliminar un producto del carrito
     public void eliminarProducto(Long idProducto) {
-        carrito.remove(idProducto);  // Elimina el producto por su ID
+        carrito.remove(idProducto); // Elimina el producto por su ID
     }
 
     // Método para actualizar la cantidad de un producto
     public void actualizarCantidad(Long idProducto, int cantidad) {
         if (cantidad > 0) {
-            carrito.put(idProducto, cantidad);  // Actualiza la cantidad en el carrito
+            carrito.put(idProducto, cantidad); // Actualiza la cantidad en el carrito
         } else {
-            carrito.remove(idProducto);  // Si la cantidad es 0, elimina el producto
+            carrito.remove(idProducto); // Si la cantidad es 0, elimina el producto
         }
+    }
+
+    // Vaciar el carrito
+    public void vaciarCarrito() {
+        carrito.clear();
     }
 
 }
