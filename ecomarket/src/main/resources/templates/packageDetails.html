@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             align-items: center;
             padding: 20px;
         }
+
         .container {
             background-color: #ffffff;
             padding: 25px;
@@ -25,68 +27,88 @@
             height: auto;
             text-align: center;
         }
+
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
             color: #333;
         }
+
         .product-info {
             font-size: 16px;
             color: #666;
             margin-bottom: 20px;
         }
+
         .product-price {
             font-size: 24px;
             color: #28a745;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-        .details-list {
-            text-align: left;
-            margin-bottom: 20px;
+
+        .product-price.strike {
+            text-decoration: line-through;
+            color: #dc3545;
+            font-size: 18px;
         }
-        .details-list li {
-            font-size: 14px;
-            color: #555;
-            margin: 5px 0;
-        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         th, td {
             padding: 12px;
             border: 1px solid #ddd;
             font-size: 14px;
             text-align: left;
         }
+
         th {
             background-color: #007bff;
             color: white;
         }
+
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
         .action-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-        }
-        .back-btn {
             margin-top: 20px;
+        }
+
+        .add-to-cart-btn, .back-btn {
             padding: 12px 20px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            background-color: #ffc107;
-            color: white;
             transition: background-color 0.3s ease;
         }
+
+        .add-to-cart-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+        }
+
+        .back-btn {
+            background-color: #ffc107;
+            color: white;
+        }
+
         .back-btn:hover {
             background-color: #e0a800;
         }
+
         .details-btn {
             flex: 1;
             padding: 10px;
@@ -95,20 +117,31 @@
             font-size: 14px;
             color: white;
             cursor: pointer;
+            background-color: #007bff;
             transition: background-color 0.3s ease;
         }
 
-        .details-btn {
-            background-color: #007bff;
+        .details-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 th:text="${productoPaquete.nombre}">Nombre del Paquete</h1>
         <div class="product-info" th:text="${productoPaquete.descripcion}">Descripción del Paquete</div>
-        <div class="product-price" th:text="'Precio: $' + ${productoPaquete.precioBase}">Precio: $100.00</div>
-        
+
+        <!-- Mostrar precios -->
+        <div>
+            <div class="product-price strike" th:if="${productoPaquete.tieneDescuento()}"
+                th:text="'$' + ${productoPaquete.precioBase}">Precio Base</div>
+            <div class="product-price" th:if="${productoPaquete.tieneDescuento()}"
+                th:text="'Precio Final: $' + ${productoPaquete.getPrecioFinal()}">Precio con Descuento</div>
+            <div class="product-price" th:unless="${productoPaquete.tieneDescuento()}"
+                th:text="'Precio Base: $' + ${productoPaquete.precioBase}">Precio Base</div>
+        </div>
+
         <!-- Tabla de productos que componen el paquete -->
         <h2>Productos incluidos en este paquete:</h2>
         <table>
@@ -126,17 +159,22 @@
                     <td th:text="${producto.descripcion}"></td>
                     <td th:text="'$' + ${producto.precioBase}"></td>
                     <td>
-                        <button th:onclick="'location.href=\'/productDetails/' + ${producto.idProducto} + '\''" class="details-btn">
-                        Ver detalles
-                        </button>
+                        <button th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''"
+                            class="details-btn">Ver detalles</button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
+        <!-- Botones de acción -->
         <div class="action-buttons">
+            <button class="add-to-cart-btn"
+                th:onclick="'window.location.href=\'/cart/add/' + ${productoPaquete.idProducto} + '\''">
+                Añadir al carrito
+            </button>
             <button class="back-btn" onclick="window.location.href='/clientMenu';">Volver al Menú</button>
         </div>
     </div>
 </body>
+
 </html>

@@ -106,6 +106,20 @@
         td button:hover {
             background-color: #c9302c;
         }
+        .return_button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #bb2020;
+        }
     </style>
 </head>
 <body>
@@ -145,6 +159,7 @@
         </table>
 
         <button type="submit">Crear Paquete</button>
+        <button type="reset" class="return_button" onclick="location.href='/productsManager';">Cancelar</button>
     </form>
 
     <script>

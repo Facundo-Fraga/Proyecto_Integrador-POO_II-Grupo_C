@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Ups! Algo salió mal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #e74c3c;
+            font-size: 4rem;
+            margin: 0.5em 0;
+        }
+        p {
+            font-size: 1.2rem;
+            margin: 0.5em 0;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error-code {
+            font-size: 2rem;
+            color: #555;
+            margin-top: 1em;
+        }
+        .container {
+            text-align: center;
+        }
+        .btn-home {
+            margin-top: 1.5em;
+            padding: 0.8em 1.5em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-home:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Ups! Algo salió mal</h1>
+        <p>Lo sentimos, ocurrió un error inesperado.</p>
+        <p class="error-code">Código de error: <span th:text="${status}"></span></p>
+        <p><a th:href="@{/}">Volver al inicio</a></p>
+        <button class="btn-home" onclick="window.location.href='/'">Ir a la página principal</button>
+    </div>
+</body>
+</html>

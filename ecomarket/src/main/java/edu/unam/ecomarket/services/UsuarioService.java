@@ -12,7 +12,7 @@ import edu.unam.ecomarket.repositories.UsuarioRepository;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository repository;
+    protected UsuarioRepository repository;
 
     public UsuarioService(UsuarioRepository repository) {
         this.repository = repository;

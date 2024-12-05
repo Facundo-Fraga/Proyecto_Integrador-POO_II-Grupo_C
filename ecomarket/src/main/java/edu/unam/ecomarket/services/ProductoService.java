@@ -15,16 +15,17 @@ import edu.unam.ecomarket.repositories.ProductoRepository;
 @Service
 public class ProductoService {
 
-    ProductoRepository repository;
-
     @Autowired
-    public ProductoService(ProductoRepository repository) {
-        this.repository = repository;
-    }
+    protected ProductoRepository repository;
 
     public void cargarProducto(Producto producto) {
         repository.save(producto);
     }
+
+    public List<Producto> buscarProductos(List<Long> productosId) {
+        return repository.findAllById(productosId);
+    }
+
 
     public List<Producto> buscarProductos() {
         return repository.findAll();

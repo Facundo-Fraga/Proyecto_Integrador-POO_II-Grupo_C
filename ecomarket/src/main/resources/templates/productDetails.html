@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
             align-items: center;
             padding: 20px;
         }
+
         .container {
             background-color: #ffffff;
             padding: 25px;
@@ -25,42 +27,51 @@
             height: auto;
             text-align: center;
         }
+
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
             color: #333;
         }
-        .product-image {
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
-        }
+
         .product-info {
             font-size: 16px;
             color: #666;
             margin-bottom: 20px;
         }
+
         .product-price {
             font-size: 24px;
             color: #28a745;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
+
+        .product-price.strike {
+            text-decoration: line-through;
+            color: #dc3545;
+            font-size: 18px;
+        }
+
         .details-list {
             text-align: left;
             margin-bottom: 20px;
         }
+
         .details-list li {
             font-size: 14px;
             color: #555;
             margin: 5px 0;
         }
+
         .action-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
         }
-        .add-to-cart-btn, .back-btn {
+
+        .add-to-cart-btn,
+        .back-btn {
             padding: 12px 20px;
             font-size: 16px;
             border: none;
@@ -68,34 +79,56 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         .add-to-cart-btn {
             background-color: #28a745;
             color: white;
         }
+
         .add-to-cart-btn:hover {
             background-color: #218838;
         }
+
         .back-btn {
             background-color: #ffc107;
             color: white;
         }
+
         .back-btn:hover {
             background-color: #e0a800;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 th:text="${producto.nombre}">Nombre del Producto</h1>
         <div class="product-info" th:text="${producto.descripcion}">Descripción del Producto</div>
-        <div class="product-price" th:text="'Precio: $' + ${producto.precioBase}">Precio: $100.00</div>
+
+        <!-- Mostrar precio con descuento si aplica -->
+        <div>
+            <div class="product-price strike" th:if="${producto.tieneDescuento()}"
+                th:text="'$' + ${producto.precioBase}">Precio Base</div>
+            <div class="product-price" th:if="${producto.tieneDescuento()}"
+                th:text="'Precio Final: $' + ${producto.getPrecioFinal()}">Precio con Descuento</div>
+            <div class="product-price" th:unless="${producto.tieneDescuento()}"
+                th:text="'Precio: $' + ${producto.precioBase}">Precio</div>
+        </div>
+
+        <!-- Lista de detalles -->
         <ul class="details-list">
-            <li th:each="entry : ${producto.detalles}" th:text="${entry.key} + ': ' + ${entry.value}">Detalle del producto</li>
+            <li th:each="entry : ${producto.detalles}" th:text="${entry.key} + ': ' + ${entry.value}">
+                Detalle del producto</li>
         </ul>
+
+        <!-- Botones de acción -->
         <div class="action-buttons">
-            <!-- <button class="add-to-cart-btn" th:onclick="">Añadir al carrito</button> -->
+            <button class="add-to-cart-btn" th:onclick="'window.location.href=\'/cart/add/' + ${producto.idProducto} + '\''">
+                Añadir al carrito
+            </button>
             <button class="back-btn" onclick="window.location.href='/clientMenu';">Volver al Menú</button>
         </div>
     </div>
 </body>
+
 </html>
