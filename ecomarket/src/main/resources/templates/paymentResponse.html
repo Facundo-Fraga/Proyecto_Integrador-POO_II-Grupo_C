@@ -32,15 +32,6 @@
     <div class="container">
         <h1 th:text="${title}">Título</h1>
         <p th:text="${message}">Mensaje</p>
-        <p th:if="${paymentId != null}">
-            <strong>ID de Pago:</strong> <span th:text="${paymentId}">ID</span>
-        </p>
-        <p th:if="${status != null}">
-            <strong>Estado:</strong> <span th:text="${status}">Estado</span>
-        </p>
-        <p th:if="${externalReference != null}">
-            <strong>Referencia:</strong> <span th:text="${externalReference}">Referencia</span>
-        </p>
         <a href="/clientMenu" class="btn">Volver al Inicio</a>
     </div>
 </body>

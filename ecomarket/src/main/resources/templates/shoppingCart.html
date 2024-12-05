@@ -148,9 +148,10 @@
             </div>
         </div>
 
-
         <div class="cart-summary">
-            Total: <span id="cart-total">$0.00</span>
+            <p>Total Productos: <span id="cart-total-productos">$0.00</span></p>
+            <p>Costo de Envío: <span id="shipping-cost">$0.00</span></p>
+            <p><strong>Total: <span id="cart-total">$0.00</span></strong></p>
         </div>
 
         <div class="buttons">
@@ -180,9 +181,22 @@
     </div>
 
     <script>
-        // Función para actualizar el subtotal y el total
+        function obtenerCostoEnvio() {
+            const tipoEnvio = document.getElementById('tipoEnvio').value;
+            switch (tipoEnvio) {
+                case 'local':
+                    return 7000;
+                case 'provincial':
+                    return 14000;
+                case 'nacional':
+                    return 20000;
+                default:
+                    return 0;
+            }
+        }
+
         function actualizarTotales() {
-            let total = 0;
+            let totalProductos = 0;
 
             document.querySelectorAll('.product').forEach(product => {
                 const cantidad = parseInt(product.querySelector('.product-quantity').value) || 0;
@@ -190,20 +204,25 @@
                 const subtotal = cantidad * precio;
 
                 product.querySelector('.product-subtotal').innerText = 'Subtotal: $' + subtotal.toFixed(2);
-                total += subtotal;
+                totalProductos += subtotal;
             });
 
-            document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+            const costoEnvio = obtenerCostoEnvio();
+            const totalFinal = totalProductos + costoEnvio;
+
+            document.getElementById('cart-total-productos').innerText = '$' + totalProductos.toFixed(2);
+            document.getElementById('shipping-cost').innerText = '$' + costoEnvio.toFixed(2);
+            document.getElementById('cart-total').innerText = '$' + totalFinal.toFixed(2);
         }
 
-        // Evento para actualizar los totales al cambiar cantidades
         document.getElementById('cart').addEventListener('input', event => {
             if (event.target.classList.contains('product-quantity')) {
                 actualizarTotales();
             }
         });
 
-        // Inicializa los totales
+        document.getElementById('tipoEnvio').addEventListener('change', actualizarTotales);
+
         actualizarTotales();
     </script>
 </body>
