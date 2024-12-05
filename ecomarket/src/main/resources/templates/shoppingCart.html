@@ -131,7 +131,7 @@
                 <div class="product">
                     <div class="product-details">
                         <span class="product-name" th:text="${entry.key.nombre}">Producto</span>
-                        <span class="product-price" th:text="'$' + ${entry.key.precioBase}">Precio</span>
+                        <span class="product-price" th:text="'$' + ${entry.key.precioFinal}">Precio</span>
                         <form action="/update-cantidad" method="post" class="update-form">
                             <input type="hidden" name="idProducto" th:value="${entry.key.idProducto}" />
                             <input class="product-quantity" type="number" name="cantidad" th:value="${entry.value}"

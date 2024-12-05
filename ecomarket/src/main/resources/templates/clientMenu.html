@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú de Productos</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -19,7 +17,6 @@
             padding: 20px;
         }
 
-
         .container {
             background-color: white;
             border-radius: 12px;
@@ -29,7 +26,6 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
-
         header {
             display: flex;
             justify-content: space-between;
@@ -37,22 +33,11 @@
             margin-bottom: 20px;
         }
 
-
         h1 {
             font-size: 28px;
             color: #333;
             margin: 0;
         }
-
-        .header-buttons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* Espaciado entre los botones */
-        }
-
-        .logout-button,
-        .cart-button {
 
         .button-container {
             display: flex;
@@ -69,34 +54,11 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .logout-button {
-            background-color: #db0000;
-        }
-
 
         .logout-button:hover {
             background-color: #af0000;
         }
-
-        .cart-button {
-            background-color: #007bff;
-            /* Azul para el botón de carrito */
-        }
-
-        .cart-button:hover {
-            background-color: #0056b3;
-        }
-
-        .cart-button i {
-            font-size: 18px;
-            /* Tamaño del ícono */
-        }
-
 
         .cart-button {
             background-color: #28a745;
@@ -125,7 +87,6 @@
             gap: 20px;
         }
 
-
         .item-card {
             background-color: #fff;
             border-radius: 10px;
@@ -136,12 +97,10 @@
             transition: transform 0.2s, box-shadow 0.3s;
         }
 
-
         .item-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
-
 
         .item-title {
             font-size: 20px;
@@ -150,13 +109,11 @@
             color: #333;
         }
 
-
         .item-info {
             font-size: 14px;
             color: #666;
             margin-bottom: 10px;
         }
-
 
         .item-price {
             margin-bottom: 10px;
@@ -164,7 +121,6 @@
             color: #28a745;
             font-weight: bold;
         }
-
 
         .item-price.strike {
             text-decoration: line-through;
@@ -178,21 +134,16 @@
             margin: 5px 0 10px;
         }
 
-
         li {
             font-size: 14px;
             color: #555;
         }
-
 
         .actions {
             margin-top: auto;
             display: flex;
             gap: 10px;
         }
-
-        .details-btn,
-        .add-to-cart-btn {
 
         .details-btn,
         .add-to-cart-btn {
@@ -206,21 +157,17 @@
             transition: background-color 0.3s ease;
         }
 
-
         .details-btn {
             background-color: #007bff;
         }
-
 
         .details-btn:hover {
             background-color: #0056b3;
         }
 
-
         .add-to-cart-btn {
             background-color: #28a745;
         }
-
 
         .add-to-cart-btn:hover {
             background-color: #218838;
@@ -245,21 +192,16 @@
     </script>
 </head>
 
-
 <body>
     <div class="container">
         <header>
             <h1>Menú de Productos</h1>
-            <div class="header-buttons">
+            <div class="button-container">
                 <button type="button" class="cart-button" onclick="window.location.href='/shoppingCart'">
                     <i class="fas fa-shopping-cart"></i> Ir al Carrito
                 </button>
-                <button type="button" class="logout-button" onclick="window.location.href='/logout'">Cerrar
+                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar
                     Sesión</button>
-            </div>
-            <div class="button-container">
-                <button type="button" class="cart-button" onclick="window.location.href='/cart';">Ver Carrito</button>
-                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar Sesión</button>
             </div>
         </header>
 
@@ -275,8 +217,6 @@
                 <div class="item-title" th:text="${producto.nombre}">Nombre del producto</div>
                 <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto
                 </div>
-                <div class="item-price" th:text="'Precio: $' + ${producto.precioBase}">Precio</div>
-                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto</div>
                 <!-- Mostrar precios -->
                 <div>
                     <div class="item-price strike" th:if="${producto.tieneDescuento()}"
@@ -295,26 +235,13 @@
                 </ul>
                 <!-- Productos incluidos limitados -->
                 <ul th:if="${producto.class.simpleName == 'ProductoPaquete'}">
-                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}" th:text="'• ' + ${p.nombre}">
+                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}"
+                        th:text="'• ' + ${p.nombre}">
                         Producto incluido
                     </li>
                 </ul>
 
                 <div class="actions">
-                    <button type="button" class="details-btn"
-                        th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">Ver
-                        detalles</button>
-                        <form action="/add" method="post" th:action="@{/add}">
-        <!-- Incluye un campo oculto con el ID del producto -->
-        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
-        
-        <!-- Botón para enviar el formulario -->
-        <button type="submit" class="add-to-cart-btn">
-            <i class="fas fa-cart-plus"></i> Agregar al carrito
-        </button>
-    </form>
-
-
                     <!-- Mostrar botón de editar producto solo si es un ProductoSingular -->
                     <button th:if="${producto.class.simpleName == 'ProductoSingular'}" class="details-btn"
                         th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">
@@ -325,10 +252,15 @@
                         th:onclick="'location.href=\'/packageDetails/' + ${producto.idProducto} + '\''">
                         Ver detalles
                     </button>
-                    <button class="add-to-cart-btn"
-                        th:onclick="'window.location.href=\'/cart/add/' + ${producto.idProducto} + '\''">
-                        Añadir al carrito
-                    </button>
+                    <form action="/add" method="post" th:action="@{/add}">
+                        <!-- Incluye un campo oculto con el ID del producto -->
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                        
+                        <!-- Botón para enviar el formulario -->
+                        <button type="submit" class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i> Agregar al carrito
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
