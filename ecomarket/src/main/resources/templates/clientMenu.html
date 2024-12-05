@@ -198,7 +198,8 @@
             <h1>Menú de Productos</h1>
             <div class="button-container">
                 <button type="button" class="cart-button" onclick="window.location.href='/cart';">Ver Carrito</button>
-                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar Sesión</button>
+                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar
+                    Sesión</button>
             </div>
         </header>
 
@@ -212,7 +213,8 @@
             <!-- Iterar sobre la lista de productos -->
             <div th:each="producto : ${productos}" class="item-card">
                 <div class="item-title" th:text="${producto.nombre}">Nombre del producto</div>
-                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto</div>
+                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto
+                </div>
                 <!-- Mostrar precios -->
                 <div>
                     <div class="item-price strike" th:if="${producto.tieneDescuento()}"
@@ -231,7 +233,8 @@
                 </ul>
                 <!-- Productos incluidos limitados -->
                 <ul th:if="${producto.class.simpleName == 'ProductoPaquete'}">
-                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}" th:text="'• ' + ${p.nombre}">
+                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}"
+                        th:text="'• ' + ${p.nombre}">
                         Producto incluido
                     </li>
                 </ul>
