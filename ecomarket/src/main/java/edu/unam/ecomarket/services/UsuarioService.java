@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository repository;
+    protected UsuarioRepository repository;
 
 
 

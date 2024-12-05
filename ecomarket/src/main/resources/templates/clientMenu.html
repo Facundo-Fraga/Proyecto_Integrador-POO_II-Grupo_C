@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
             padding: 20px;
         }
 
+
         .container {
             background-color: white;
             border-radius: 12px;
@@ -27,12 +29,14 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
+
 
         h1 {
             font-size: 28px;
@@ -49,6 +53,15 @@
 
         .logout-button,
         .cart-button {
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .logout-button,
+        .cart-button {
+            background-color: #db0000;
             border: none;
             color: white;
             padding: 10px 15px;
@@ -64,6 +77,7 @@
         .logout-button {
             background-color: #db0000;
         }
+
 
         .logout-button:hover {
             background-color: #af0000;
@@ -83,11 +97,34 @@
             /* Tamaño del ícono */
         }
 
+
+        .cart-button {
+            background-color: #28a745;
+        }
+
+        .cart-button:hover {
+            background-color: #218838;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
         .menu {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
+
 
         .item-card {
             background-color: #fff;
@@ -99,10 +136,12 @@
             transition: transform 0.2s, box-shadow 0.3s;
         }
 
+
         .item-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
+
 
         .item-title {
             font-size: 20px;
@@ -111,18 +150,26 @@
             color: #333;
         }
 
+
         .item-info {
             font-size: 14px;
             color: #666;
             margin-bottom: 10px;
         }
 
+
         .item-price {
-            margin-top: 10px;
             margin-bottom: 10px;
             font-size: 18px;
             color: #28a745;
             font-weight: bold;
+        }
+
+
+        .item-price.strike {
+            text-decoration: line-through;
+            color: #dc3545;
+            font-size: 16px;
         }
 
         ul {
@@ -131,16 +178,21 @@
             margin: 5px 0 10px;
         }
 
+
         li {
             font-size: 14px;
             color: #555;
         }
+
 
         .actions {
             margin-top: auto;
             display: flex;
             gap: 10px;
         }
+
+        .details-btn,
+        .add-to-cart-btn {
 
         .details-btn,
         .add-to-cart-btn {
@@ -154,23 +206,45 @@
             transition: background-color 0.3s ease;
         }
 
+
         .details-btn {
             background-color: #007bff;
         }
+
 
         .details-btn:hover {
             background-color: #0056b3;
         }
 
+
         .add-to-cart-btn {
             background-color: #28a745;
         }
+
 
         .add-to-cart-btn:hover {
             background-color: #218838;
         }
     </style>
+    <script>
+        function filtrarProductos() {
+            const filtro = document.getElementById("searchInput").value.toLowerCase();
+            const productos = document.querySelectorAll(".item-card");
+
+            productos.forEach(producto => {
+                const titulo = producto.querySelector(".item-title").textContent.toLowerCase();
+                const descripcion = producto.querySelector(".item-info").textContent.toLowerCase();
+
+                if (titulo.includes(filtro) || descripcion.includes(filtro)) {
+                    producto.style.display = "block";
+                } else {
+                    producto.style.display = "none";
+                }
+            });
+        }
+    </script>
 </head>
+
 
 <body>
     <div class="container">
@@ -183,7 +257,18 @@
                 <button type="button" class="logout-button" onclick="window.location.href='/logout'">Cerrar
                     Sesión</button>
             </div>
+            <div class="button-container">
+                <button type="button" class="cart-button" onclick="window.location.href='/cart';">Ver Carrito</button>
+                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar Sesión</button>
+            </div>
         </header>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar productos..." onkeyup="filtrarProductos()">
+        </div>
+
+        <!-- Menú de productos -->
         <div class="menu">
             <!-- Iterar sobre la lista de productos -->
             <div th:each="producto : ${productos}" class="item-card">
@@ -191,6 +276,30 @@
                 <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto
                 </div>
                 <div class="item-price" th:text="'Precio: $' + ${producto.precioBase}">Precio</div>
+                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto</div>
+                <!-- Mostrar precios -->
+                <div>
+                    <div class="item-price strike" th:if="${producto.tieneDescuento()}"
+                        th:text="'$' + ${producto.precioBase}">Precio Base</div>
+                    <div class="item-price" th:if="${producto.tieneDescuento()}"
+                        th:text="'Precio Final: $' + ${producto.getPrecioFinal()}">Precio con Descuento</div>
+                    <div class="item-price" th:unless="${producto.tieneDescuento()}"
+                        th:text="'Precio Base: $' + ${producto.precioBase}">Precio Base</div>
+                </div>
+                <!-- Detalles limitados -->
+                <ul th:if="${producto.class.simpleName == 'ProductoSingular'}">
+                    <li th:each="detalle, iter : ${producto.detalles}" th:if="${iter.count <= 3}"
+                        th:text="'• ' + ${detalle.key} + ': ' + ${detalle.value}">
+                        Detalle
+                    </li>
+                </ul>
+                <!-- Productos incluidos limitados -->
+                <ul th:if="${producto.class.simpleName == 'ProductoPaquete'}">
+                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}" th:text="'• ' + ${p.nombre}">
+                        Producto incluido
+                    </li>
+                </ul>
+
                 <div class="actions">
                     <button type="button" class="details-btn"
                         th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">Ver
@@ -206,9 +315,24 @@
     </form>
 
 
+                    <!-- Mostrar botón de editar producto solo si es un ProductoSingular -->
+                    <button th:if="${producto.class.simpleName == 'ProductoSingular'}" class="details-btn"
+                        th:onclick="'window.location.href=\'/productDetails/' + ${producto.idProducto} + '\''">
+                        Ver detalles
+                    </button>
+                    <!-- Mostrar botón de editar paquete solo si no es un ProductoSingular -->
+                    <button th:if="${producto.class.simpleName != 'ProductoSingular'}" class="details-btn"
+                        th:onclick="'location.href=\'/packageDetails/' + ${producto.idProducto} + '\''">
+                        Ver detalles
+                    </button>
+                    <button class="add-to-cart-btn"
+                        th:onclick="'window.location.href=\'/cart/add/' + ${producto.idProducto} + '\''">
+                        Añadir al carrito
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
