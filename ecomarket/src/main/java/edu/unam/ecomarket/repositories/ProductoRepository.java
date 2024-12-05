@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import edu.unam.ecomarket.modelo.Producto;
+import edu.unam.ecomarket.modelo.ProductoPaquete;
 import edu.unam.ecomarket.modelo.ProductoSingular;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long>{
@@ -16,4 +17,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long>{
 
     @Query("SELECT p FROM Producto p WHERE TYPE(p) = ProductoSingular AND p.id = :id")
     Optional<ProductoSingular> findProductoSingularById(@Param("id") Long id);
+
+    @Query("SELECT p FROM Producto p WHERE TYPE(p) = ProductoPaquete AND p.id = :id")
+    Optional<ProductoPaquete> findPaqueteById(@Param("id") Long id);
 }

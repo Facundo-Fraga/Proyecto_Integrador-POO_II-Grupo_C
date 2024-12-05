@@ -5,11 +5,11 @@ import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("PORCENTAJE")
+@DiscriminatorValue("MONTO_FIJO")
 @NoArgsConstructor
-public class DescuentoPorcentaje extends EstrategiaDescuento {
+public class DescuentoFijo extends EstrategiaDescuento {
 
     public Double aplicarDescuento(Double precio) {
-        return precio - (precio * (valorDescuento / 100));
+        return Math.max(1, precio - valorDescuento);
     }
 }

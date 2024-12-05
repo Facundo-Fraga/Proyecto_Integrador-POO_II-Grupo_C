@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Paquete</title>
+    <title>Editar Paquete</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -106,6 +106,20 @@
         td button:hover {
             background-color: #c9302c;
         }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
         .return_button {
             width: 100%;
             padding: 12px;
@@ -121,10 +135,27 @@
             background-color: #bb2020;
         }
     </style>
+    <script>
+        function filtrarProductos() {
+            const filtro = document.getElementById("searchInput").value.toLowerCase();
+            const filas = document.querySelectorAll("#product-list tr");
+
+            filas.forEach(fila => {
+                const nombre = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                const descripcion = fila.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+                if (nombre.includes(filtro) || descripcion.includes(filtro)) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-    <form action="#" th:action="@{/packageCreator/crear}" th:object="${productoPaquete}" method="post">
-        <h1>Crear Paquete</h1>
+    <form th:action="@{'/packageEditor/' + ${productoPaquete.idProducto} + '/editar'}" th:object="${productoPaquete}" method="post">
+        <h1>Editar Paquete</h1>
 
         <!-- Nombre del paquete -->
         <label for="nombre">Nombre del Paquete</label>
@@ -134,11 +165,12 @@
         <label for="descripcion">Descripción</label>
         <input type="text" id="descripcion" th:field="*{descripcion}" placeholder="Descripción del Paquete" required>
 
-        <!-- Barra de búsqueda -->
-        <label for="search">Buscar Producto Singular</label>
-        <input type="text" id="search" placeholder="Buscar..." onkeyup="filterProducts()">
-        
-        <!-- Lista de productos singulares -->
+        <!-- Barra de búsqueda para filtrar productos singulares -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o descripción..." onkeyup="filtrarProductos()">
+        </div>
+
+        <!-- Lista de productos seleccionados -->
         <table>
             <thead>
                 <tr>
@@ -150,7 +182,10 @@
             </thead>
             <tbody id="product-list">
                 <tr th:each="productoSingular : ${productosSingulares}">
-                    <td><input type="checkbox" th:value="${productoSingular.idProducto}" th:name="productosSeleccionados" /></td>
+                    <td>
+                        <input type="checkbox" th:checked="${productoPaquete.productos.contains(productoSingular)}" 
+                               th:value="${productoSingular.idProducto}" th:name="productosSeleccionados" />
+                    </td>
                     <td th:text="${productoSingular.nombre}"></td>
                     <td th:text="${productoSingular.descripcion}"></td>
                     <td th:text="${productoSingular.precioBase}"></td>
@@ -158,26 +193,8 @@
             </tbody>
         </table>
 
-        <button type="submit">Crear Paquete</button>
-        <button type="reset" class="return_button" onclick="location.href='/productsManager';">Cancelar</button>
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" class="return_button" onclick="location.href='/productsManager';">Cancelar</button>
     </form>
-
-    <script>
-        // Función para filtrar productos por nombre
-        function filterProducts() {
-            let input = document.getElementById('search');
-            let filter = input.value.toUpperCase();
-            let table = document.getElementById('product-list');
-            let tr = table.getElementsByTagName('tr');
-
-            for (let i = 0; i < tr.length; i++) {
-                let td = tr[i].getElementsByTagName('td')[1];
-                if (td) {
-                    let txtValue = td.textContent || td.innerText;
-                    tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-                }
-            }
-        }
-    </script>
 </body>
 </html>
