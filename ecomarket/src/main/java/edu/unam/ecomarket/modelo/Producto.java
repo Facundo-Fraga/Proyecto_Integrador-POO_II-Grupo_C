@@ -1,12 +1,10 @@
 package edu.unam.ecomarket.modelo;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import jakarta.persistence.CollectionTable;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,10 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,29 +35,43 @@ public abstract class Producto {
     Long idProducto;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     protected String nombre;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     protected String descripcion;
-
-    @ElementCollection
-    @CollectionTable(
-        name = "producto_detalles",
-        joinColumns = @JoinColumn(name = "producto_id")
-    )
-    @MapKeyColumn(name = "clave")
-    @Column(name = "valor")
-    protected Map<String, String> detalles = new HashMap<>();
     
     @Column(nullable = false)
     @NotNull
-    protected double precio;
+    protected double precioBase;
 
-    public String getDetalle(String detalle) {
-        return detalles.get(detalle);
+    @ManyToMany
+    @JoinTable(
+        name = "producto_descuento",
+        joinColumns = @JoinColumn(name = "producto_id"),
+        inverseJoinColumns = @JoinColumn(name = "descuento_id")
+    )
+    private List<Descuento> descuentos;
+
+    public Boolean tieneDescuento() {
+        if(descuentos == null || descuentos.isEmpty()) {
+            return false;
+        }
+        return descuentos.stream().anyMatch(Descuento::esAplicable);
     }
 
-    abstract void aplicarDescuento(double descuento);
+    public double getPrecioFinal() {
+        Double precioFinal = this.precioBase;
+
+        if(descuentos != null) {
+            for (Descuento index : descuentos) {
+                if (index.esAplicable()) {
+                    precioFinal = index.aplicarDescuento(precioFinal);
+                }
+            }
+        }
+
+        return precioFinal;
+    }
 }

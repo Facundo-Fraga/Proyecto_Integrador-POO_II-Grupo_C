@@ -20,9 +20,10 @@ public class MpNotifyDTO {
     private DataMpDTO data;
 
     @Override
-    public String toString() {
-        return "MpNotifyDTO [id=" + id + ", liveMode=" + liveMode + ", type=" + type + ", dateCreated=" + dateCreated
-                + ", userID=" + userID + ", apiVersion=" + apiVersion + ", action=" + action + ", data="
-                + data.toString() + "]";
-    }
+public String toString() {
+    return "MpNotifyDTO [id=" + id + ", liveMode=" + liveMode + ", type=" + type + ", dateCreated=" + dateCreated
+            + ", userID=" + userID + ", apiVersion=" + apiVersion + ", action=" + action + ", data="
+            + (data != null ? data.toString() : "null") + "]";
+}
+
 }

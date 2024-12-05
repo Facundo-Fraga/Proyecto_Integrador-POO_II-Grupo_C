@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -26,26 +27,30 @@ import lombok.Setter;
 public class DetallePedido {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_seq")
-    @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "detalle_pedido_seq")
+@SequenceGenerator(name = "detalle_pedido_seq", sequenceName = "detalle_pedido_sequence", allocationSize = 1)
+private Long idDetallePedido;
 
-    private Long idDetallePedido;
+
+    @Column
+    private int cantidad;
     
     @Column
+    private double subTotal;
 
-    private Long cantidad;
-    
-    @Column
-
-    private double precioTotal;
-    
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
-
-    private Pedido pedido;
-    
-
-    @Transient
-
+    @JoinColumn(name = "producto_id_producto")
     private Producto producto;
+
+    public DetallePedido(int cantidad, Producto producto) {
+        this.cantidad = cantidad;
+        this.producto = producto;
+        
+        this.subTotal = calcularSubTotal(producto, cantidad);
+    }
+
+    private double calcularSubTotal(Producto producto, int cantidad){
+        
+        return producto.getPrecioFinal() * cantidad;   
+    }
 }

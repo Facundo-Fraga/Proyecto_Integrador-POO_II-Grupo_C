@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Paquete</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input, select, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            border-color: #00b818;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 184, 24, 0.4);
+        }
+
+        button {
+            width: 100%;
+            background-color: #00b818;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #009b14;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        td button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        td button:hover {
+            background-color: #c9302c;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .return_button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #000000;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return_button:hover {
+            background-color: #bb2020;
+        }
+    </style>
+    <script>
+        function filtrarProductos() {
+            const filtro = document.getElementById("searchInput").value.toLowerCase();
+            const filas = document.querySelectorAll("#product-list tr");
+
+            filas.forEach(fila => {
+                const nombre = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                const descripcion = fila.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+                if (nombre.includes(filtro) || descripcion.includes(filtro)) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <form th:action="@{'/packageEditor/' + ${productoPaquete.idProducto} + '/editar'}" th:object="${productoPaquete}" method="post">
+        <h1>Editar Paquete</h1>
+
+        <!-- Nombre del paquete -->
+        <label for="nombre">Nombre del Paquete</label>
+        <input type="text" id="nombre" th:field="*{nombre}" placeholder="Nombre del Paquete" required>
+
+        <!-- Descripción del paquete -->
+        <label for="descripcion">Descripción</label>
+        <input type="text" id="descripcion" th:field="*{descripcion}" placeholder="Descripción del Paquete" required>
+
+        <!-- Barra de búsqueda para filtrar productos singulares -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o descripción..." onkeyup="filtrarProductos()">
+        </div>
+
+        <!-- Lista de productos seleccionados -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                <tr th:each="productoSingular : ${productosSingulares}">
+                    <td>
+                        <input type="checkbox" th:checked="${productoPaquete.productos.contains(productoSingular)}" 
+                               th:value="${productoSingular.idProducto}" th:name="productosSeleccionados" />
+                    </td>
+                    <td th:text="${productoSingular.nombre}"></td>
+                    <td th:text="${productoSingular.descripcion}"></td>
+                    <td th:text="${productoSingular.precioBase}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" class="return_button" onclick="location.href='/productsManager';">Cancelar</button>
+    </form>
+</body>
+</html>

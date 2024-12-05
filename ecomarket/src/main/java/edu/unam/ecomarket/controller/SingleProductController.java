@@ -39,11 +39,11 @@ public class SingleProductController {
         if (resultado.hasErrors()) {
             return "singleProductCreator";
         }
-        service.crearProductoConDetalles(productoSingular, claves, valores);
+        service.crearProductoSingular(productoSingular, claves, valores);
         return "redirect:/productsManager";
     }
 
-    @GetMapping("/singleProductEditor/{id}")
+    @GetMapping("/singleProductEditor/{id}/editar")
     public String mostrarFormularioEdicion(@PathVariable String id, Model model) {
         try {
             Long idProducto = Long.parseLong(id);
@@ -66,7 +66,7 @@ public class SingleProductController {
         if (resultado.hasErrors()) {
             return "singleProductEditor";
         }
-        service.actualizarProductoConDetalles(id, productoSingular, claves, valores);
+        service.actualizarProductoSingular(id, productoSingular, claves, valores);
         return "redirect:/productsManager";
     }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Gestión de Descuentos</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -24,7 +24,7 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-width: 1000px;
             width: 100%;
-            height: 825px;
+            height: 750px;
         }
 
         h1 {
@@ -50,7 +50,7 @@
 
         .table-container {
             width: 100%;
-            height: 525px;
+            height: 500px;
             overflow-y: auto;
         }
 
@@ -143,18 +143,20 @@
     </style>
     <script>
         function confirmarEliminacion(url) {
-            if (confirm("¿Está seguro de que desea eliminar este producto? Esta acción no se puede deshacer.")) {
+            if (confirm("¿Está seguro de que desea eliminar este descuento? Esta acción no se puede deshacer.")) {
                 window.location.href = url;
             }
         }
 
-        function filtrarProductos() {
+        function filtrarDescuentos() {
             const filtro = document.getElementById("searchInput").value.toLowerCase();
             const filas = document.querySelectorAll("tbody tr");
 
             filas.forEach(fila => {
-                const nombre = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
-                if (nombre.includes(filtro)) {
+                const nombre = fila.querySelector("td:nth-child(1)").textContent.toLowerCase();
+                const estrategia = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+
+                if (nombre.includes(filtro) || estrategia.includes(filtro)) {
                     fila.style.display = "";
                 } else {
                     fila.style.display = "none";
@@ -166,40 +168,32 @@
 
 <body>
     <div class="container">
-        <h1>Lista de Productos</h1>
+        <h1>Gestión de Descuentos</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar por nombre..." onkeyup="filtrarProductos()">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre o estrategia..." onkeyup="filtrarDescuentos()">
         </div>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
-                        <th>Precio Base</th>
-                        <th>Precio con Descuento</th>
-                        <th>Es Paquete</th>
+                        <th>Tipo de Estrategia</th>
+                        <th>Valor del Descuento</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="producto : ${productos}">
-                        <td th:text="${producto.idProducto}"></td>
-                        <td th:text="${producto.nombre}"></td>
-                        <td th:text="${producto.precioBase}"></td>
-                        <td th:text="${producto.tieneDescuento() ? producto.getPrecioFinal() : 'N/A'}"></td>
-                        <td th:text="${producto.class.simpleName == 'ProductoSingular' ? 'No' : 'Sí'}"></td>
+                    <tr th:each="descuento : ${descuentos}">
+                        <td th:text="${descuento.nombre}">Descuento A</td>
+                        <td th:text="${descuento.estrategia.class.simpleName}">DescuentoPorcentaje</td>
+                        <td th:text="${descuento.estrategia.valorDescuento}">10%</td>
+                        <td th:text="${descuento.fechaInicio}">2024-01-01</td>
+                        <td th:text="${descuento.fechaFin}">2024-12-31</td>
                         <td>
-                            <button th:if="${producto.class.simpleName == 'ProductoSingular'}"
-                                th:onclick="'location.href=\'/singleProductEditor/' + ${producto.idProducto} + '/editar\''">
-                                Editar Producto
-                            </button>
-                            <button th:if="${producto.class.simpleName != 'ProductoSingular'}"
-                                th:onclick="'location.href=\'/packageEditor/' + ${producto.idProducto} + '/editar\''">
-                                Editar Paquete
-                            </button>
                             <button type="button" class="danger"
-                                th:onclick="'confirmarEliminacion(\'/productsManager/eliminar/' + ${producto.idProducto} + '\')'">
+                                th:onclick="'confirmarEliminacion(\'/manageDiscounts/eliminar/' + ${descuento.idDescuento} + '\')'">
                                 Eliminar
                             </button>
                         </td>
@@ -207,8 +201,7 @@
                 </tbody>
             </table>
         </div>
-        <button class="add-button" onclick="location.href='/singleProductCreator';">+ Agregar Producto</button>
-        <button class="add-button" onclick="location.href='/packageCreator';">+ Agregar Paquete</button>
+        <button class="add-button" onclick="location.href='/discountsCreator';">+ Crear Descuento</button>
         <button class="back-button" onclick="location.href='/mainMenu';">Volver al Menú</button>
     </div>
 </body>

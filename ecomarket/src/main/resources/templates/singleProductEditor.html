@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar o Crear Producto</title>
+    <title>Editar Producto</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -163,35 +163,27 @@
         <small class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en Nombre</small>
     
         <label for="precio">Precio</label>
-        <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="Ingrese el precio del producto" th:field="*{precio}" required>
+        <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="Ingrese el precio del producto" th:field="*{precioBase}" required>
     
         <label for="descripcion">Descripción</label>
         <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese una descripción del producto" th:field="*{descripcion}" required>
         <small class="error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error en Descripción</small>
     
         <label>Características</label>
-        <table id="tablaCaracteristicas" style="width: 100%; margin-bottom: 15px; border-collapse: collapse;">
+        <table id="tablaCaracteristicas">
             <thead>
                 <tr>
-                    <th style="text-align: left; padding: 5px;">Clave</th>
-                    <th style="text-align: left; padding: 5px;">Valor</th>
-                    <th style="text-align: left; padding: 5px;">Acciones</th>
+                    <th>Clave</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="entry : ${productoSingular.detalles}">
-                <td>
-                    <input type="text" th:value="${entry.key}" 
-                           name="detalles_clave[]" placeholder="Clave" required />
-                </td>
-                <td>
-                    <input type="text" th:value="${entry.value}" 
-                           name="detalles_valor[]" placeholder="Valor" required />
-                </td>
-                <td>
-                    <button type="button" onclick="eliminarFila(this)">Eliminar</button>
-                </td>
-            </tr>
+                    <td><input type="text" th:value="${entry.key}" name="detalles_clave[]" placeholder="Clave" required /></td>
+                    <td><input type="text" th:value="${entry.value}" name="detalles_valor[]" placeholder="Valor" required /></td>
+                    <td><button type="button" onclick="eliminarFila(this)">Eliminar</button></td>
+                </tr>
             </tbody>
         </table>
         <button type="button" onclick="agregarFila()">+ Agregar Característica</button>
