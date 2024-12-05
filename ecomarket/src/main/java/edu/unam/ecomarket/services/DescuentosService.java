@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.unam.ecomarket.modelo.Descuento;
-import edu.unam.ecomarket.modelo.DescuentoFijo;
-import edu.unam.ecomarket.modelo.DescuentoPorcentaje;
 import edu.unam.ecomarket.modelo.EstrategiaDescuento;
 import edu.unam.ecomarket.modelo.Producto;
 import edu.unam.ecomarket.repositories.DescuentosRepository;
