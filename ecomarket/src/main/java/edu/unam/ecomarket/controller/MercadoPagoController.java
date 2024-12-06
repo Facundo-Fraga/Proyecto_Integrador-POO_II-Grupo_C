@@ -112,7 +112,6 @@ public class MercadoPagoController {
         // Log de la notificación de pago
         System.out.println("Notificación de pago recibida: " + mpNotify.toString());
 
-        // Aquí puedes manejar la notificación del pago (actualizar estado, etc.)
         return ResponseEntity.ok().build();
     }
 }
