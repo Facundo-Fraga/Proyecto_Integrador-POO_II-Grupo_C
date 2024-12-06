@@ -2,9 +2,9 @@
 
 **Erreguerena, Agustín Iñaki:** Responsable del diseño de pantallas, implementación de plantillas, integración con la API de Mercado Pago y apoyo en el modelado del diagrama de clases.
 
-**Fraga, Facundo Román:** Encargado del diseño de pantallas y soporte en la implementación de las entidades JPA.
+**Fraga, Facundo Román:** Encargado del diseño de pantallas y soporte en la implementación de las entidades JPA y encargado del testing.
 
-**Piloni, Fabrizio Julián:** Responsable de la creación del diagrama de clases y de la implementación de las entidades JPA.
+**Piloni, Fabrizio Julián:** Responsable de la creación del diagrama de clases y de la implementación de las entidades JPA y encargado del testing.
 
 **Pulikoski, Mauricio Ezequiel:** Responsable de las funcionalidades de alta, baja y modificación de productos individuales, diseño e implementación de plantillas, y desarrollo del sistema de registro e inicio de sesión de usuarios.
 
@@ -190,37 +190,37 @@ classDiagram
 
 ## **Historias de Usuario**
 
-1. **HU01: Crear descuentos en productos**  
+1. **HU01: Crear descuentos**  
    - **Criterios de aceptación**:
      1. Definir un porcentaje o monto fijo de descuento y asociarlo a productos específicos.
      2. Guardar el descuento en la base de datos y aplicarlo automáticamente.
      3. Reflejar el descuento en el precio final visible en la tienda en línea.
 
-2. **HU02: Buscar productos por categorías**  
+2. **HU04: Buscar productos por nombre**  
    - **Criterios de aceptación**:
-     1. Permitir al cliente buscar productos por nombre o categoría.
+     1. Permitir al cliente buscar productos por nombre.
      2. Mostrar solo los productos que coinciden con la búsqueda.
      3. No mostrar productos si no hay coincidencias.
 
-3. **HU03: Ver detalles del pedido antes de confirmar la compra**  
+3. **HU05: Ver detalles del pedido antes de confirmar la compra (Carrito)**  
    - **Criterios de aceptación**:
      1. Mostrar un resumen del pedido con precios detallados.
      2. Incluir descuentos y cargos adicionales en el total.
      3. Requerir confirmación antes de procesar el pago.
 
-4. **HU04: Programar la duración de los descuentos**  
+4. **HU06: Programar la duración de los descuentos**  
    - **Criterios de aceptación**:
      1. Seleccionar fechas de inicio y fin del descuento.
      2. Activar y desactivar automáticamente los descuentos en las fechas especificadas.
      3. Mostrar el precio regular al terminar el descuento.
 
-5. **HU05: Aplicar descuentos automáticamente al agregar productos al carrito**  
+5. **HU07: Aplicar descuentos en el carrito**  
    - **Criterios de aceptación**:
      1. Aplicar automáticamente los descuentos al agregar productos al carrito.
      2. Mostrar el precio final en el carrito con los descuentos aplicados.
      3. Retirar el descuento si el producto se elimina del carrito.
 
-6. **HU06: Ver productos en oferta y descuentos aplicables**  
+6. **HU08: Ver productos en oferta**  
    - **Criterios de aceptación**:
      1. Mostrar el precio original y el precio con descuento.
      2. Si no hay promociones, mostrar solo precios regulares.
@@ -236,7 +236,7 @@ classDiagram
 
 ---
 
-### **HU01: Crear descuentos en productos**
+### **HU01: Crear descuentos**  
 1. **Backend**:
    - Implementar repositorios y servicios para CRUD de descuentos.
 2. **Frontend**:
@@ -246,7 +246,7 @@ classDiagram
 
 ---
 
-### **HU02: Buscar productos por categorías**
+### **HU04: Buscar productos por nombre** 
 1. **Backend**:
    - Implementar servicio de búsqueda en el repositorio de productos.
 2. **Frontend**:
@@ -256,7 +256,7 @@ classDiagram
 
 ---
 
-### **HU03: Ver detalles del pedido antes de confirmar la compra**
+### **HU05: Ver detalles del pedido antes de confirmar la compra (Carrito)** 
 1. **Backend**:
    - Crear servicio para generar el resumen del pedido.
 2. **Frontend**:
@@ -266,7 +266,7 @@ classDiagram
 
 ---
 
-### **HU04: Programar la duración de los descuentos**
+### **HU06: Programar la duración de los descuentos**
 1. **Backend**:
    - Implementar lógica para activar/desactivar descuentos automáticamente.
 2. **Frontend**:
@@ -276,7 +276,7 @@ classDiagram
 
 ---
 
-### **HU05: Aplicar descuentos automáticamente al carrito**
+### **HU07: Aplicar descuentos en el carrito**  
 1. **Backend**:
    - Modificar la lógica del carrito para incluir descuentos.
 2. **Frontend**:
@@ -286,7 +286,7 @@ classDiagram
 
 ---
 
-### **HU06: Ver productos en oferta y descuentos aplicables**
+### **HU08: Ver productos en oferta** 
 1. **Backend**:
    - Crear un servicio para listar productos con descuentos activos.
 2. **Frontend**:
