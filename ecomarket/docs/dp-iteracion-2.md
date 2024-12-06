@@ -9,46 +9,193 @@
 **Pulikoski, Mauricio Ezequiel:** Responsable de las funcionalidades de alta, baja y modificación de productos individuales, diseño e implementación de plantillas, y desarrollo del sistema de registro e inicio de sesión de usuarios.
 
 # Diseño OO
-![ ](/ecomarket/docs/EcoMarketDiagramaDeClases.png)
+```mermaid
+classDiagram
+    Usuario <|-- Cliente
+    Usuario <|-- Administrador
+    Usuario : - Long idUsuario
+    Usuario : - String nombre
+    Usuario : - String contrasenia
+    Usuario : - String email
+    
+    class Cliente {
+    }
+
+    class Administrador {
+    }
+
+    class Producto {
+        <<abstract>>
+        - Long idProducto
+        - String nombre
+        - String descripcion
+        - double precioBase
+        - List<Descuento> descuentos
+        + Boolean tieneDescuento()
+        + double getPrecioFinal()
+    }
+
+    Producto <|-- ProductoSingular
+    Producto <|-- ProductoPaquete
+
+    class ProductoSingular {
+        - List<ProductoPaquete> paquetesContenedores
+        - Map<String, String> detalles
+        + void agregarPaqueteContenedor(ProductoPaquete paquete)
+        + void eliminarPaqueteContenedor(ProductoPaquete paquete)
+        + List<ProductoPaquete> getPaquetesContenedores()
+    }
+
+    class ProductoPaquete {
+        - List<ProductoSingular> productos
+        + void agregarProducto(ProductoSingular producto)
+        + void eliminarProducto(Producto producto)
+        + void recalcularPrecioBase()
+    }
+
+    class Descuento {
+        - Long idDescuento
+        - String nombre
+        - LocalDate fechaInicio
+        - LocalDate fechaFin
+        - EstrategiaDescuento estrategia
+        - List<Producto> productos
+        + Boolean esAplicable()
+        + Double aplicarDescuento(Double precio)
+        + Double getValorDescuento()
+    }
+
+    class EstrategiaDescuento {
+        <<abstract>>
+        - Long id
+        - Double valorDescuento
+        + Double aplicarDescuento(Double precio)
+    }
+
+    EstrategiaDescuento <|-- DescuentoFijo
+    EstrategiaDescuento <|-- DescuentoPorcentaje
+
+    class DescuentoFijo {
+        + Double aplicarDescuento(Double precio)
+    }
+
+    class DescuentoPorcentaje {
+        + Double aplicarDescuento(Double precio)
+    }
+
+    class Pedido {
+        - Long idPedido
+        - LocalDateTime fecha
+        - double total
+        - MetodoEnvio metodoEnvio
+        - Cliente cliente
+        - Pago pago
+        - List<DetallePedido> detallesPedido
+        + void agregarDetalle(DetallePedido detallePedido)
+        + double calcularTotal(List<DetallePedido> detallesPedido)
+    }
+
+    class DetallePedido {
+        - Long idDetallePedido
+        - int cantidad
+        - double subTotal
+        - Producto producto
+        + double calcularSubTotal(Producto producto, int cantidad)
+    }
+
+    class MetodoEnvio {
+        <<abstract>>
+        - Long nroSeguimiento
+        - double tarifaInterna
+        + void calcularCosto()
+    }
+
+    MetodoEnvio <|-- EnvioLocal
+    MetodoEnvio <|-- EnvioProvincial
+    MetodoEnvio <|-- EnvioNacional
+
+    class EnvioLocal {
+        + void calcularCosto()
+    }
+
+    class EnvioProvincial {
+        + void calcularCosto()
+    }
+
+    class EnvioNacional {
+        + void calcularCosto()
+    }
+
+    class Pago {
+        <<abstract>>
+        - Long idPago
+        - LocalDateTime fechaPago
+    }
+
+    Pago <|-- PagoMercadoPago
+
+    class PagoMercadoPago {
+        - String moneda
+        - String idPagoMP
+        - String estado
+    }
+
+    Cliente --> Pedido : "Realiza"
+    Pedido --> DetallePedido : "Contiene"
+    DetallePedido --> Producto : "Se refiere a"
+    Pedido --> MetodoEnvio : "Usa"
+    Pedido --> Pago : "Incluye"
+    Producto --> Descuento : "Puede tener"
+    ProductoPaquete --> ProductoSingular : "Compuesto por"
+    Descuento --> EstrategiaDescuento : "Usa"
+```  
+
+
+
+
 # Wireframe y caso de uso
 
 # Backlog de Iteración 1
-## Acceso Publico
 ### Registrar cuenta
-![ ](/ecomarket/docs/wirefreame/Registrar%20cuenta.png)
+![Registrar cuenta](/ecomarket/docs/wirefreame/Iteracion2/Registrar%20Cuenta.png)
 
-### Inciar sesión
-![ ](/ecomarket/docs/wirefreame/Iniciar%20sesion.png)
-### Detalle del producto
-![ ](/ecomarket/docs/wirefreame/Detalle%20del%20producto.png)
-### Detalle del paquete
-![ ](/ecomarket/docs/wirefreame/Detalle%20del%20paquete.png)
+### Alta/Modificación de producto singular
+![Alta/Modificación de producto singular](/ecomarket/docs/wirefreame/Iteracion2/Alta-Modificacion%20producto%20singular.png)
 
-## Acceso restringido al Cliente
-### Inicio
-![ ](/ecomarket/docs/wirefreame/Inicio%20Cliente.png)
-### Carrito de compras
-![ ](/ecomarket/docs/wirefreame/Carrito%20de%20compras.png)
-### Metodos de pago
-![ ](/ecomarket/docs/wirefreame/Metodos%20de%20pago.png)
+### Carrito
+![Carrito](/ecomarket/docs/wirefreame/Iteracion2/Carrito.png)
+
+### Detalle de producto
+![Detalle de producto](/ecomarket/docs/wirefreame/Iteracion2/Detalle%20Producto.png)
+
+### Error
+![Error](/ecomarket/docs/wirefreame/Iteracion2/Error.png)
+
+### Gestión de productos y paquetes
+![Gestión de productos y paquetes](/ecomarket/docs/wirefreame/Iteracion2/Gestion%20productos-paquetes.png)
+
+### Iniciar sesión
+![Iniciar sesión](/ecomarket/docs/wirefreame/Iteracion2/Inciar%20sesion.png)
+
+### Menú administrador
+![Menú administrador](/ecomarket/docs/wirefreame/Iteracion2/Menu%20administrador.png)
+
+### Menú cliente
+![Menú cliente](/ecomarket/docs/wirefreame/Iteracion2/Menu%20cliete.png)
+
+### Método de pago - Paso 1
+![Método de pago - Paso 1](/ecomarket/docs/wirefreame/Iteracion2/Metodo%20de%20Pago%201.png)
+
+### Método de pago - Paso 2
+![Método de pago - Paso 2](/ecomarket/docs/wirefreame/Iteracion2/Metodo%20de%20Pago%202.png)
+
 ### Pago exitoso
-![ ](/ecomarket/docs/wirefreame/Pago%20exitoso.png)
+![Pago exitoso](/ecomarket/docs/wirefreame/Iteracion2/Pago%20exitoso.png)
 
-## Acceso restringido al Administrador
-### Inicio
-![ ](/ecomarket/docs/wirefreame/Inicio%20administrador.png)
-### Gestion de productos
-![ ](/ecomarket/docs/wirefreame/Gestion%20de%20productos.png)
-### Gestion de paquetes
-![ ](/ecomarket/docs/wirefreame/Gestion%20de%20paquetes.png)
-### Agregar producto
-![ ](/ecomarket/docs/wirefreame/Agregar%20producto.png)
-### Editar producto
-![ ](/ecomarket/docs/wirefreame/Editar%20producto.png)
-### Agregar paquete
-![ ](/ecomarket/docs/wirefreame/Agregar%20paquete.png)
-### Editar paquete
-![ ](/ecomarket/docs/wirefreame/Editar%20paquete.png)
+### Resumen de pedido
+![Resumen de pedido](/ecomarket/docs/wirefreame/Iteracion2/Resumen%20de%20pedido.png)
+
+
 
 # **Backlog de Iteración**
 
