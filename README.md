@@ -49,7 +49,7 @@ El proyecto sigue una arquitectura en capas bien definida para facilitar el desa
 
 1. **Modelo**: Clases que representan la estructura de los datos y las relaciones entre ellos.
 2. **Controladores**: Lógica para manejar las interacciones del usuario y coordinar la comunicación entre la UI y los servicios.
-3. **Servicios**: Lógica de negocio principal, como el cálculo de precios y la gestión de inventario.
+3. **Servicios**: Se encargan de procesar datos, interactuar con repositorios, y realizar tareas relacionadas con las operaciones centrales del sistema.
 4. **Repositorio**: Acceso y gestión de datos en la base de datos, utilizando JPA.
 
 ---
