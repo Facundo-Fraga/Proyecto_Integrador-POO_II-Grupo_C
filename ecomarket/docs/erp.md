@@ -133,10 +133,7 @@ La solución de software automatizará la gestión de inventario, permitiendo un
 1. **Tipo de Aplicación:**
    - La aplicación será una **aplicación web**.
 
-2. **Arquitectura de Software:**
-   - Se ajustará a una **arquitectura Cliente-Servidor**, donde el cliente accederá a los servicios a través de un navegador web mientras el servidor manejará la lógica de negocio y el acceso a la base de datos.
-
-3. **Tecnologías a Utilizar:**
+2. **Tecnologías a Utilizar:**
    - **Lenguaje de Programación:** Java.
    - **Framework de Desarrollo:** Spring.
    - **Base de Datos:** PostgreSQL.
