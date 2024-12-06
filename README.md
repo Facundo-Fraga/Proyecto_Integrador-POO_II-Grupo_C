@@ -49,7 +49,7 @@ El proyecto sigue una arquitectura en capas bien definida para facilitar el desa
 
 1. **Modelo**: Clases que representan la estructura de los datos y las relaciones entre ellos.
 2. **Controladores**: Lógica para manejar las interacciones del usuario y coordinar la comunicación entre la UI y los servicios.
-3. **Servicios**: Lógica de negocio principal, como el cálculo de precios y la gestión de inventario.
+3. **Servicios**: Se encargan de procesar datos, interactuar con repositorios, y realizar tareas relacionadas con las operaciones centrales del sistema.
 4. **Repositorio**: Acceso y gestión de datos en la base de datos, utilizando JPA.
 
 ---
@@ -104,3 +104,49 @@ El proyecto sigue una arquitectura en capas bien definida para facilitar el desa
     - DNI: 12345678
 
     **Access token:** APP_USR-2065505450968304-112416-8243d6043a8a5c0456925ea2dcf13478-2117047882
+
+
+    # **Tutorial de Ejecución del Proyecto EcoMarketDev**
+
+  Este tutorial explica cómo ejecutar el proyecto **EcoMarketDev** de manera correcta, incluyendo los pasos para configurar el entorno, la base de datos y el servidor.
+
+  ---
+
+  ## **Requisitos Previos**
+
+  1. **Java Development Kit (JDK):**  
+   Asegúrese de tener instalado JDK 21.  
+   Verifique la instalación ejecutando:  
+   ```bash
+   java -version
+   ```
+  2. **Apache Maven:**
+  Instale Maven y verifique su instalación ejecutando:
+  ```bash
+   mvn -version
+   ```
+  3. **PostgreSQL:**
+  Asegúrese de tener PostgreSQL instalado y configurado.
+  4. **Instalar ngrok:**
+  Visita la página oficial de ngrok (Incluye tutorial de instalación):  
+   [https://ngrok.com/download](https://ngrok.com/download)
+
+   ## Pasos de ejecución
+   1. **Iniciar un endpoint**
+   ```bash
+   ngrok http 4567
+   ```
+   2. **Crear la base de datos PostgreSQL:** 
+    - Con el nombre EcoMarket
+    - Puerto 5432 (Si no se tiene este puerto para PostgreSQL modificar el puerto de **"application.properties"**)
+  3. **Cambiar Usuario y Contraseña:**
+    Cambiar las credenciales de la base de datos en **"application.properties"** segun corresponda:
+    - spring.datasource.username=**"Su usuario"**
+    - spring.datasource.password=**"Su contraseña"**  
+  4. **Cambie la url de app.base.url:**
+    Cambie la url de app.base.url por la url que le dio ngrok al ingresar esto en el bash:
+    ```bash
+   ngrok http 4567
+   ```
+   5. **Ejecute el proyecto**
+   6. **Abra su navegador y ingrese la url de ngrok**: Si no se sigue este paso y pone localhost no se crearan los pedidos correctamente.

@@ -9,46 +9,46 @@
 **Pulikoski, Mauricio Ezequiel:** Responsable de las funcionalidades de alta, baja y modificación de productos individuales, diseño e implementación de plantillas, y desarrollo del sistema de registro e inicio de sesión de usuarios.
 
 # Diseño OO
-![ ](/ecomarket/docs/EcoMarketDiagramaDeClases.png)
+![ ](/ecomarket/docs/EcoMarketDiagramaDeClases1.png)
 # Wireframe y caso de uso
 
 # Backlog de Iteración 1
 ## Acceso Publico
 ### Registrar cuenta
-![ ](/ecomarket/docs/wirefreame/Registrar%20cuenta.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Registrar%20cuenta.png)
 
 ### Inciar sesión
-![ ](/ecomarket/docs/wirefreame/Iniciar%20sesion.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Iniciar%20sesion.png)
 ### Detalle del producto
-![ ](/ecomarket/docs/wirefreame/Detalle%20del%20producto.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Detalle%20del%20producto.png)
 ### Detalle del paquete
-![ ](/ecomarket/docs/wirefreame/Detalle%20del%20paquete.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Detalle%20del%20paquete.png)
 
 ## Acceso restringido al Cliente
 ### Inicio
-![ ](/ecomarket/docs/wirefreame/Inicio%20Cliente.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Inicio%20Cliente.png)
 ### Carrito de compras
-![ ](/ecomarket/docs/wirefreame/Carrito%20de%20compras.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Carrito%20de%20compras.png)
 ### Metodos de pago
-![ ](/ecomarket/docs/wirefreame/Metodos%20de%20pago.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Metodos%20de%20pago.png)
 ### Pago exitoso
-![ ](/ecomarket/docs/wirefreame/Pago%20exitoso.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Pago%20exitoso.png)
 
 ## Acceso restringido al Administrador
 ### Inicio
-![ ](/ecomarket/docs/wirefreame/Inicio%20administrador.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Inicio%20administrador.png)
 ### Gestion de productos
-![ ](/ecomarket/docs/wirefreame/Gestion%20de%20productos.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Gestion%20de%20productos.png)
 ### Gestion de paquetes
-![ ](/ecomarket/docs/wirefreame/Gestion%20de%20paquetes.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Gestion%20de%20paquetes.png)
 ### Agregar producto
-![ ](/ecomarket/docs/wirefreame/Agregar%20producto.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Agregar%20producto.png)
 ### Editar producto
-![ ](/ecomarket/docs/wirefreame/Editar%20producto.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Editar%20producto.png)
 ### Agregar paquete
-![ ](/ecomarket/docs/wirefreame/Agregar%20paquete.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Agregar%20paquete.png)
 ### Editar paquete
-![ ](/ecomarket/docs/wirefreame/Editar%20paquete.png)
+![ ](/ecomarket/docs/wirefreame/Iteracion1/Editar%20paquete.png)
 # Casos de uso (esenciales) de las pantallas
 
 ## Caso de Uso: Crear un Producto Nuevo
