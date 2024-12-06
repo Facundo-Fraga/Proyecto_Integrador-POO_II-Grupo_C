@@ -1,188 +1,230 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #000000;
-            color: #fff;
-            font-size: 18px;
-        }
-        .header .cart-icon {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-        }
-        .cart-container {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
+
+        .container {
             max-width: 800px;
             margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
-        .cart-item {
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .product {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #ddd;
         }
-        .cart-item:last-child {
+
+        .product:last-child {
             border-bottom: none;
         }
-        .item-details {
+
+        .product-details {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
+            flex-grow: 1;
         }
-        .item-image {
-            width: 50px;
-            height: 50px;
-            background-color: #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 4px;
+
+        .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            width: 30%;
         }
-        .item-info {
+
+        .product-price,
+        .product-subtotal {
             font-size: 14px;
-        }
-        .item-quantity {
-            font-size: 12px;
-            color: #555;
-        }
-        .item-price {
-            font-size: 16px;
             font-weight: bold;
+            color: #333;
+            width: 20%;
+            text-align: center;
         }
-        .remove-btn {
-            background-color: #000000;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .remove-btn:hover {
-            background-color: #ec0000;
-        }
-        .summary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .checkout {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        .shipping-select {
-            padding: 10px;
+
+        .product-quantity {
+            width: 60px;
+            text-align: center;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            flex: 1;
+            border-radius: 5px;
+            padding: 5px;
         }
-        .checkout-btn {
-            background-color: #00a028;
-            color: #fff;
+
+        .remove-button {
+            background-color: #dc3545;
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
         }
-        .checkout-btn:hover {
-            background-color: #00c030;
+
+        .remove-button:hover {
+            background-color: #c82333;
         }
-        .return-btn {
-            background-color: #000000;
-            color: #fff;
+
+        .cart-summary {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            padding: 10px 15px;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: white;
         }
-        .return-btn:hover {
-            background-color: #0056b3;
+
+        .button.checkout {
+            background-color: #28a745;
+        }
+
+        .button.continue {
+            background-color: #007bff;
+        }
+
+        .button:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
+
 <body>
-    <div class="header">
-        <div>Carrito de Compras</div>
-        <div class="cart-icon">🛒</div>
+    <div class="container">
+        <h1>Carrito de Compras</h1>
+
+        <div id="cart">
+            <div th:each="entry : ${productos}">
+                <div class="product">
+                    <div class="product-details">
+                        <span class="product-name" th:text="${entry.key.nombre}">Producto</span>
+                        <span class="product-price" th:text="'$' + ${entry.key.precioFinal}">Precio</span>
+                        <form action="/update-cantidad" method="post" class="update-form">
+                            <input type="hidden" name="idProducto" th:value="${entry.key.idProducto}" />
+                            <input class="product-quantity" type="number" name="cantidad" th:value="${entry.value}"
+                                min="1" />
+                            <button type="submit" class="update-button">Actualizar</button>
+                        </form>
+                        <span class="product-subtotal">Subtotal: $0.00</span>
+                    </div>
+                    <form action="/remove" method="post">
+                        <input type="hidden" name="idProducto" th:value="${entry.key.idProducto}" />
+                        <button type="submit" class="remove-button">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <p>Total Productos: <span id="cart-total-productos">$0.00</span></p>
+            <p>Costo de Envío: <span id="shipping-cost">$0.00</span></p>
+            <p><strong>Total: <span id="cart-total">$0.00</span></strong></p>
+        </div>
+
+        <div class="buttons">
+            <!-- Formulario para redirigir a "Iniciar Compra" -->
+            <form action="/payment" method="post">
+                <div class="envio-section">
+                    <label for="tipoEnvio">Seleccionar Tipo de Envío:</label>
+                    <select id="tipoEnvio" name="tipoEnvio" required>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="local">Envío Local</option>
+                        <option value="provincial">Envío Provincial</option>
+                        <option value="nacional">Envío Nacional</option>
+                    </select>
+                </div>
+                <!-- Botón para iniciar la compra -->
+                <div class="buttons">
+                    <button type="submit" class="button checkout">Iniciar Compra</button>
+                </div>
+            </form>
+
+            <!-- Formulario para redirigir a "Seguir Comprando" -->
+            <form action="/clientMenu" method="get">
+                <button type="submit" class="button continue">Seguir Comprando</button>
+            </form>
+        </div>
+
     </div>
-    <div class="cart-container">
-        <div class="cart-item">
-            <div class="item-details">
-                <div class="item-image">📷</div>
-                <div class="item-info">
-                    <div>Producto 1 - Lorem ipsum dolor sit amet</div>
-                    <div class="item-quantity">x1</div>
-                </div>
-            </div>
-            <div class="item-price">$10.000,00</div>
-            <button class="remove-btn">🗑️</button>
-        </div>
-        <div class="cart-item">
-            <div class="item-details">
-                <div class="item-image">📷</div>
-                <div class="item-info">
-                    <div>Producto 2 - Lorem ipsum dolor sit amet</div>
-                    <div class="item-quantity">x2</div>
-                </div>
-            </div>
-            <div class="item-price">$22.000,00</div>
-            <button class="remove-btn">🗑️</button>
-        </div>
-        <div class="cart-item">
-            <div class="item-details">
-                <div class="item-image">📷</div>
-                <div class="item-info">
-                    <div>Producto 3 - Lorem ipsum dolor sit amet</div>
-                    <div class="item-quantity">x1</div>
-                </div>
-            </div>
-            <div class="item-price">$1.000,00</div>
-            <button class="remove-btn">🗑️</button>
-        </div>
-        <div class="cart-item">
-            <div class="item-details">
-                <div class="item-image">📷</div>
-                <div class="item-info">
-                    <div>Producto 4 - Lorem ipsum dolor sit amet</div>
-                    <div class="item-quantity">x1</div>
-                </div>
-            </div>
-            <div class="item-price">$20.000,00</div>
-            <button class="remove-btn">🗑️</button>
-        </div>
-        <div class="summary">
-            <div>Subtotal: <span style="font-weight: bold;">$53.500,00</span></div>
-        </div>
-        <div class="checkout">
-            <select class="shipping-select">
-                <option>Seleccionar método de envío</option>
-                <option>Envío Local</option>
-                <option>Envío Provincial</option>
-                <option>Envío Nacional</option>
-            </select>
-            <button type="button" class="checkout-btn" onclick="window.location.href='/payment'">Iniciar Compra</button>
-            <button type="button" class="return-btn" onclick="window.location.href='/clientMenu'">Seguir comprando</button>
-        </div>
-    </div>
+
+    <script>
+        function obtenerCostoEnvio() {
+            const tipoEnvio = document.getElementById('tipoEnvio').value;
+            switch (tipoEnvio) {
+                case 'local':
+                    return 7000;
+                case 'provincial':
+                    return 14000;
+                case 'nacional':
+                    return 20000;
+                default:
+                    return 0;
+            }
+        }
+
+        function actualizarTotales() {
+            let totalProductos = 0;
+
+            document.querySelectorAll('.product').forEach(product => {
+                const cantidad = parseInt(product.querySelector('.product-quantity').value) || 0;
+                const precio = parseFloat(product.querySelector('.product-price').innerText.replace('$', ''));
+                const subtotal = cantidad * precio;
+
+                product.querySelector('.product-subtotal').innerText = 'Subtotal: $' + subtotal.toFixed(2);
+                totalProductos += subtotal;
+            });
+
+            const costoEnvio = obtenerCostoEnvio();
+            const totalFinal = totalProductos + costoEnvio;
+
+            document.getElementById('cart-total-productos').innerText = '$' + totalProductos.toFixed(2);
+            document.getElementById('shipping-cost').innerText = '$' + costoEnvio.toFixed(2);
+            document.getElementById('cart-total').innerText = '$' + totalFinal.toFixed(2);
+        }
+
+        document.getElementById('cart').addEventListener('input', event => {
+            if (event.target.classList.contains('product-quantity')) {
+                actualizarTotales();
+            }
+        });
+
+        document.getElementById('tipoEnvio').addEventListener('change', actualizarTotales);
+
+        actualizarTotales();
+    </script>
 </body>
+
 </html>

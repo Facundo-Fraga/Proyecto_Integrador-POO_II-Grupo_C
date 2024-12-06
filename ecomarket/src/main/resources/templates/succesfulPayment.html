@@ -1,75 +1,129 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Pago</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title th:text="${title}">Pedido Exitoso</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f4f4f9;
             margin: 0;
+            padding: 0;
+            color: #333;
         }
-        .confirmation-container {
-            text-align: center;
-            width: 300px;
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
             background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .confirmation-icon {
-            font-size: 50px;
-            color: #28a745; /* Verde para el tick */
-            background-color: #d3d3d3; /* Gris claro para el círculo */
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
+
+        header h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .confirmation-message {
-            font-size: 24px;
-            color: #333333;
-            margin: 0;
+
+        h2, h3 {
+            color: #34495e;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
         }
-        .order-number {
-            font-size: 16px;
-            color: #666666;
-            margin: 10px 0 20px;
-        }
-        .return_button {
-            width: 200px;
-            padding: 10px;
+
+        p {
             margin: 10px 0;
-            background-color: #000000;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
         }
-        .return_button:hover {
-            background-color: #0056b3;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2c3e50;
+            color: #ffffff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #2c3e50;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #1a242f;
         }
     </style>
 </head>
 <body>
-    <div class="confirmation-container">
-        <div class="confirmation-icon">
-            <i class="fas fa-check"></i> <!-- Icono de checkmark de FontAwesome -->
-        </div>
-        <h1 class="confirmation-message">¡Pago Exitoso!</h1>
-        <p class="order-number">Orden: <span th:text="${orderNumber}">#XXXXXX</span></p> <!-- Mostrando el número de orden -->
-        <button type="button" class="return_button" onclick="window.location.href='/clientMenu'">Volver al Inicio</button>
+    <div class="container">
+        <header>
+            <h1 th:text="${message}">¡Gracias por tu compra!</h1>
+        </header>
+
+        <section class="order-details">
+            <h2>Detalles del Pedido</h2>
+            <p><strong>ID del Pedido:</strong> <span th:text="${pedido.idPedido}"></span></p>
+            <p><strong>Fecha del Pedido:</strong> <span th:text="${pedido.fecha}"></span></p>
+            <p><strong>Total del Pedido:</strong> <span th:text="${pedido.total}"></span></p>
+        </section>
+
+        <section class="product-details">
+            <h3>Detalles de los Productos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="detalle : ${pedido.detallesPedido}">
+                        <td th:text="${detalle.producto.nombre}"></td>
+                        <td th:text="${detalle.cantidad}"></td>
+                        <td th:text="${detalle.producto.precioBase}"></td>
+                        <td th:text="${detalle.subTotal}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="shipping-info">
+            <h3>Información de Envío</h3>
+            <p><strong>Tarifa de Envío:</strong> <span th:text="${pedido.metodoEnvio.tarifaInterna}"></span></p>
+        </section>
+
+        <section class="payment-info">
+            <h3>Información del Pago</h3>
+            <p><strong>ID de Pago:</strong> <span th:text="${paymentId}"></span></p>
+            <p><strong>Estado del Pago:</strong> <span th:text="${status}"></span></p>
+        </section>
+
+        <footer>
+            <a href="/clientMenu" class="btn" th:text="'Volver a la tienda'"></a>
+        </footer>
     </div>
 </body>
 </html>

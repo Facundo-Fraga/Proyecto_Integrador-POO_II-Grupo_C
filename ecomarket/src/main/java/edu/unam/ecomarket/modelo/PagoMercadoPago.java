@@ -1,87 +1,62 @@
 package edu.unam.ecomarket.modelo;
 
-import java.math.BigDecimal;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+/**
+ * Clase que representa un pago realizado a través de MercadoPago.
+ * 
+ * <p>
+ * Hereda de la clase abstracta {@link Pago} y añade información específica de los pagos realizados mediante la plataforma MercadoPago,
+ * como el identificador del pago, el estado del pago y la moneda utilizada.
+ * </p>
+ * 
+ * <p>
+ * La moneda predeterminada es el peso argentino (ARS).
+ * </p>
+ * 
+ * @author Grupo C
+ * @version 1.0
+ */
 @Entity
-@Table (name = "pago_MP")
+@NoArgsConstructor
+public class PagoMercadoPago extends Pago {
 
-public class PagoMercadoPago implements MetodoPago {
-   
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mp_seq")
-    @SequenceGenerator(name = "mp_seq", sequenceName = "mp_sequence", allocationSize = 1)
-
-    private Long idTransaccion;
-   
-    @Column(name = "monto", precision = 19, scale = 2, nullable = false)
-
-    private BigDecimal monto;
-
-    @Column(name = "saldo", precision = 19, scale = 2, nullable = false)
-
-    private BigDecimal saldo;
-
+    /**
+     * Moneda utilizada para el pago.
+     * 
+     * <p>
+     * El valor predeterminado es "ARS" (pesos argentinos).
+     * </p>
+     */
     @Column(nullable = false)
-    
-    private String moneda;
-   
-    @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
-    @NotBlank
-    
-    private String emailUsuario;
-    
-    @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
-    @NotBlank
+    private String moneda = "ARS";
 
-    private String contrasena;
-
+    /**
+     * Identificador único del pago en MercadoPago.
+     */
     @Column
-    private boolean logueado;
+    private String idPagoMP;
 
-    @Override
-    public boolean pagar(BigDecimal monto) {
-        // Verificar que el usuario esté autenticado
-        if (!logueado) {
-            return false;
-        }
-    
-        // Comparar el saldo con el monto a pagar
-        if (saldo.compareTo(monto) >= 0) {
-            // Actualizar el saldo si el pago es exitoso
-            saldo = saldo.subtract(monto);
-            System.out.println("Pago realizado con éxito. Saldo restante: " + saldo);
-            return true;
-        } else {
-            System.out.println("Saldo insuficiente. No se puede realizar el pago.");
-            return false;
-        }
+    /**
+     * Estado del pago en MercadoPago.
+     * 
+     * <p>
+     * Puede ser, por ejemplo, "aprobado", "pendiente" o "rechazado".
+     * </p>
+     */
+    @Column
+    private String estado;
+
+    /**
+     * Constructor que inicializa un pago de MercadoPago con su identificador y estado.
+     * 
+     * @param idPagoMP Identificador único del pago en MercadoPago.
+     * @param estado   Estado del pago.
+     */
+    public PagoMercadoPago(String idPagoMP, String estado) {
+        this.idPagoMP = idPagoMP;
+        this.estado = estado;
     }
-    
-    @Override
-    public void obtenerDetalles() {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'setEstrategiaPrecio'");
-    }
-
-   
-
 }

@@ -197,8 +197,11 @@
         <header>
             <h1>Menú de Productos</h1>
             <div class="button-container">
-                <button type="button" class="cart-button" onclick="window.location.href='/cart';">Ver Carrito</button>
-                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar Sesión</button>
+                <button type="button" class="cart-button" onclick="window.location.href='/shoppingCart'">
+                    <i class="fas fa-shopping-cart"></i> Ir al Carrito
+                </button>
+                <button type="button" class="logout-button" onclick="window.location.href='/logout';">Cerrar
+                    Sesión</button>
             </div>
         </header>
 
@@ -212,7 +215,8 @@
             <!-- Iterar sobre la lista de productos -->
             <div th:each="producto : ${productos}" class="item-card">
                 <div class="item-title" th:text="${producto.nombre}">Nombre del producto</div>
-                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto</div>
+                <div class="item-info" th:text="'Descripción: ' + ${producto.descripcion}">Descripción del producto
+                </div>
                 <!-- Mostrar precios -->
                 <div>
                     <div class="item-price strike" th:if="${producto.tieneDescuento()}"
@@ -231,7 +235,8 @@
                 </ul>
                 <!-- Productos incluidos limitados -->
                 <ul th:if="${producto.class.simpleName == 'ProductoPaquete'}">
-                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}" th:text="'• ' + ${p.nombre}">
+                    <li th:each="p, iter : ${producto.productos}" th:if="${iter.count <= 3}"
+                        th:text="'• ' + ${p.nombre}">
                         Producto incluido
                     </li>
                 </ul>
@@ -247,10 +252,15 @@
                         th:onclick="'location.href=\'/packageDetails/' + ${producto.idProducto} + '\''">
                         Ver detalles
                     </button>
-                    <button class="add-to-cart-btn"
-                        th:onclick="'window.location.href=\'/cart/add/' + ${producto.idProducto} + '\''">
-                        Añadir al carrito
-                    </button>
+                    <form action="/add" method="post" th:action="@{/add}">
+                        <!-- Incluye un campo oculto con el ID del producto -->
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                        
+                        <!-- Botón para enviar el formulario -->
+                        <button type="submit" class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i> Agregar al carrito
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
