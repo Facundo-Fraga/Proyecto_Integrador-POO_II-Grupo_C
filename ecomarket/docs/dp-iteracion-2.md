@@ -30,7 +30,6 @@ classDiagram
         - String nombre
         - String descripcion
         - double precioBase
-        - List<Descuento> descuentos
         + Boolean tieneDescuento()
         + double getPrecioFinal()
     }
@@ -39,15 +38,12 @@ classDiagram
     Producto <|-- ProductoPaquete
 
     class ProductoSingular {
-        - List<ProductoPaquete> paquetesContenedores
-        - Map<String, String> detalles
         + void agregarPaqueteContenedor(ProductoPaquete paquete)
         + void eliminarPaqueteContenedor(ProductoPaquete paquete)
         + List<ProductoPaquete> getPaquetesContenedores()
     }
 
     class ProductoPaquete {
-        - List<ProductoSingular> productos
         + void agregarProducto(ProductoSingular producto)
         + void eliminarProducto(Producto producto)
         + void recalcularPrecioBase()
@@ -58,8 +54,6 @@ classDiagram
         - String nombre
         - LocalDate fechaInicio
         - LocalDate fechaFin
-        - EstrategiaDescuento estrategia
-        - List<Producto> productos
         + Boolean esAplicable()
         + Double aplicarDescuento(Double precio)
         + Double getValorDescuento()
@@ -87,10 +81,6 @@ classDiagram
         - Long idPedido
         - LocalDateTime fecha
         - double total
-        - MetodoEnvio metodoEnvio
-        - Cliente cliente
-        - Pago pago
-        - List<DetallePedido> detallesPedido
         + void agregarDetalle(DetallePedido detallePedido)
         + double calcularTotal(List<DetallePedido> detallesPedido)
     }
@@ -99,7 +89,6 @@ classDiagram
         - Long idDetallePedido
         - int cantidad
         - double subTotal
-        - Producto producto
         + double calcularSubTotal(Producto producto, int cantidad)
     }
 
